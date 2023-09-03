@@ -4,14 +4,17 @@ using System.Text.RegularExpressions;
 
 class Program
 {
-    public static void Main()
+    public static void Main(string[] args)
     {
+        string file = "chirp_cli_db.csv";
         try
         {
             // Open the text file using a stream reader.
-            using (var sr = new StreamReader("chirp_cli_db.csv"))
+            using (var sr = new StreamReader(file))
             {
                 string line;
+                string author;
+                string message;
                 
                 while ((line = sr.ReadLine()) != null)
                 {
@@ -22,8 +25,8 @@ class Program
 
                     if(X.Length >= 3) 
                     {
-                        string author = X[0];
-                        string message = X[1];
+                        author = X[0];
+                        message = X[1];
                         string unixTimeStampString = X[2];
                         if(long.TryParse(unixTimeStampString, out long unixTimeStamp))
                         {
@@ -33,6 +36,19 @@ class Program
                         }
                         
                     } 
+                }
+                if(args.Length >= 1)
+                {
+                    author = Environment.UserName;
+                    message = args[0];
+                    long unixTimeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                    string date = DateTimeOffset.UtcNow.ToString("MM/dd/yy HH:mm:ss");
+                    string newLine = $"{author}, \"{message}\",{unixTimeStamp}";
+                    using (StreamWriter sw = File.AppendText(file))
+                    {
+                        // Append the new line to the file
+                        sw.WriteLine(newLine);
+                    }
                 }
                 // Read the stream as a string, and write the string to the console.
                 Console.WriteLine(sr.ReadToEnd());
