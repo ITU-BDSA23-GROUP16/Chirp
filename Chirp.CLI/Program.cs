@@ -15,9 +15,12 @@ class Program
                 string line;
                 string author;
                 string message;
-                
-                while ((line = sr.ReadLine()) != null)
+                string command = args[0];
+
+                if(command == "read")
                 {
+                    while ((line = sr.ReadLine()) != null)
+                    {
                     //Define pattern
                     Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
                     //Separating columns to array
@@ -36,18 +39,21 @@ class Program
                         }
                         
                     } 
-                }
-                if(args.Length >= 1)
+                    }
+                } else if(command == "cheep")
                 {
+                    if(args.Length >= 2)
+                    {
                     author = Environment.UserName;
-                    message = args[0];
+                    message = args[1];
                     long unixTimeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                     string date = DateTimeOffset.UtcNow.ToString("MM/dd/yy HH:mm:ss");
-                    string newLine = $"{author}, \"{message}\",{unixTimeStamp}";
+                    string newLine = $"{author},\"{message}\",{unixTimeStamp}";
                     using (StreamWriter sw = File.AppendText(file))
                     {
                         // Append the new line to the file
                         sw.WriteLine(newLine);
+                    }
                     }
                 }
                 // Read the stream as a string, and write the string to the console.
