@@ -24,8 +24,14 @@ class Program
                     {
                         string author = X[0];
                         string message = X[1];
+                        string unixTimeStampString = X[2];
+                        if(long.TryParse(unixTimeStampString, out long unixTimeStamp))
+                        {
+                            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(unixTimeStamp);
+                            string date = dateTimeOffset.ToString("MM/dd/yy HH:mm:ss");
+                            Console.WriteLine($"{author} @ {date}: {message}");
+                        }
                         
-                        Console.WriteLine($"{author} @ Date: {message}");
                     } 
                 }
                 // Read the stream as a string, and write the string to the console.
