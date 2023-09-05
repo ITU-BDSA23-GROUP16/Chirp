@@ -1,4 +1,11 @@
-﻿using System;
+﻿//Parts of the code have been taken from the following links:
+//Read text from a file https://learn.microsoft.com/en-us/dotnet/standard/io/how-to-read-text-from-a-file
+//Append text(string) https://learn.microsoft.com/en-us/dotnet/api/system.io.file.appendtext?view=net-7.0
+//Unix timestamp to a typical timestamp https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset.tounixtimeseconds?view=net-7.0 
+//and and https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset.utcnow?view=net-7.0
+//Regular expressions https://stackoverflow.com/questions/3507498/reading-csv-files-using-c-sharp/34265869#34265869
+
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -9,7 +16,7 @@ class Program
         string file = "chirp_cli_db.csv";
         try
         {
-            // Open the text file using a stream reader.
+            //Open the text file using a stream reader.
             using (var sr = new StreamReader(file))
             {
                 //Defines variables for later use
