@@ -17,21 +17,7 @@ class Program
         
         try
         {
-            IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
-            if(command == "read")
-                {
-                    database.read()
-                }
-                } else if(command == "cheep")
-                {
-                    if(args.Length >= 2)
-                    {
-                    author = Environment.UserName;
-                    message = args[1];
-                    long unixTimeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-
-                    database.Store(new Cheep(author,message,unixTimeStamp))
-                }
+            
             //Open the text file using a stream reader.
             using (var sr = new StreamReader(file))
             {
