@@ -13,13 +13,14 @@ class Program
 {
     public static void Main(string[] args)
     {
-        string file = "chirp_cli_db.csv";
+        string file = "Chirp.CLI/chirp_cli_db.csv";
         
         try
         {
             
             //Open the text file using a stream reader.
-            using (var sr = new StreamReader(file))
+            using( var stream = new FileStream( file , FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var sr = new StreamReader(stream))
             {
                 //Defines variables for later use
                 string line;
@@ -85,6 +86,11 @@ class Program
         catch (IOException e)
         {
             Console.WriteLine("The file could not be read:");
+            Console.WriteLine(e.Message);
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            Console.WriteLine("Parameters missing. Try: \"read\" or \"cheep \"<your message>\"\" ");
             Console.WriteLine(e.Message);
         }
         
