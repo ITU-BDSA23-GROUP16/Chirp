@@ -31,6 +31,11 @@ Options:
 
 var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
 
+/*
+    Uses arguments variable to check for usage command
+    if arguments contains "read", run code for printing cheeps,
+    else if arguments contains "cheep", append to the database. The <message> provided in the arguments is converted to a string, to create a Cheep. 
+*/
 if(arguments["read"].IsTrue){
     //Returns IEnumerable<T>
     var cheeps = database.Read(10); 
@@ -41,7 +46,7 @@ if(arguments["read"].IsTrue){
 } else if (arguments["cheep"].IsTrue){
     long date = DateTimeOffset.UtcNow.ToUnixTimeSeconds();   
     var author    = Environment.UserName;
-    var message   = arguments["<message>"].ToString();
+    var message   = arguments["<message>"].ToString(); 
     
     Cheep cheep = new Cheep(author,message,date);
     database.Store(cheep);
