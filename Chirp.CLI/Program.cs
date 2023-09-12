@@ -3,68 +3,50 @@
 //Append text(string) https://learn.microsoft.com/en-us/dotnet/api/system.io.file.appendtext?view=net-7.0
 //Unix timestamp to a typical timestamp https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset.tounixtimeseconds?view=net-7.0 
 //and https://learn.microsoft.com/en-us/dotnet/api/system.datetimeoffset.utcnow?view=net-7.0
-//Regular expressions https://stackoverflow.com/questions/3507498/reading-csv-files-using-c-sharp/34265869#34265869
+
 
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using SimpleDB;
+using DocoptNet;
 
-class Program {
-    public static void Main(string[] args) {
-        string file = "chirp_cli_db.csv";
-        
-        try {
-            //First command line argument "read" or cheep"
-            string command = args[0];
-            
-            //
-            IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
-
-            //Displays cheeps
-            if(command == "read") {
-                
-                //Returns IEnumerable<T>
-                var cheeps = database.Read(10); 
-            
-                UserInterface.PrintCheeps(cheeps);
-
-              
-            //adds cheep
-            } else if(command == "cheep") {
-
-                
-                //checks if there are at least two command line arguments besides cheep itself
-                //if there are at least 2 arguments
-                //sets author to logged in user's name
-                //create new message with author, message and unix timestamp
-                if(args.Length >= 2)
-                {
-
-                long date = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                
-                
-                var author    = Environment.UserName;
-                var message   = args[1];
-                
-                Cheep cheep = new Cheep(author,message,date);
-                database.Store(cheep);
-            
-              
-                }
-            }
-            // Read the stream as a string, and write the string to the console.
-            //i.e. prints contents of csv file to console
-           // Console.WriteLine(sr.ReadToEnd());
-        } catch (IOException e) {
-            
-        Console.WriteLine("The file could not be read:");
-        Console.WriteLine(e.Message);
-        
-        } catch (IndexOutOfRangeException e) {
-            Console.WriteLine("Parameters missing. Try: \"read\" or \"cheep \"<your message>\"\" ");
-            Console.WriteLine(e.Message);
-        }
-    }
+string file = "chirp_cli_db.csv";
     
-}
+
+IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
+
+const string usage = @"Chirp CLI version.
+
+Usage:
+    chirp read <limit> | read
+    chirp cheep <message>
+    chirp --help
+    chirp --version
+
+Options:
+    --help        Show this screen.
+    --version     Show version.
+";
+
+var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
+
+if(arguments["read"].IsTrue){
+    //Returns IEnumerable<T>
+    var cheeps = database.Read(10); 
+    UserInterface.PrintCheeps(cheeps);
+
+    return 0;
+
+} else if (arguments["cheep"].IsTrue){
+    long date = DateTimeOffset.UtcNow.ToUnixTimeSeconds();   
+    var author    = Environment.UserName;
+    var message   = arguments["<message>"].ToString();
+    
+    Cheep cheep = new Cheep(author,message,date);
+    database.Store(cheep);
+    
+    return 0;
+} 
+
+return 1;
