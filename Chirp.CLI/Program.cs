@@ -8,91 +8,66 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using SimpleDB;
 
-class Program
-{
-    public static void Main(string[] args)
-    {
-        string file = "Chirp.CLI/chirp_cli_db.csv";
+class Program {
+    public static void Main(string[] args) {
+        string file = "chirp_cli_db.csv";
         
-        try
-        {
+        try {
+            //First command line argument "read" or cheep"
+            string command = args[0];
             
-            //Open the text file using a stream reader.
-            using( var stream = new FileStream( file , FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (var sr = new StreamReader(stream))
-            {
-                //Defines variables for later use
-                string line;
-                string author;
-                string message;
-                //First command line argument "read" or cheep"
-                string command = args[0];
+            //
+            IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
+
+            //Displays cheeps
+            if(command == "read") {
                 
-                //Displays cheeps
-                if(command == "read")
-                {
-                    //loops through each line of csv file
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                    //Define pattern
-                    Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+                //Returns IEnumerable<T>
+                var cheeps = database.Read(10); 
+                
 
-                    //Separating columns to array
-                    string[] X = CSVParser.Split(line);
-
-                    //check if there are three columns author, message, timestamp in each line
-                    //converts unixtime to readable date and prints formatted line to console
-                    if(X.Length >= 3) 
-                    {
-                        author = X[0];
-                        message = X[1];
-                        string unixTimeStampString = X[2];
-                        if(long.TryParse(unixTimeStampString, out long unixTimeStamp))
-                        {
-                            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(unixTimeStamp);
-                            string date = dateTimeOffset.ToString("MM/dd/yy HH:mm:ss");
-                            Console.WriteLine($"{author} @ {date}: {message}");
-                        }
-                        
-                    } 
-                    }
-                //adds cheep
-                } else if(command == "cheep")
-                {
-                    //checks if there are at least two command line arguments besides cheep itself
-                    //if there are at least 2 arguments
-                    //sets author to logged in user's name
-                    //create new message with author, message and unix timestamp
-                    if(args.Length >= 2)
-                    {
-                    author = Environment.UserName;
-                    message = args[1];
-                    long unixTimeStamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-                    string date = DateTimeOffset.UtcNow.ToString("MM/dd/yy HH:mm:ss");
-                    string newLine = $"{author},\"{message}\",{unixTimeStamp}";
-                    //appends new line to csv file using StreamWriter
-                    using (StreamWriter sw = File.AppendText(file))
-                    {
-                        sw.WriteLine(newLine);
-                    }
-                    }
+                foreach(Cheep cheep in cheeps){
+                    DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(cheep.Timestamp);
+                    string date = dateTimeOffset.ToString("MM/dd/yy HH:mm:ss");
+                    Console.WriteLine($"{cheep.Author} @ {date}: {cheep.Message}");
                 }
-                // Read the stream as a string, and write the string to the console.
-                //i.e. prints contents of csv file to console
-                Console.WriteLine(sr.ReadToEnd());
+            //adds cheep
+            } else if(command == "cheep") {
+
+                
+                //checks if there are at least two command line arguments besides cheep itself
+                //if there are at least 2 arguments
+                //sets author to logged in user's name
+                //create new message with author, message and unix timestamp
+                if(args.Length >= 2)
+                {
+
+                long date = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+                
+                
+                var author    = Environment.UserName;
+                var message   = args[1];
+                
+                Cheep cheep = new Cheep(author,message,date);
+                database.Store(cheep);
+                
+              
+                }
             }
-        }
-        catch (IOException e)
-        {
-            Console.WriteLine("The file could not be read:");
-            Console.WriteLine(e.Message);
-        }
-        catch (IndexOutOfRangeException e)
-        {
+            // Read the stream as a string, and write the string to the console.
+            //i.e. prints contents of csv file to console
+           // Console.WriteLine(sr.ReadToEnd());
+        } catch (IOException e) {
+            
+        Console.WriteLine("The file could not be read:");
+        Console.WriteLine(e.Message);
+        
+        } catch (IndexOutOfRangeException e) {
             Console.WriteLine("Parameters missing. Try: \"read\" or \"cheep \"<your message>\"\" ");
             Console.WriteLine(e.Message);
         }
-        
     }
+    
 }
