@@ -52,7 +52,7 @@ class Program {
                 
                 Cheep cheep = new Cheep(author,message,date);
                 database.Store(cheep);
-                
+            
               
                 }
             }

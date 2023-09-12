@@ -22,17 +22,19 @@ sealed public class CSVDatabase<T> : IDatabaseRepository<T>
         using (var reader = new StreamReader(file))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                return csv.GetRecords<T>();
+                return csv.GetRecords<T>().ToList();
             };
     }
 
-
+    
     public void Store(T record){
-        using (var writer = new StreamWriter(file))
+        using (var stream = File.Open(file, FileMode.Append))
+        using (var writer = new StreamWriter(stream))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
             csv.WriteRecord(record);
-            writer.Flush(); 
+            csv.NextRecord();
+       
 
         };
         
