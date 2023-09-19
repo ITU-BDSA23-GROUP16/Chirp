@@ -1,14 +1,14 @@
 using Xunit;
 using SimpleDB;
-namespace SimpleDB.Tests
+namespace SimpleDB.Tests;
 
 public class StoredIntegrationTest{
 
-    private string file = "chirp_cli_db.csv"
-    private long timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds()
+    private string file = "CSV-test.csv";
+    private long timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
 
-        [Fact]
+        [Fact] 
         public void IsStored(){
   
             
@@ -23,7 +23,7 @@ public class StoredIntegrationTest{
 
 
         //Assert
-        var storeCheeps = database.Read().ToList();
+        var storedCheeps = database.Read().ToList();
         Assert.Contains(cheep, storedCheeps);
 
 

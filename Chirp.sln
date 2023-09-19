@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chirp.CLI", "Chirp.CLI\Chirp.CLI.csproj", "{7A0CDB17-BD76-4924-97D2-4DB1FB056103}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chirp.CLI", "src\Chirp.CLI\Chirp.CLI.csproj", "{7A0CDB17-BD76-4924-97D2-4DB1FB056103}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDB", "SimpleDB\SimpleDB.csproj", "{D3E36803-D6E9-4815-BE80-1DCFF7F87683}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDB", "src\SimpleDB\SimpleDB.csproj", "{D3E36803-D6E9-4815-BE80-1DCFF7F87683}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2E9E866B-B719-4209-9E27-4E07795B35A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDB.Tests", "test\SimpleDB.Tests\SimpleDB.Tests.csproj", "{585DE20F-4F34-4054-A8AA-0142563F724C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.CLI.Tests", "test\Chirp.CLI.Tests\Chirp.CLI.Tests.csproj", "{15D4930E-1449-48E6-B179-BBB3AD0C4585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,11 +27,23 @@ Global
 		{D3E36803-D6E9-4815-BE80-1DCFF7F87683}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3E36803-D6E9-4815-BE80-1DCFF7F87683}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3E36803-D6E9-4815-BE80-1DCFF7F87683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{585DE20F-4F34-4054-A8AA-0142563F724C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{585DE20F-4F34-4054-A8AA-0142563F724C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{585DE20F-4F34-4054-A8AA-0142563F724C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{585DE20F-4F34-4054-A8AA-0142563F724C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15D4930E-1449-48E6-B179-BBB3AD0C4585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15D4930E-1449-48E6-B179-BBB3AD0C4585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15D4930E-1449-48E6-B179-BBB3AD0C4585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15D4930E-1449-48E6-B179-BBB3AD0C4585}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {758D44C4-3CF3-4251-830D-7887443DF9EC}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{585DE20F-4F34-4054-A8AA-0142563F724C} = {2E9E866B-B719-4209-9E27-4E07795B35A6}
+		{15D4930E-1449-48E6-B179-BBB3AD0C4585} = {2E9E866B-B719-4209-9E27-4E07795B35A6}
 	EndGlobalSection
 EndGlobal
