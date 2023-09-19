@@ -4,13 +4,12 @@ namespace SimpleDB.Tests;
 
 public class StoredIntegrationTest{
 
-    private string file = "CSV-test.csv";
+    private string file = "../../../CSV-test.csv";
     private long timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
-
         [Fact] 
-        public void IsStored(){
-  
+        public void IsStoredAbuCheep(){
+
             
         //Arrange
         var database = new CSVDatabase<Cheep>(file);
@@ -19,7 +18,29 @@ public class StoredIntegrationTest{
 
         //Act
         database.Store(cheep);
-        //var stored_cheep = database.Read(cheep)
+        
+
+        //Assert
+        var storedCheeps = database.Read().ToList();
+        Assert.Contains(cheep, storedCheeps);
+
+
+        //Flush
+        File.WriteAllText(file, "Author,Message,Timestamp\n" );
+
+        }
+
+[Fact] 
+        public void IsStoredChristineCheep(){
+
+            
+        //Arrange
+        var database = new CSVDatabase<Cheep>(file);
+        var cheep = new Cheep("Christine", "Abushabu", timestamp);
+                
+
+        //Act
+        database.Store(cheep);
 
 
         //Assert
@@ -28,8 +49,91 @@ public class StoredIntegrationTest{
 
 
         //Flush
-        File.Delete(file);
-
+        File.WriteAllText(file, "Author,Message,Timestamp\n" );
         }
+
+[Fact] 
+        public void IsStoredScorpionCheep(){
+  
+        //Arrange
+        var database = new CSVDatabase<Cheep>(file);
+        var cheep = new Cheep("MyScorpion42", "LET ME INNNNN", timestamp);
+                
+
+        //Act
+        database.Store(cheep);
+
+
+        //Assert
+        var storedCheeps = database.Read().ToList();
+        Assert.Contains(cheep, storedCheeps);
+
+
+        //Flush
+        File.WriteAllText(file, "Author,Message,Timestamp\n" );
+        }
+
+[Fact] 
+        public void IsStoredStanCheep(){
+  
+        //Arrange
+        var database = new CSVDatabase<Cheep>(file);
+        var cheep = new Cheep("Stanlee", "Genshin 4 life", timestamp);
+                
+
+        //Act
+        database.Store(cheep);
+    
+
+        //Assert
+        var storedCheeps = database.Read().ToList();
+        Assert.Contains(cheep, storedCheeps);
+
+
+        //Flush
+        File.WriteAllText(file, "Author,Message,Timestamp\n" );
+        }
+
+[Fact] 
+        public void IsStoredSayCheep(){
+
+        //Arrange
+        var database = new CSVDatabase<Cheep>(file);
+        var cheep = new Cheep("Sisse", "Jeg kan ikk lide ketchup", timestamp);
+                
+
+        //Act
+        database.Store(cheep);
+
+        //Assert
+        var storedCheeps = database.Read().ToList();
+        Assert.Contains(cheep, storedCheeps);
+
+
+        //Flush
+        File.WriteAllText(file, "Author,Message,Timestamp\n" );
+        }
+
+[Fact] 
+        public void IsStoredDimaCheep(){
+
+        //Arrange
+        var database = new CSVDatabase<Cheep>(file);
+        var cheep = new Cheep("DJ", "pspspspsps", timestamp);
+                
+
+        //Act
+        database.Store(cheep);
+
+
+        //Assert
+        var storedCheeps = database.Read().ToList();
+        Assert.Contains(cheep, storedCheeps);
+
+
+        //Flush
+        File.WriteAllText(file, "Author,Message,Timestamp\n" );
+        }
+
     }
 
