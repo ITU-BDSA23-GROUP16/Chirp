@@ -57,7 +57,7 @@ jobs:
             release_name="App-$tag-linux-x64"
   
             # Build everything
-            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework netcoreapp3.1 --runtime "linux-x64" -c Release -o "$release_name"
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_name"
   
             # Pack files
             tar czvf "${release_name}.tar.gz" "$release_name"
