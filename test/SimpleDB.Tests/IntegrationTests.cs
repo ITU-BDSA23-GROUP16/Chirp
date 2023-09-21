@@ -1,4 +1,3 @@
-
 namespace SimpleDB.Tests;
 
 using Xunit;
@@ -139,7 +138,6 @@ public class StoredIntegrationTest
             File.WriteAllText(file, "Author,Message,Timestamp\n" );
 
         }
-
 
     }
 

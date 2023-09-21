@@ -13,7 +13,7 @@ using DocoptNet;
 using UI;
 
 string file = "chirp_cli_db.csv";
-    
+//Console.WriteLine(file);
 
 IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
 
