@@ -53,15 +53,16 @@ jobs:
         shell: bash
         run: |
             # Define some variables for things we need
+            runtime="linux-x64"
             tag=$(git describe --tags --abbrev=0)
-            release_name="App-$tag-linux-x64"
+            release_name="App-$tag-$runtime"
   
             # Build everything
-            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c Release -o "$release_name"
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "$runtime" -c Release -o "$release_name"
   
             # Pack files
-            tar czvf "${release_name}.tar.gz" "$release_name"
-  
+            7z a -tzip "${release_name}.zip" "./${release_name}/*"
+            
             # Delete output directory
             rm -r "$release_name"
       
