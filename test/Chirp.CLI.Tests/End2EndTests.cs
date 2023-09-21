@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using Xunit;
 
@@ -21,7 +21,7 @@ public class End2EndTests{
         string fstCheep = output.Split("\n")[0];
 
         Assert.StartsWith("ropf", fstCheep, StringComparison.Ordinal);
-        Console.WriteLine(fstCheep);
+        //Debug.WriteLine(fstCheep);
         Assert.EndsWith("Hello World!", fstCheep, StringComparison.Ordinal);
     }
 }
