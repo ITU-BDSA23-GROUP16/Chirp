@@ -37,6 +37,6 @@ public class End2EndTests{
         // fstCheep.Should().StartWith("ropf").And.EndWith("Hello World!");
         Assert.StartsWith("ropf", fstCheep);
         Console.WriteLine(fstCheep);
-        Assert.EndsWith("Hello World!", fstCheep);
+        Assert.EndsWith("Hello, BDSA students!", fstCheep);
     }
 }
