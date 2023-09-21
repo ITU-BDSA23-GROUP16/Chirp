@@ -1,0 +1,74 @@
+name: .NET Release Executables
+
+on:
+  push:
+    tags: 
+    - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+  release:
+    needs: test
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+  
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.400
+      - name: Build
+        shell: bash
+        run: |
+            # Define some variables for things we need
+            runtime="linux-x64"
+            tag=$(git describe --tags --abbrev=0)
+            release_name="App-$tag-$runtime"
+  
+            # Build everything
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "$runtime" -c Release -o "$release_name"
+  
+            # Pack files
+            7z a -tzip "${release_name}.zip" "./${release_name}/*"
+            
+            # Delete output directory
+            rm -r "$release_name"
+      
+      - name: Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: "App*"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

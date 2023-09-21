@@ -10,6 +10,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using SimpleDB;
 using DocoptNet;
+using UI;
 
 string file = "chirp_cli_db.csv";
 //Console.WriteLine(file);
