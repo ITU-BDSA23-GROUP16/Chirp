@@ -12,7 +12,7 @@ using SimpleDB;
 using DocoptNet;
 
 string file = "chirp_cli_db.csv";
-Console.WriteLine(file);
+//Console.WriteLine(file);
 
 IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
 
