@@ -19,4 +19,9 @@
     <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
+  <PropertyGroup>
+  <DebugType>embedded</DebugType>
+  <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
 </Project>
