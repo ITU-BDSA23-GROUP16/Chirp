@@ -80,7 +80,7 @@ jobs:
             
             # Delete output directory
             rm -r "$release_name"
-      - name:
+      - name: Build MacOs
         run: |
             # Define some variables for things we need
             runtime="osx-x64"
@@ -99,7 +99,7 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: "App*.zip"
+          files: "Chirp.CLI*.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
