@@ -15,7 +15,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-//https://learn.microsoft.com/en-us/dotnet/core/deploying/single-file/overview?tabs=cli
   <PropertyGroup>
     <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>

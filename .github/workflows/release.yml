@@ -58,7 +58,7 @@ jobs:
             release_name="chirp-$tag-$runtime"
   
             # Build everything
-            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c SelfContained -o "$release_name"
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c self-contained -o "$release_name"
   
             # Pack files
             7z a -tzip "${release_name}.zip" "$release_name"
@@ -73,7 +73,7 @@ jobs:
             release_name="chirp-$tag-$runtime"
   
             # Build everything
-            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c SelfContained -o "$release_name" 
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c self-contained -o "$release_name" 
   
             # Pack files
             7z a -tzip "${release_name}.zip" "./${release_name}/*"
@@ -88,7 +88,7 @@ jobs:
             release_name="chirp-$tag-$runtime"
   
             # Build everything
-            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c SelfContained -o "$release_name" 
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c self-contained -o "$release_name" 
   
             # Pack files
             7z a -tzip "${release_name}.zip" "$release_name"
