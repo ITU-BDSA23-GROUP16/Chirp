@@ -3,7 +3,7 @@ name: .NET Release Executables
 on:
   push:
     tags: 
-    - '**'
+    - 'v*.*.*'
 
 jobs:
   build:
@@ -49,19 +49,49 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 7.0.400
-      - name: Build
+      - name: Build Linux
         shell: bash
         run: |
             # Define some variables for things we need
             runtime="linux-x64"
             tag=$(git describe --tags --abbrev=0)
-            release_name="App-$tag-$runtime"
+            release_name="chirp-$tag-$runtime"
   
             # Build everything
-            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "$runtime" -c Release -o "$release_name"
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c SelfContained -o "$release_name"
+  
+            # Pack files
+            7z a -tzip "${release_name}.zip" "$release_name"
+            
+            # Delete output directory
+            rm -r "$release_name"
+      - name: Build Windows
+        run: |
+            # Define some variables for things we need
+            runtime="win-x64"
+            tag=$(git describe --tags --abbrev=0)
+            release_name="chirp-$tag-$runtime"
+  
+            # Build everything
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c SelfContained -o "$release_name" 
   
             # Pack files
             7z a -tzip "${release_name}.zip" "./${release_name}/*"
+            
+            # Delete output directory
+            rm -r "$release_name"
+      - name:
+        run: |
+            # Define some variables for things we need
+            runtime="osx-x64"
+            tag=$(git describe --tags --abbrev=0)
+            release_name="chirp-$tag-$runtime"
+  
+            # Build everything
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --runtime "$runtime" -c SelfContained -o "$release_name" 
+  
+            # Pack files
+            7z a -tzip "${release_name}.zip" "$release_name"
             
             # Delete output directory
             rm -r "$release_name"
@@ -69,6 +99,7 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: "App*"
+          files: "App*.zip"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
