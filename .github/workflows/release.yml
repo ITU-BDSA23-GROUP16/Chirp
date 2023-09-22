@@ -99,7 +99,9 @@ jobs:
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          files: "Chirp.CLI*"
+          
+          file_glob: true
+          file: "Chirp.CLI*"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
