@@ -32,13 +32,20 @@ sealed public class CSVDatabase<T> : IDatabaseRepository<T>
         using (var writer = new StreamWriter(stream))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
+
             csv.WriteRecord(record);
             csv.NextRecord();
        
 
         };
-        
+    }
 
-
+    public void Init(){
+        using (var stream = File.Open(file, FileMode.Append))
+        using (var writer = new StreamWriter(stream))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)){
+            csv.WriteHeader<T>();
+            csv.NextRecord();
+        };
     }
 }
