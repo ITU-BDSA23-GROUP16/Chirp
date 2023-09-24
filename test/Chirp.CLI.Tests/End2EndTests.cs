@@ -31,7 +31,7 @@ public class End2EndTests{
         }
 
         Console.WriteLine("This is output --> " + output);
-        string fstCheep = output.Split("\n")[0];
+        string fstCheep = output.Split("\n")[0].Trim();
 
         Console.WriteLine("This is fstCheep --> " + fstCheep);
         // fstCheep.Should().StartWith("ropf").And.EndWith("Hello World!");
