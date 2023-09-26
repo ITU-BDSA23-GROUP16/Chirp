@@ -53,13 +53,20 @@ https://joshclose.github.io/CsvHelper/getting-started/
         using (var writer = new StreamWriter(stream))
         using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
+
             csv.WriteRecord(record);
             csv.NextRecord();
        
 
         };
-        
+    }
 
-
+    public void Init(){
+        using (var stream = File.Open(file, FileMode.Append))
+        using (var writer = new StreamWriter(stream))
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)){
+            csv.WriteHeader<T>();
+            csv.NextRecord();
+        };
     }
 }

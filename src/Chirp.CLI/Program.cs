@@ -12,10 +12,12 @@ using SimpleDB;
 using DocoptNet;
 using UI;
 
-//string file = "";
-//Console.WriteLine(file);
 
-IDatabaseRepository<Cheep> database = CSVDatabase<Cheep>.Instance("chirp_cli_db.csv");
+string file = "chirp_cli_db.csv";
+
+
+IDatabaseRepository<Cheep> database = CSVDatabase<Cheep>.Instance(file);
+
 
 const string usage = @"Chirp CLI version.
 
@@ -39,8 +41,14 @@ var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
 */
 if(arguments["read"].IsTrue){
     //Returns IEnumerable<T>
-    var cheeps = database.Read(10); 
-    UserInterface.PrintCheeps(cheeps);
+    try {
+        var cheeps = database.Read(10); 
+        UserInterface.PrintCheeps(cheeps);
+    }
+
+    catch (System.IO.FileNotFoundException e) {
+        Console.WriteLine("No stored cheeps found :(\nStart cheeping!");
+    }
 
     return 0;
 
@@ -50,6 +58,13 @@ if(arguments["read"].IsTrue){
     var message   = arguments["<message>"].ToString(); 
     
     Cheep cheep = new Cheep(author,message,date);
+    
+    try {
+        database.Read(1); 
+    } catch(System.IO.FileNotFoundException e) {
+        database.Init();
+    }
+
     database.Store(cheep);
     
     return 0;
