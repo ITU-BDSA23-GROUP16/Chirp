@@ -13,10 +13,10 @@ public class UnitTests
     {
         // Arrange
         long UNIX2Convert = 1695054881;
-        string expected   = "09/18/23 16.34.41";
+        string expected = "09/18/23 16:34:41";
 
         // Act
-        string actual     = UserInterface.ConvertTimestampToDate(UNIX2Convert);
+        string actual = UserInterface.ConvertTimestampToDate(UNIX2Convert);
 
         // Assert
         Assert.Equal(expected, actual);
@@ -27,10 +27,10 @@ public class UnitTests
     {
         // Arrange
         long UNIX2Convert = 1660239950;
-        string expected   = "08/11/22 17.45.50";
+        string expected = "08/11/22 17:45:50";
 
         // Act
-        string actual     = UserInterface.ConvertTimestampToDate(UNIX2Convert);
+        string actual = UserInterface.ConvertTimestampToDate(UNIX2Convert);
 
         // Assert
         Assert.Equal(expected, actual);
@@ -40,11 +40,11 @@ public class UnitTests
     public void UNIX_1695054881_2WrongDateTest()
     {
         // Arrange
-        long UNIX2Convert  = 1695054881;
-        string notExpected = "07/10/23 17.25.09";
+        long UNIX2Convert = 1695054881;
+        string notExpected = "07/10/23 17:25:09";
 
         // Act
-        string actual      = UserInterface.ConvertTimestampToDate(UNIX2Convert);
+        string actual = UserInterface.ConvertTimestampToDate(UNIX2Convert);
 
         // Assert
         Assert.NotEqual(notExpected, actual);
@@ -54,11 +54,11 @@ public class UnitTests
     public void UNIX_1695063038_2WrongDateTest()
     {
         // Arrange
-        long UNIX2Convert  = 1695063038;
-        string notExpected = "09/19/23 18.10.55";
+        long UNIX2Convert = 1695063038;
+        string notExpected = "09/19/23 18:10:55";
 
         // Act
-        string actual      = UserInterface.ConvertTimestampToDate(UNIX2Convert);
+        string actual = UserInterface.ConvertTimestampToDate(UNIX2Convert);
 
         // Assert
         Assert.NotEqual(notExpected, actual);
@@ -72,14 +72,14 @@ public class UnitTests
     public void FormatCheep1_2ActualMessageTest()
     {
         // Arrange
-        string author   = "christina";
-        string message  = "I am currently testing this";
-        long date       = 1695107575;
-        string expected = "christina @ 09/19/23 07.12.55: I am currently testing this";
-        Cheep cheep        = new Cheep(author,message,date);
+        string author = "christina";
+        string message = "I am currently testing this";
+        long date = 1695107575;
+        string expected = "christina @ 09/19/23 07:12:55: I am currently testing this";
+        Cheep cheep = new Cheep(author, message, date);
 
         // Act
-        string actual      = UserInterface.GetCheepFormattedMessage(cheep);
+        string actual = UserInterface.GetCheepFormattedMessage(cheep);
 
         // Assert
         Assert.Equal(expected, actual);
@@ -89,14 +89,14 @@ public class UnitTests
     public void FormatCheep2_2ActualMessageTest()
     {
         // Arrange
-        string author   = "christina";
-        string message  = "Merry Christmas!";
-        long date       = 1703445150;
-        string expected = "christina @ 12/24/23 19.12.30: Merry Christmas!";
-        Cheep cheep        = new Cheep(author,message,date);
+        string author = "christina";
+        string message = "Merry Christmas!";
+        long date = 1703445150;
+        string expected = "christina @ 12/24/23 19:12:30: Merry Christmas!";
+        Cheep cheep = new Cheep(author, message, date);
 
         // Act
-        string actual      = UserInterface.GetCheepFormattedMessage(cheep);
+        string actual = UserInterface.GetCheepFormattedMessage(cheep);
 
         // Assert
         Assert.Equal(expected, actual);
@@ -106,14 +106,14 @@ public class UnitTests
     public void FormatCheep_2WrongMessageTest()
     {
         // Arrange
-        string author   = "qwerty";
-        string message  = "I dont know who I am";
-        long date       = 1695107575;
-        string expected = "qwerty @ 09/19/23 07.12.55: I am Qwerty, the one and only";
-        Cheep cheep        = new Cheep(author,message,date);
+        string author = "qwerty";
+        string message = "I dont know who I am";
+        long date = 1695107575;
+        string expected = "qwerty @ 09/19/23 07:12:55: I am Qwerty, the one and only";
+        Cheep cheep = new Cheep(author, message, date);
 
         // Act
-        string actual      = UserInterface.GetCheepFormattedMessage(cheep);
+        string actual = UserInterface.GetCheepFormattedMessage(cheep);
 
         // Assert
         Assert.NotEqual(expected, actual);
