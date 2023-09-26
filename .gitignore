@@ -475,4 +475,19 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
 Chirp.CLI/chirp_cli_db.csv
+
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/.idea.Chirp.iml
+/contentModel.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
