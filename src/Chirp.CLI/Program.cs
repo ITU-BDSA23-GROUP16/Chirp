@@ -12,10 +12,10 @@ using SimpleDB;
 using DocoptNet;
 using UI;
 
-string file = "chirp_cli_db.csv";
+//string file = "";
 //Console.WriteLine(file);
 
-IDatabaseRepository<Cheep> database = new CSVDatabase<Cheep>(file);
+IDatabaseRepository<Cheep> database = CSVDatabase<Cheep>.Instance("chirp_cli_db.csv");
 
 const string usage = @"Chirp CLI version.
 
