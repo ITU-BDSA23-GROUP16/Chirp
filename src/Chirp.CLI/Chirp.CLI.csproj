@@ -15,4 +15,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+  <DebugType>embedded</DebugType>
+  <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
 </Project>
