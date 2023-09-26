@@ -9,15 +9,19 @@ using Xunit;
 ! output is not updated with reader.ReadToEnd()
 */
 
-public class End2EndTests{
+public class End2EndTests
+{
     [Fact]
-    public void Test1(){
+    public void Test1()
+    {
         string dir = Directory.GetCurrentDirectory();
         Console.WriteLine("This is printed --> " + dir);
         string output = "";
-        
-        
-        using (var process = new Process()){
+        File.WriteAllText("../../../../../chirp_cli_db.csv", "Author,Message,Timestamp\nropf,\"Hello, BDSA students!\",1690891760");
+
+
+        using (var process = new Process())
+        {
             process.StartInfo.FileName = "dotnet";
             process.StartInfo.Arguments = "run --project src/Chirp.CLI/Chirp.CLI.csproj read 10";
             process.StartInfo.UseShellExecute = false;

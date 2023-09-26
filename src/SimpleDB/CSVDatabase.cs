@@ -13,60 +13,78 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T>
 
     private static readonly CSVDatabase<T> instance = new CSVDatabase<T>(file);
 
-    static CSVDatabase(){
-        
+    static CSVDatabase()
+    {
+
     }
 
     private CSVDatabase(string file)
     {
         CSVDatabase<T>.file = file;
     }
-   
-    public static CSVDatabase<T> Instance(){
-            return instance;
-        
+
+    public static CSVDatabase<T> Instance()
+    {
+        return instance;
+
     }
-    public static CSVDatabase<T> Instance(string file){
-            CSVDatabase<T>.file=file;
-            return instance;
-       }
-    
-    
-  
+    public static CSVDatabase<T> Instance(string file)
+    {
+        CSVDatabase<T>.file = file;
+        return instance;
+    }
+
+
+
 
 
     /* 
 The following code includes parts from "Csvhelper - getting started" (the link below) to help rewrite our csv reader using records
 https://joshclose.github.io/CsvHelper/getting-started/
 */
-    public IEnumerable<T> Read(int? limit = null){
-        using (var reader = new StreamReader(file))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+    public IEnumerable<T> Read(int? limit = null)
+    {
+        try
+        {
+            using (var reader = new StreamReader(file))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 return csv.GetRecords<T>().ToList();
-            };
-    }
-
-    
-    public void Store(T record){
-        using (var stream = File.Open(file, FileMode.Append))
-        using (var writer = new StreamWriter(stream))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            }
+        }
+        catch (System.IO.FileNotFoundException e)
         {
-
-            csv.WriteRecord(record);
-            csv.NextRecord();
-       
-
-        };
+            Init();
+            return Read(limit);
+        }
     }
 
-    public void Init(){
-        using (var stream = File.Open(file, FileMode.Append))
-        using (var writer = new StreamWriter(stream))
-        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)){
-            csv.WriteHeader<T>();
-            csv.NextRecord();
-        };
+
+    public void Store(T record)
+    {
+        try
+        {
+            using (var stream = File.Open(file, FileMode.Append))
+            using (var writer = new StreamWriter(stream))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+
+                csv.WriteRecord(record);
+                csv.NextRecord();
+
+
+            };
+        }
+        catch (System.IO.FileNotFoundException e)
+        {
+            Init();
+            Store(record);
+        }
+    }
+
+    public void Init()
+    {
+        File.WriteAllText(file, "Author,Message,Timestamp\n");
+
     }
 }
