@@ -12,11 +12,22 @@ using SimpleDB;
 using DocoptNet;
 using UI;
 
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
-string file = "chirp_cli_db.csv";
+//Following taken from the lecture notes
+// Create an HTTP client object
+var baseURL = "http://localhost:5080";
+using HttpClient client = new();
+client.DefaultRequestHeaders.Accept.Clear();
+client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+client.BaseAddress = new Uri(baseURL);
 
-
-IDatabaseRepository<Cheep> database = CSVDatabase<Cheep>.Instance(file);
+// Send an asynchronous HTTP GET request and automatically construct a Cheep object from the
+// JSON object in the body of the response
+//List<Cheep> cheeps = await client.GetFromJsonAsync<List<Cheep>>("cheeps");
+//var cheep = await client.GetFromJsonAsync<Cheep>("cheeps");
 
 
 const string usage = @"Chirp CLI version.
@@ -42,7 +53,9 @@ var arguments = new Docopt().Apply(usage, args, version: "1.0", exit: true)!;
 if (arguments["read"].IsTrue)
 {
     //Returns IEnumerable<T>
-    var cheeps = database.Read(10);
+    //var cheeps = database.Read(10); BEFORE
+    List<Cheep> cheeps = await client.GetFromJsonAsync<List<Cheep>>("cheeps");
+    //From lecturenotes: var cheep = await client.GetFromJsonAsync<Cheep>("cheeps");
     UserInterface.PrintCheeps(cheeps);
 
     return 0;
@@ -56,10 +69,14 @@ else if (arguments["cheep"].IsTrue)
 
     Cheep cheep = new Cheep(author, message, date);
 
-    database.Read(1);
-    database.Store(cheep);
+    //https://stackoverflow.com/a/36626686/15994070
+    var response = await client.PostAsJsonAsync<Cheep>("cheep", cheep);
+    //database.Read(1);
+    //database.Store(cheep);
 
     return 0;
 }
 
 return 1;
+
+
