@@ -28,8 +28,23 @@ public class PublicModel : PageModel
             }
             Cheeps = _service.GetCheeps();
 
+            var cheepsPerPage = 6;
+            var startcheep = ((PageInt-1)*cheepsPerPage);
+            var endCheep = PageInt * cheepsPerPage;
+            if(startcheep > Cheeps.Count) {
+                Cheeps = new List<CheepViewModel>();
+            } 
+            
+            else if (endCheep > Cheeps.Count) {
+            var remCheeps = Cheeps.Count-startcheep;
+            Cheeps = Cheeps.GetRange(startcheep, remCheeps);
 
-            Cheeps = Cheeps.GetRange(((PageInt - 1) * 32), 32);
+            } else {
+                
+                Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
+            }
+            
+
             
         }
         catch (ArgumentException e)
@@ -39,7 +54,7 @@ public class PublicModel : PageModel
                 throw new ArgumentException("Argument is invalid");
             }
         } 
-       return Page();
+        return Page();
         }    
 
 

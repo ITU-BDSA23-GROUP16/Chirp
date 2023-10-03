@@ -13,14 +13,14 @@ public class CheepService : ICheepService
         {
             new CheepViewModel("Helge", "Hello, BDSA students!", UnixTimeStampToDateTimeString(1690892208)),
             new CheepViewModel("Rasmus", "Hej, velkommen til kurset.", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Helge", "Hello, BDSA students!", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Rasmus", "Hej, velkommen til kurset.", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Helge", "Hello, BDSA students!", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Rasmus", "Hej, velkommen til kurset.", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Helge", "Hello, BDSA students!", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Rasmus", "Hej, velkommen til kurset.", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Helge", "Hello, BDSA students!", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Rasmus", "Hej, velkommen til kurset.", UnixTimeStampToDateTimeString(1690895308)),
+            new CheepViewModel("Stan", "SUP DUDES!", UnixTimeStampToDateTimeString(1690892209)),
+            new CheepViewModel("Jeppe", "bhusrkhuisuli", UnixTimeStampToDateTimeString(1690895308)),
+            new CheepViewModel("Dima", "Hi", UnixTimeStampToDateTimeString(1690892208)),
+            new CheepViewModel("Christine", "Det er fredag.", UnixTimeStampToDateTimeString(1690895318)),
+            new CheepViewModel("Barney The Dinosau", "I love you", UnixTimeStampToDateTimeString(1690892208)),
+            new CheepViewModel("Bob", "HEYYYYY.", UnixTimeStampToDateTimeString(1690895308)),
+            new CheepViewModel("Stanley", "Helloooo everyone!", UnixTimeStampToDateTimeString(1690892208)),
+            new CheepViewModel("Jebediah", "What's up!", UnixTimeStampToDateTimeString(1690895308)),
         };
 
     public List<CheepViewModel> GetCheeps()
