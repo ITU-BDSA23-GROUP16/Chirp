@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+  
   <ItemGroup>
      <InternalsVisibleTo Include="..\..\test\Chirp.Razor.Tests\Chirp.Razor.Tests.csproj" />
   </ItemGroup>
