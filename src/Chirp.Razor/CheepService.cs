@@ -25,35 +25,25 @@ namespace Cheep
 
         public CheepService()
         {
-            _cheeps = database.ReturnCheeps<CheepViewModel>();
+            _cheeps = ReturnedCheeps();
         }
-        /*
-                private List<CheepViewModel> parseCheep()
-                {
 
-                    var retrievedList = database.ReturnRow();
-                    Console.WriteLine(retrievedList.Count);
-                    var returnList = new List<CheepViewModel>();
-                    string[] variables;
-                    foreach (String str in retrievedList)
-                    {
-                        Regex CSVParser = new Regex(",(?=(?:[^\']*\'[^\']*\')*(?![^\']*\'))");
 
-                        //Separating columns to array
-                        Console.WriteLine("hi--" + str);
-                        variables = CSVParser.Split(str);
-                        foreach (var strong in variables)
-                        {
-                            Console.WriteLine("bye-- " + strong);
-                        }
-                        //variables = str.Split(",");
-                        returnList.Add(new CheepViewModel(variables[0], variables[1], variables[2]));
+        public List<CheepViewModel> ReturnedCheeps()
+        {
+            var newCheepList = new List<CheepViewModel>();
+            var retrievedList = database.CheepsFromDB<CheepViewModel>();
+            string newTime = null;
 
-                    }
+            for (int i = 0; i < retrievedList.Count; i++)
+            {
+                newTime = UnixTimeStampToDateTimeString2String(retrievedList[i].Timestamp);
+                newCheepList.Add(new CheepViewModel(retrievedList[i].Author, retrievedList[i].Message, newTime));
+            }
 
-                    return returnList;
-                }
-                */
+            return newCheepList;
+
+        }
 
 
         public List<CheepViewModel> GetCheeps()
@@ -73,6 +63,15 @@ namespace Cheep
             // Unix timestamp is seconds past epoch
             DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dateTime = dateTime.AddSeconds(unixTimeStamp);
+            return dateTime.ToString("MM/dd/yy H:mm:ss");
+        }
+
+        private static string UnixTimeStampToDateTimeString2String(string unixTimeStamp)
+        {
+            var string2double = Convert.ToDouble(unixTimeStamp);
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(string2double);
             return dateTime.ToString("MM/dd/yy H:mm:ss");
         }
     }
