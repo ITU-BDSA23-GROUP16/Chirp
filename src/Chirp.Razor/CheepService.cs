@@ -32,7 +32,7 @@ namespace Cheep
         public List<CheepViewModel> ReturnedCheeps()
         {
             var newCheepList = new List<CheepViewModel>();
-            var retrievedList = database.CheepsFromDB<CheepViewModel>();
+            var retrievedList = database.CheepReturn<CheepViewModel>();
             string newTime = null;
 
             for (int i = 0; i < retrievedList.Count; i++)
