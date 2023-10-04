@@ -1,4 +1,7 @@
 using DB;
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
 public record CheepViewModel(string Author, string Message, string Timestamp);
 
 
@@ -22,25 +25,35 @@ namespace Cheep
 
         public CheepService()
         {
-            _cheeps = parseCheep();
+            _cheeps = database.ReturnCheeps<CheepViewModel>();
         }
+        /*
+                private List<CheepViewModel> parseCheep()
+                {
 
-        private List<CheepViewModel> parseCheep()
-        {
+                    var retrievedList = database.ReturnRow();
+                    Console.WriteLine(retrievedList.Count);
+                    var returnList = new List<CheepViewModel>();
+                    string[] variables;
+                    foreach (String str in retrievedList)
+                    {
+                        Regex CSVParser = new Regex(",(?=(?:[^\']*\'[^\']*\')*(?![^\']*\'))");
 
-            var retrievedList = database.ReturnRow();
-            Console.WriteLine(retrievedList.Count);
-            var returnList = new List<CheepViewModel>();
-            string[] variables;
-            foreach (String str in retrievedList)
-            {
-                variables = str.Split(",");
-                returnList.Add(new CheepViewModel(variables[0], variables[1], variables[2]));
+                        //Separating columns to array
+                        Console.WriteLine("hi--" + str);
+                        variables = CSVParser.Split(str);
+                        foreach (var strong in variables)
+                        {
+                            Console.WriteLine("bye-- " + strong);
+                        }
+                        //variables = str.Split(",");
+                        returnList.Add(new CheepViewModel(variables[0], variables[1], variables[2]));
 
-            }
+                    }
 
-            return returnList;
-        }
+                    return returnList;
+                }
+                */
 
 
         public List<CheepViewModel> GetCheeps()
