@@ -14,20 +14,19 @@ public class DBFacade
 {
     
     private static string customDelimiter = "SPLITONTHISSTRINGSPECIFICALLY";
+    private static string sqlDBFilePath = "/tmp/chirp.db";
+     //Query
+    private static string sqlQuery = @"SELECT message.*, user.username FROM message JOIN user ON message.author_id = user.user_id ORDER BY message.pub_date DESC;";
 
-    //Eveything we put in <T> is what se work with in List<T>
-    public List<T> CheepsFromDB<T>() //Needs refactoring!
-    {
-        //Users temporary database
-        //Calling dotnet run will store the database under users temporary directiory tmp, under name chirp.db
+
+     //The method is to create the connection, that can be used in the CheepsFromDB
+    private static IDbCommand createConnection(){
+
+         //Calling dotnet run will store the database under users temporary directiory tmp, under name chirp.db
         if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("CHIRPDBPATH")))
             Console.WriteLine(Environment.GetEnvironmentVariable("CHIRPDBPATH"));
 
-        var sqlDBFilePath = "/tmp/chirp.db";
-
-        //Query
-        var sqlQuery = @"SELECT message.*, user.username FROM message JOIN user ON message.author_id = user.user_id ORDER BY message.pub_date DESC;";
-
+       
         //Creating SQL Connection
         var connection = new SqliteConnection($"Data Source={sqlDBFilePath}");
         using (connection) ;
@@ -39,8 +38,16 @@ public class DBFacade
         //Setting the command to be our query
         command.CommandText = sqlQuery;
 
-        //Creating a SQL data reader
-        using var reader = command.ExecuteReader();
+        return command;
+    }
+
+    //Eveything we put in <T> is what se work with in List<T>
+    public List<T> CheepsFromDB<T>() //Needs refactoring!
+    {
+      
+
+        //Creating a SQL data reader (command.ExecuteReader())
+        using var reader = createConnection().ExecuteReader();
 
         //Create list to be added to and be return at  method call
         var returnList = new List<T>();
@@ -82,5 +89,7 @@ public class DBFacade
         return returnList;
 
     }
+  
+
 
 }
