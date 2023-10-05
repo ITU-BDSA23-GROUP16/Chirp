@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class BloggingContext : DbContext
 {
-    public DbSet<Blog> Blogs { get; set; }
-    public DbSet<Post> Posts { get; set; }
+    public DbSet<Author> author { get; set; }
+    public DbSet<Cheep> cheep { get; set; }
 
     public string DbPath { get; }
 
@@ -22,20 +22,28 @@ public class BloggingContext : DbContext
         => options.UseSqlite($"Data Source={DbPath}");
 }
 
-public class Blog
-{
-    public int BlogId { get; set; }
-    public string Url { get; set; }
 
-    public List<Post> Posts { get; } = new();
+public class Cheep
+{
+    public string Text { get; set; }
+
+    public DateTime Time { get; set; }
+
+    public Author? Author {get; set}
+
+
+
 }
 
-public class Post
+//https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many
+//The link above is a Microsoft documentation about one-to-many relationships in EF Core that has been used in line 45
+public class Author
 {
-    public int PostId { get; set; }
-    public string Title { get; set; }
-    public string Content { get; set; }
+    public string Email { get; set; }
 
-    public int BlogId { get; set; }
-    public Blog Blog { get; set; }
+    public string Name { get; set; }
+
+     public ICollection<Cheep> cheep {get; set} = new List<Cheep>()
+ 
+
 }
