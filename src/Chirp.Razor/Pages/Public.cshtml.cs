@@ -15,7 +15,52 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
-        Cheeps = _service.GetCheeps();
+        try
+        {
+            int PageInt;
+            if (string.IsNullOrEmpty(PageNumber))
+            {
+                PageInt = 1;
+            }
+            else
+            {
+                PageInt = Int32.Parse(PageNumber);
+            }
+            Cheeps = _service.GetCheeps();
+
+            var cheepsPerPage = 6;
+            var startcheep = ((PageInt-1)*cheepsPerPage);
+            var endCheep = PageInt * cheepsPerPage;
+            if(startcheep > Cheeps.Count) {
+                Cheeps = new List<CheepViewModel>();
+            } 
+            
+            else if (endCheep > Cheeps.Count) {
+            var remCheeps = Cheeps.Count-startcheep;
+            Cheeps = Cheeps.GetRange(startcheep, remCheeps);
+
+            } else {
+                
+                Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
+            }
+            
+
+            
+        }
+        catch (ArgumentException e)
+        {
+            if (Cheeps.Count > _service.GetCheeps().Count)
+            {
+                throw new ArgumentException("Argument is invalid");
+            }
+        } 
         return Page();
+        }    
+
+
+     [BindProperty(SupportsGet = true)]
+    public string? PageNumber { get; set; }
+       
     }
-}
+
+ 

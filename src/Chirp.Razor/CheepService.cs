@@ -25,8 +25,10 @@ namespace Cheep
 
         public CheepService()
         {
+
             _cheeps = ReturnedCheeps();
         }
+
 
 
         public List<CheepViewModel> ReturnedCheeps()
