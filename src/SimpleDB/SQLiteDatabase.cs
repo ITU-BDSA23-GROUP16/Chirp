@@ -1,7 +1,7 @@
 
 // https://joshclose.github.io/CsvHelper/getting-started/
 
-
+/*
 using CsvHelper;
 using Microsoft.Data.Sqlite;
 using System.Globalization;
@@ -46,7 +46,7 @@ public sealed class SQLiteDatabase<T> : IDatabaseRepository<T>
     /* 
 The following code includes parts from "Csvhelper - getting started" (the link below) to help rewrite our csv reader using records
 https://joshclose.github.io/CsvHelper/getting-started/
-*/
+*//*
     public IEnumerable<T> Read(int? limit = null)
     {
         try
@@ -92,4 +92,4 @@ https://joshclose.github.io/CsvHelper/getting-started/
         File.WriteAllText(file, "Author,Message,Timestamp\n");
 
     }
-}
+}*/
