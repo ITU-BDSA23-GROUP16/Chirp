@@ -28,7 +28,7 @@ public class PublicModel : PageModel
             }
             Cheeps = _service.GetCheeps();
 
-            var cheepsPerPage = 6;
+            var cheepsPerPage = 32;
             var startcheep = ((PageInt-1)*cheepsPerPage);
             var endCheep = PageInt * cheepsPerPage;
             if(startcheep > Cheeps.Count) {
@@ -55,6 +55,12 @@ public class PublicModel : PageModel
             }
         } 
         return Page();
+
+        var pageQuery = Request.Query["page"].ToString();
+        var hasPage = int.TryParse(Request.Query["page"], out var page);
+        page = Math.Max(hasPage ? page : 1, 1);
+
+
         }    
 
 
