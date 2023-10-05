@@ -1,4 +1,9 @@
+using DB;
+using System;
+using System.IO;
+using System.Text.RegularExpressions;
 public record CheepViewModel(string Author, string Message, string Timestamp);
+
 
 public interface ICheepService
 {
@@ -6,40 +11,72 @@ public interface ICheepService
     public List<CheepViewModel> GetCheepsFromAuthor(string author);
 }
 
-public class CheepService : ICheepService
+namespace Cheep
 {
-    // These would normally be loaded from a database for example
-    private static readonly List<CheepViewModel> _cheeps = new()
+    public class CheepService : ICheepService
+    {
+        DBFacade database = new DBFacade();
+
+        // These would normally be loaded from a database for example
+        //Need author var, message var, time
+
+
+        private readonly List<CheepViewModel> _cheeps;
+
+        public CheepService()
         {
-            new CheepViewModel("Helge", "Hello, BDSA students!", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Rasmus", "Hej, velkommen til kurset.", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Stan", "SUP DUDES!", UnixTimeStampToDateTimeString(1690892209)),
-            new CheepViewModel("Jeppe", "bhusrkhuisuli", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Dima", "Hi", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Christine", "Det er fredag.", UnixTimeStampToDateTimeString(1690895318)),
-            new CheepViewModel("Barney The Dinosau", "I love you", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Bob", "HEYYYYY.", UnixTimeStampToDateTimeString(1690895308)),
-            new CheepViewModel("Stanley", "Helloooo everyone!", UnixTimeStampToDateTimeString(1690892208)),
-            new CheepViewModel("Jebediah", "What's up!", UnixTimeStampToDateTimeString(1690895308)),
-        };
 
-    public List<CheepViewModel> GetCheeps()
-    {
-        return _cheeps;
+            _cheeps = ReturnedCheeps();
+        }
+
+
+
+        public List<CheepViewModel> ReturnedCheeps()
+        {
+            var newCheepList = new List<CheepViewModel>();
+            var retrievedList = database.CheepReturn<CheepViewModel>();
+            string newTime = null;
+
+            for (int i = 0; i < retrievedList.Count; i++)
+            {
+                newTime = UnixTimeStampToDateTimeString2String(retrievedList[i].Timestamp);
+                newCheepList.Add(new CheepViewModel(retrievedList[i].Author, retrievedList[i].Message, newTime));
+            }
+
+            return newCheepList;
+
+        }
+
+
+        public List<CheepViewModel> GetCheeps()
+        {
+            return _cheeps;
+        }
+
+
+        public List<CheepViewModel> GetCheepsFromAuthor(string author)
+        {
+            // filter by the provided author name
+            return _cheeps.Where(x => x.Author == author).ToList();
+        }
+
+        private static string UnixTimeStampToDateTimeString(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(unixTimeStamp);
+            return dateTime.ToString("MM/dd/yy H:mm:ss");
+        }
+
+        private static string UnixTimeStampToDateTimeString2String(string unixTimeStamp)
+        {
+            var string2double = Convert.ToDouble(unixTimeStamp);
+            // Unix timestamp is seconds past epoch
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dateTime = dateTime.AddSeconds(string2double);
+            return dateTime.ToString("MM/dd/yy H:mm:ss");
+        }
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author)
-    {
-        // filter by the provided author name
-        return _cheeps.Where(x => x.Author == author).ToList();
-    }
-
-    private static string UnixTimeStampToDateTimeString(double unixTimeStamp)
-    {
-        // Unix timestamp is seconds past epoch
-        DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-        dateTime = dateTime.AddSeconds(unixTimeStamp);
-        return dateTime.ToString("MM/dd/yy H:mm:ss");
-    }
 
 }
