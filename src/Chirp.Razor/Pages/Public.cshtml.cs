@@ -28,7 +28,7 @@ public class PublicModel : PageModel
             }
             Cheeps = _service.GetCheeps();
 
-            var cheepsPerPage = 6;
+            var cheepsPerPage = 32;
             var startcheep = ((PageInt-1)*cheepsPerPage);
             var endCheep = PageInt * cheepsPerPage;
             if(startcheep > Cheeps.Count) {
