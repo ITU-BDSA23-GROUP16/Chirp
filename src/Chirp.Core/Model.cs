@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 
 
+
 //dotnet tool install --global dotnet-ef
+//dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 7.0.11 (for using the UseSqlite)
 
 public class ChirpContext : DbContext
 {
@@ -24,7 +26,8 @@ public class ChirpContext : DbContext
 
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
-    //dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 7.0.11 (for using the UseSqlite)
+    //create the migration that construct the sqlite by using the UseSqlite, which means that it understands Sqlite
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 }
