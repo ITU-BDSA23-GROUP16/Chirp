@@ -2,8 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 
+//use the following commands to update your database:
+/*dotnet tool install --global dotnet-ef
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet ef migrations add InitialCreate
+dotnet ef database update */
 
-//dotnet tool install --global dotnet-ef
 
 public class ChirpContext : DbContext
 {
