@@ -9,6 +9,8 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update */
 
 
+
+
 public class ChirpContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
@@ -28,7 +30,8 @@ public class ChirpContext : DbContext
 
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
-    //dotnet add package Microsoft.EntityFrameworkCore.Sqlite --version 7.0.11 (for using the UseSqlite)
+    //create the migration that construct the sqlite by using the UseSqlite, which means that it understands Sqlite
+
     protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 }

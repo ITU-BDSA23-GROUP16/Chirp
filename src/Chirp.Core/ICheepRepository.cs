@@ -1,21 +1,11 @@
 
-public interface ICheepRepository {
-
-IEnumerable<RetrievedCheep> getCheeps();
-
-/*
-IEnumerable<RetrievedCheep> getbyID();
+public record RetrievedCheep(Author Author, string Message, DateTime time);
 
 
-RetrievedCheep getText(string text);
+public interface ICheepRepository{
+IEnumerable<RetrievedCheep>GetCheeps();
 
-RetrievedCheep getTimeStamp(DateTime time);
 
-RetrievedCheep getAuthor(Author author);
-
-} */
 
 
 }
-public record RetrievedCheep(Author Author, string Message, DateTime Time);
-
