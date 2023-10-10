@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chirp.CLI", "src\Chirp.CLI\Chirp.CLI.csproj", "{7A0CDB17-BD76-4924-97D2-4DB1FB056103}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3425D06A-C878-48B8-BBCA-25F39F116A13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Razor.Tests", "test\Chirp.Razor.Tests\Chirp.Razor.Tests.csproj", "{42859A22-FD61-40C6-9823-1F1DF9D3D70B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{64577A93-1A2A-4C62-A749-6BB71E0B89E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Razor", "src\Chirp.Razor\Chirp.Razor.csproj", "{79A25AB5-7F7B-443E-862D-6CF38BC86755}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7A0CDB17-BD76-4924-97D2-4DB1FB056103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A0CDB17-BD76-4924-97D2-4DB1FB056103}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A0CDB17-BD76-4924-97D2-4DB1FB056103}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A0CDB17-BD76-4924-97D2-4DB1FB056103}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -35,6 +33,18 @@ Global
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B}.Release|x64.Build.0 = Release|Any CPU
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B}.Release|x86.ActiveCfg = Release|Any CPU
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B}.Release|x86.Build.0 = Release|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Debug|x64.Build.0 = Debug|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Debug|x86.Build.0 = Debug|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Release|x64.ActiveCfg = Release|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Release|x64.Build.0 = Release|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Release|x86.ActiveCfg = Release|Any CPU
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +54,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{42859A22-FD61-40C6-9823-1F1DF9D3D70B} = {3425D06A-C878-48B8-BBCA-25F39F116A13}
+		{79A25AB5-7F7B-443E-862D-6CF38BC86755} = {64577A93-1A2A-4C62-A749-6BB71E0B89E6}
 	EndGlobalSection
 EndGlobal
