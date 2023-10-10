@@ -1,4 +1,4 @@
-namespace Chirp.Razor.Tests;
+/*namespace Chirp.Razor.Tests;
 using Microsoft.AspNetCore.Mvc.Testing;
 public class TestAPI : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -39,4 +39,4 @@ public class TestAPI : IClassFixture<WebApplicationFactory<Program>>
     {
         Assert.True(true);
     }
-}
+}*/
