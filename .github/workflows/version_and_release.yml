@@ -1,0 +1,132 @@
+name: .NET Release Executables
+
+on:
+  push:
+    branches: 
+    - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+  release:
+    needs: test
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+  
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+      - name: Build Linux
+        shell: bash
+        run: |
+            # Define some variables for things we need
+            tag=$(git describe --tags --abbrev=0)
+            release_name="chirp-$tag-linux-x64"
+  
+            # Build everything
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
+  
+            # Pack files
+            7z a -tzip "${release_name}.zip" "$release_name"
+            
+            # Delete output directory
+            rm -r "$release_name"
+      - name: Build Windows
+        run: |
+            # Define some variables for things we need
+            tag=$(git describe --tags --abbrev=0)
+            release_name="chirp-$tag-win-x64"
+  
+            # Build everything
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "win-x64" -c --self-contained -o "$release_name"
+  
+            # Pack files
+            7z a -tzip "${release_name}.zip" "./${release_name}/*"
+            
+            # Delete output directory
+            rm -r "$release_name"
+      - name: Build MacOs
+        run: |
+            # Define some variables for things we need
+            tag=$(git describe --tags --abbrev=0)
+            release_name="chirp-$tag-osx-x64"
+  
+            # Build everything
+            dotnet publish src/Chirp.CLI/Chirp.CLI.csproj --framework net7.0 --runtime "osx-x64" -c --self-contained -o "$release_name"
+  
+            # Pack files
+            7z a -tzip "${release_name}.zip" "$release_name"
+            
+            # Delete output directory
+            rm -r "$release_name"
+      
+      - name: Install Versionize
+        run: dotnet tool install --global Versionize
+        
+      - name: Versioning
+        id: versionize
+        run: versionize --changelog-all --skip-dirty
+        continue-on-error: true
+      
+      - name: No release required
+        if: steps.versionize.outcome != 'success'
+        run: echo "Skipping Release. No release required."
+      
+      - name: "Create release"
+      if: steps.versionize.outcome == 'success'
+      uses: "actions/github-script@v5"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+        script: |
+          try {
+            const tags_url = context.payload.repository.tags_url + "?per_page=1"
+            const result = await github.request(tags_url)
+            const current_tag = result.data[0].name
+            await github.rest.repos.createRelease({
+              draft: false,
+              generate_release_notes: true,
+              name: current_tag,
+              owner: context.repo.owner,
+              prerelease: false,
+              repo: context.repo.repo,
+              tag_name: current_tag,
+            });
+          } catch (error) {
+            core.setFailed(error.message);
+          }
+
