@@ -39,6 +39,18 @@ public class PublicModel : PageModel
             else
             {
 
+            var cheepsPerPage = 32;
+            var startcheep = ((PageInt-1)*cheepsPerPage);
+            var endCheep = PageInt * cheepsPerPage;
+            if(startcheep > Cheeps.Count) {
+                Cheeps = new List<CheepViewModel>();
+            } 
+            
+            else if (endCheep > Cheeps.Count) {
+            var remCheeps = Cheeps.Count-startcheep;
+            Cheeps = Cheeps.GetRange(startcheep, remCheeps);
+
+            } else {
                 Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
             }
 
@@ -53,6 +65,13 @@ public class PublicModel : PageModel
             }
         }
         return Page();
+
+        var pageQuery = Request.Query["page"].ToString();
+        var hasPage = int.TryParse(Request.Query["page"], out var page);
+        page = Math.Max(hasPage ? page : 1, 1);
+
+
+        }    
     }
 
 
