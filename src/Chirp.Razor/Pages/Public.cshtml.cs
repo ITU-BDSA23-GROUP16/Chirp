@@ -15,37 +15,35 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
+        bool hasPage = int.TryParse(Request.Query["page"], out var page);
+        var PageInt = Math.Max(hasPage ? page : 1, 1);
+
         try
         {
-            int PageInt;
-            if (string.IsNullOrEmpty(PageNumber))
+            Cheeps = _service.GetCheeps();
+            var cheepsPerPage = 32;
+            var startcheep = ((PageInt-1)*cheepsPerPage);
+
+            var endCheep = PageInt * cheepsPerPage;
+            if (startcheep > Cheeps.Count)
             {
-                PageInt = 1;
+                Cheeps = new List<CheepViewModel>();
+            }
+
+            else if (endCheep > Cheeps.Count)
+            {
+                var remnCheeps = Cheeps.Count - startcheep;
+                Cheeps = Cheeps.GetRange(startcheep, remnCheeps);
+
             }
             else
             {
-                PageInt = Int32.Parse(PageNumber);
-            }
-            Cheeps = _service.GetCheeps();
 
-            var cheepsPerPage = 32;
-            var startcheep = ((PageInt-1)*cheepsPerPage);
-            var endCheep = PageInt * cheepsPerPage;
-            if(startcheep > Cheeps.Count) {
-                Cheeps = new List<CheepViewModel>();
-            } 
-            
-            else if (endCheep > Cheeps.Count) {
-            var remCheeps = Cheeps.Count-startcheep;
-            Cheeps = Cheeps.GetRange(startcheep, remCheeps);
-
-            } else {
-                
                 Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
             }
-            
 
-            
+
+
         }
         catch (ArgumentException e)
         {
@@ -53,14 +51,11 @@ public class PublicModel : PageModel
             {
                 throw new ArgumentException("Argument is invalid");
             }
-        } 
+        }
         return Page();
-        }    
-
-
-     [BindProperty(SupportsGet = true)]
-    public string? PageNumber { get; set; }
-       
     }
 
- 
+
+
+}
+
