@@ -3,7 +3,7 @@ using System.Linq;
 
 //This line creates a new instance of the ChirpContext, which is a database context class for Entity Framework Core. 
 //It establishes a connection to the database specified in your context's configuration
-using var db = new ChirpContext();
+using var db = new ChirpDBContext();
 
 // Note: This sample requires the database to be created before running.
 Console.WriteLine($"Database path: {db.DbPath}.");

@@ -11,7 +11,7 @@ dotnet ef database update */
 
 
 
-public class ChirpContext : DbContext
+public class ChirpDBContext : DbContext
 {
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
@@ -20,7 +20,7 @@ public class ChirpContext : DbContext
 
     public string DbPath { get; }
 
-    public ChirpContext()
+    public ChirpDBContext()
     {
         
         var folder = Environment.SpecialFolder.LocalApplicationData;
@@ -66,7 +66,7 @@ public class Author
 
     public string Name { get; set; }
 
-     public ICollection<Cheep> cheep {get; set;} = new List<Cheep>();
+    public ICollection<Cheep> cheep {get; set;} = new List<Cheep>();
  
 
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EFGetStarted.Migrations
 {
-    [DbContext(typeof(ChirpContext))]
+    [DbContext(typeof(ChirpDBContext))]
     [Migration("20231010100659_InitialCreate")]
     partial class InitialCreate
     {
