@@ -1,3 +1,4 @@
+using Cheep;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,3 +27,4 @@ app.UseRouting();
 app.MapRazorPages();
 
 app.Run();
+public partial class Program { }
