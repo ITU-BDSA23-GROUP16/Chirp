@@ -1,8 +1,11 @@
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<ICheepService, CheepService>();
+/*builder.Services.AddDbContext<ChirpDBContext>();
+builder.Services.AddTransient<ICheepRepository, CheepRepository>(); */
 
 
 var app = builder.Build();
@@ -15,6 +18,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -23,3 +27,4 @@ app.UseRouting();
 app.MapRazorPages();
 
 app.Run();
+public partial class Program { }
