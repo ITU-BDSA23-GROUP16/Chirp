@@ -15,49 +15,7 @@ public class PublicModel : PageModel
 
     public ActionResult OnGet()
     {
-        bool hasPage = int.TryParse(Request.Query["page"], out var page);
-        var PageInt = Math.Max(hasPage ? page : 1, 1);
-
-        try
-        {
-            Cheeps = _service.GetCheeps();
-            var cheepsPerPage = 32;
-            var startcheep = ((PageInt - 1) * cheepsPerPage);
-
-            var endCheep = PageInt * cheepsPerPage;
-            if (startcheep > Cheeps.Count)
-            {
-                Cheeps = new List<CheepViewModel>();
-            }
-
-            else if (endCheep > Cheeps.Count)
-            {
-                var remnCheeps = Cheeps.Count - startcheep;
-                Cheeps = Cheeps.GetRange(startcheep, remnCheeps);
-
-            }
-            else
-            {
-                Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
-            }
-
-
-
-        }
-        catch (ArgumentException e)
-        {
-            if (Cheeps.Count > _service.GetCheeps().Count)
-            {
-                throw new ArgumentException("Argument is invalid");
-            }
-        }
+        Cheeps = _service.GetCheeps();
         return Page();
-
-
-
     }
-
-
-
 }
-
