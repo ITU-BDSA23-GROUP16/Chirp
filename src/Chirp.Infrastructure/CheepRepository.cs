@@ -2,30 +2,30 @@ namespace Chirp.Infrastructure;
 public class CheepRepository : ICheepRepository
 {
 
-   private readonly ChirpContext _context;
+   private readonly ChirpDBContext _context;
 
-
-   public CheepRepository(ChirpContext context)
+   public CheepRepository(ChirpDBContext context)
    {
       _context = context;
    }
 
-   public async IEnumerable<CheepListDto> GetCheeps(int pageSize = 32, int page = 0) =>
-     {
-       await _context.Cheeps
-       .OrderByDesecnding(c => c.Time)
-       .Skip(page* pageSize)
-       .Take(pakesixe)
-       .Select(c => new CheepListDto(c.Message, c.Author.Name, c.PubDate )
-       .toListAsync()
-}
+   //ChirpDBContext and repos
+   public IEnumerable<CheepDTO> GetCheeps(int pageSize = 32, int page = 0)
+   {
+      return _context.Cheeps
+       .OrderByDescending(c => c.TimeStamp)
+       .Skip(page * pageSize)
+       .Take(pageSize)
+       .Select(c => new CheepDTO(c.Text, c.Author.Name, c.TimeStamp));
 
-public async IEnumerable<CheepListDto> GetCheepsAuthor(int pageSize = 32, int page = 0) =>
-     {
-   await _context.Cheeps
-   .OrderByDesecnding(c => c.Author)
-   .Skip(page* pageSize)
-   .Take(pakesixe)
-   .Select(c => new CheepListDto(c.Message, c.Author.Name, c.PubDate)
-   .toListAsync()
+   }
+
+   public IEnumerable<CheepDTO> GetAuthor(int pageSize = 32, int page = 0)
+   {
+      return _context.Cheeps
+      .OrderByDescending(c => c.Author)
+      .Skip(page * pageSize)
+      .Take(pageSize)
+      .Select(c => new CheepDTO(c.Text, c.Author.Name, c.TimeStamp));
+   }
 }

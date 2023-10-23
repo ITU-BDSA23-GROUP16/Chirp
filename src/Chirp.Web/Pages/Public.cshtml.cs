@@ -5,52 +5,55 @@ namespace Chirp.Razor.Pages;
 
 public class PublicModel : PageModel
 {
-    private readonly ICheepService _service;
-    public List<CheepViewModel> Cheeps { get; set; }
+    private readonly ICheepRepository _repository;
+    public IEnumerable<CheepDTO> Cheeps { get; set; }
 
-    public PublicModel(ICheepService service)
+    public PublicModel(ICheepRepository repository)
     {
-        _service = service;
+        _repository = repository;
     }
 
     public ActionResult OnGet()
     {
         bool hasPage = int.TryParse(Request.Query["page"], out var page);
         var PageInt = Math.Max(hasPage ? page : 1, 1);
+        var cheepsPerPage = 32;
+        Cheeps = _repository.GetCheeps(cheepsPerPage, PageInt);
+        /*
+                try
+                {
 
-        try
-        {
-            Cheeps = _service.GetCheeps();
-            var cheepsPerPage = 32;
-            var startcheep = ((PageInt - 1) * cheepsPerPage);
-
-            var endCheep = PageInt * cheepsPerPage;
-            if (startcheep > Cheeps.Count)
-            {
-                Cheeps = new List<CheepViewModel>();
-            }
-
-            else if (endCheep > Cheeps.Count)
-            {
-                var remnCheeps = Cheeps.Count - startcheep;
-                Cheeps = Cheeps.GetRange(startcheep, remnCheeps);
-
-            }
-            else
-            {
-                Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
-            }
+                    //var startcheep = (PageInt - 1) * cheepsPerPage;
 
 
+                                var endCheep = PageInt * cheepsPerPage;
+                                if (startcheep > Cheeps.Count)
+                                {
+                                    Cheeps = new List<CheepViewModel>();
+                                }
 
-        }
-        catch (ArgumentException e)
-        {
-            if (Cheeps.Count > _service.GetCheeps().Count)
-            {
-                throw new ArgumentException("Argument is invalid");
-            }
-        }
+                                else if (endCheep > Cheeps.Count)
+                                {
+                                    var remnCheeps = Cheeps.Count - startcheep;
+                                    Cheeps = Cheeps.GetRange(startcheep, remnCheeps);
+
+                                }
+                                else
+                                {
+                                    Cheeps = Cheeps.GetRange(startcheep, cheepsPerPage);
+                                }
+
+
+
+                }
+                catch (ArgumentException e)
+                {
+                    if (Cheeps.Count > _repository.GetCheeps(cheepsPerPage, PageInt).Count)
+                    {
+                        throw new ArgumentException("Argument is invalid");
+                    }
+                }
+                */
         return Page();
 
 

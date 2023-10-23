@@ -1,14 +1,27 @@
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<ICheepService, CheepService>();
-/*builder.Services.AddDbContext<ChirpDBContext>();
-builder.Services.AddTransient<ICheepRepository, CheepRepository>(); */
+//builder.Services.AddSingleton<ICheepService, CheepService>();
+//Read about GetConnectionString
+builder.Services.AddDbContext<ChirpDBContext>();
+builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 
 
 var app = builder.Build();
+
+// Seed database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ChirpDBContext>();
+
+    //Then you can use the context to seed the database for example
+    DbInitializer.SeedDatabase(context);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

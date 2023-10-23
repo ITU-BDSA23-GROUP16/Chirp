@@ -1,10 +1,12 @@
 namespace Chirp.Core;
-public record CheepDTO(Author Author, string Message, DateTime time);
+public record CheepDTO(string Author, string Message, DateTime TimeStamp);
 
 public interface ICheepRepository
 {
-    Task<IEnumerable<CheepListDto>> GetCheeps {int pageSize = 32, int page = 0};
-    Task<IEnumerable<CheepListDto>> GetAuthor { String Author, int pageSize = 32, int page = 0};
-    Task Create(CheepDTO cheep);
+    IEnumerable<CheepDTO> GetCheeps(int pageSize, int page);
+    IEnumerable<CheepDTO> GetAuthor(int pageSize, int page);
+
+    
+    //Task Create(CheepDTO cheep);
 
 }
