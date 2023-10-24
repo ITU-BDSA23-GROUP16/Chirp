@@ -6,7 +6,7 @@ namespace Chirp.Infrastructure.Tests;
 public class AuthorRepTest{
 //the infrastructurtest needs a reference from infrasturctor project
 [Fact]
-public async void Adds_author_to_databse(){
+public async void AddAuthor(){
 //Arrange
 using var connection = new SqliteConnection("Filename=:memory:");
 //run the test and then kill the test that what connection.open do connection.Open(); ChirpDBContext doesn't take builder.Options
@@ -16,14 +16,14 @@ var repository = new AuthorRepository(context);
 //ChirpRepository
 
 //Act
-var author = new AuthorDTO() {Name = "Saynab", Email = "saynab@jjj"};
+var author = new AuthorDTO() {Name = "Saynab", Email = "saynab@jjj", cheeps = new List<CheepDTO>() };
 await repository.Create(author);
 //Assert
 var created = await context.Authors.SingleOrDefaultAsync(c =>c.Name == "Saynab"); 
 Assert.NotNull(created);
 }
 [Fact]
-public async void Create(){
+public async void CreateAuthor(){
 //Arrange
 using var connection = new SqliteConnection("Filename=:memory:");
 //run the test and then kill the test that what connection.open do connection.Open();
