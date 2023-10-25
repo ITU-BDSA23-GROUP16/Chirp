@@ -16,7 +16,7 @@ public class CheepRepository : ICheepRepository
        .OrderByDescending(c => c.TimeStamp)
        .Skip(page * pageSize)
        .Take(pageSize)
-       .Select(c => new CheepDTO(c.Text, c.Author.Name, c.TimeStamp));
+       .Select(c => new CheepDTO(c.Text!, c.Author!.Name, c.TimeStamp));
 
    }
 
@@ -26,6 +26,6 @@ public class CheepRepository : ICheepRepository
       .OrderByDescending(c => c.Author)
       .Skip(page * pageSize)
       .Take(pageSize)
-      .Select(c => new CheepDTO(c.Text, c.Author.Name, c.TimeStamp));
+      .Select(c => new CheepDTO(c.Text!, c.Author!.Name, c.TimeStamp));
    }
 }

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 namespace Chirp.Infrastructure;
 public class Cheep
 {
@@ -6,11 +7,12 @@ public class Cheep
 
     public int AuthorId { get; set; }
 
-    public Author? Author { get; set; } = null;
+    public required Author Author { get; set; }
 
 
-    //[StringLength(160, MinumumLength = 5)] // means that minumum it is 5 and maximun the text is 160
-    public required string? Text { get; set; } // we have said it can not be null 
+    [StringLength(160, MinimumLength = 5)] // means that minimum it is 5 and maximum the text is 160
+    
+    public required string Text { get; set; } // we have said it can not be null 
 
     public DateTime TimeStamp { get; set; }
 }

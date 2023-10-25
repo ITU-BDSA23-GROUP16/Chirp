@@ -6,7 +6,7 @@ namespace Chirp.Razor.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _repository;
-    public IEnumerable<CheepDTO> Cheeps { get; set; }
+    public IEnumerable<CheepDTO>? Cheeps { get; set; }
 
     public PublicModel(ICheepRepository repository)
     {
