@@ -7,7 +7,7 @@ public interface ICheepRepository
     IEnumerable<CheepDTO> GetAuthor(int pageSize, int page);
     IEnumerable<CheepDTO> GetByAuthor(string author);    
 
-
+    
     //Task Create(CheepDTO cheep);
 
 }
