@@ -16,7 +16,7 @@ var repository = new AuthorRepository(context);
 //ChirpRepository
 
 //Act
-var author = new AuthorDTO() {Name = "Saynab", Email = "saynab@jjj", cheeps = new List<CheepDTO>() };
+var author = new AuthorDTO("Saynab", "saynab@jjj", new List<CheepDTO>());
 await repository.Create(author);
 //Assert
 var created = await context.Authors.SingleOrDefaultAsync(c =>c.Name == "Saynab"); 
@@ -32,7 +32,7 @@ await context.Database.EnsureCreatedAsync();
 context.Authors.Add(new Author{ Name = "herman", Email = "Herman@only.com"}); var repository = new AuthorRepository(context);
 //ChirpRepository
 //Act
-var author = new AuthorDTO{ Name = "herman", Email = "Herman@only.com" };
+var author = new AuthorDTO("herman", "Herman@only.com", new List<CheepDTO>());
 await repository.Create(author);
 //Assert
 await Assert.ThrowsAsync<ArgumentException>(async() => await repository.Create(author)); 

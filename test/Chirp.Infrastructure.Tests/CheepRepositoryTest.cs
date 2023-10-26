@@ -18,10 +18,10 @@ public class CheepRepTest
         //ChirpRepository
 
         //Act
-        var Cheep = new CheepDTO() { Author = "Stanley", Message = "Once upon a time", TimeStamp = 1698150571 };
+        var Cheep = new CheepDTO("Stanley", "Once upon a time", new DateTime(1698150571));
         await repository.Create(Cheep);
         //Assert
-        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Author == "Stanley");
+        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Once upon a time");
         Assert.NotNull(created);
     }
     [Fact]
@@ -32,14 +32,15 @@ public class CheepRepTest
         //run the test and then kill the test that what connection.open do connection.Open();
         var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection); using var context = new ChirpDBContext();
         await context.Database.EnsureCreatedAsync();
-        context.Cheeps.Add(new Cheep { Author = "herman", Text = "Herman@only.com" }); var repository = new CheepRepository(context);
+        var hermie = new Author { Name = "herman", Email = "Herman@only.com" };
+        context.Cheeps.Add(new Cheep { Author = hermie, Text = "Herman@only.com" }); var repository = new CheepRepository(context);
         //ChirpRepository
         //Act
-        var cheep = new CheepDTO { Author = "herman", Text = "Herman@only.com" };
-        await repository.Create(Cheep);
+        var cheep = new CheepDTO("herman", "Herman@only.com", DateTime.Parse("2022-08-01 13:14:37"));
+        await repository.Create(cheep);
         //Assert
-        await Assert.ThrowsAsync<ArgumentException>(async () => await repository.Create(Cheep));
-        var herman = await context.Cheeps.Where(c => c.Name == "Saynab").ToListAsync();
+        await Assert.ThrowsAsync<ArgumentException>(async () => await repository.Create(cheep));
+        var herman = await context.Cheeps.Where(c => c.Text == "Herman@only.com").ToListAsync();
         Assert.Single(herman);
     }
 }
