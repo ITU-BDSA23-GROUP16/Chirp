@@ -1,27 +1,13 @@
+namespace Chirp.Core;
+public record CheepDTO(string Author, string Message, DateTime TimeStamp);
 
-public record CheepDTO(Author Author, string Message, DateTime time);
-public record AuthorDTO(string Name, string Email, ICollection<Cheep> cheeps);
-
-public interface ICheepRepository{
-IEnumerable<CheepDTO>GetCheeps();
-
-
-IEnumerable<AuthorDTO> getAuthors();
-
-/*
-Author getAuthorById();
+public interface ICheepRepository
+{
+    IEnumerable<CheepDTO> GetCheeps(int pageSize, int page);
+    IEnumerable<CheepDTO> GetAuthor(int pageSize, int page);
+    IEnumerable<CheepDTO> GetByAuthor(string author);    
 
 
-
-string getAuthorMail();
-
-
-CheepDTO getCheepById();
-
-string getCheepMessage();
-
-DateTime getCheepTime();
-*/
-
+    //Task Create(CheepDTO cheep);
 
 }
