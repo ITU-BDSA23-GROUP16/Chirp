@@ -20,9 +20,11 @@ public class ChirpDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
+        //Fluent API does not support minimum length
+        //modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
         modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(100);
         modelBuilder.Entity<Author>().Property(a => a.Email).HasMaxLength(50);
+        
     }
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
