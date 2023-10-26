@@ -6,7 +6,7 @@ namespace Chirp.Razor.Pages;
 public class UserTimelineModel : PageModel
 {
     private readonly ICheepRepository _repository;
-    public List<CheepViewModel> Cheeps { get; set; }
+    public IEnumerable<CheepDTO> Cheeps { get; set; }
 
     public UserTimelineModel(ICheepRepository repository)
     {
@@ -15,7 +15,7 @@ public class UserTimelineModel : PageModel
 
     public ActionResult OnGet(string author)
     {
-        Cheeps = _repository.GetCheepsFromAuthor(author);
+        Cheeps = _repository.GetByAuthor(author);
         return Page();
     }
 }
