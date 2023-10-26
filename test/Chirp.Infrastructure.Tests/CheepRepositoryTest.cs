@@ -3,6 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Chirp.Core;
 namespace Chirp.Infrastructure.Tests;
 
+/*
+Tests:
+    Retrieve Cheeps from a page of the Public Timeline
+    Retrieve Cheeps from a page of an Author's timeline
+    Create a new cheep in the database
+*/
+
 public class CheepRepTest
 {
     //the infrastructurtest needs a reference from infrasturctor project
