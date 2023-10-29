@@ -29,13 +29,14 @@ public class AuthorRepTest: IDisposable
         herman = new Author { Name = "herman", Email = "Herman@only.com" };
     }
 
-
     //the infrastructurtest needs a reference from infrasturctor project
     [Fact]
     public async void CreatedExists()
     {
+        //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
+        
         //ActDTO
         await repository.Create(saynabDTO);
 

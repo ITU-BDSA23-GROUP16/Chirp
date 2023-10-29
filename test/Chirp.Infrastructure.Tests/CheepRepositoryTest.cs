@@ -102,6 +102,29 @@ public class CheepRepTest: IDisposable
         }
         Assert.Equal(resultdto,result);
     }
+
+    [Fact]
+    public async void GetPages()
+    {
+        //Arrange
+        Arrange();
+        await repository.Create(helloDTO);
+
+        //Act
+        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Once upon a time");
+        var herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Herman@only.com");
+
+        IEnumerable<CheepDTO> page1 = repository.GetCheeps(2);
+        IEnumerable<CheepDTO> page2 = repository.GetCheeps(2,2);
+
+        //Assert
+        EnsureUnchanged(created,herman);
+        var first1=page1.ElementAt(0);
+        var first2=page2.ElementAt(0);
+        //if hermanDTO is from August, then it is the earliest and should be on page 2
+        Assert.Equal(first1,stanleyDTO);
+        Assert.Equal(first2,hermanDTO);
+    }
     
     public void Dispose()
     {
@@ -112,8 +135,8 @@ public class CheepRepTest: IDisposable
     private async void EnsureUnchanged(Cheep created0, Cheep herman0)
     {
         //Assert
-        var created1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Once upon a time");
-        var herman1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Herman@only.com");
+        var created1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == created0.Text);
+        var herman1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == herman0.Text);
 
         //assert that no changes to the data have occurred during query
             Assert.Equal(created1,created0);
