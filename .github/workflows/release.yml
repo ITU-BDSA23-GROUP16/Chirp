@@ -17,10 +17,11 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-        run: dotnet build src/Chirp.Core/ --no-restore
-        run: dotnet build src/Chirp.Web/ --no-restore
-        run: dotnet build src/Chirp.Infrastructure/ --no-restore
+    - name: Build core
+        run: | 
+        dotnet build src/Chirp.Core/ --no-restore
+        dotnet build src/Chirp.Web/ --no-restore
+        dotnet build src/Chirp.Infrastructure/ --no-restore
  #test:
  #  needs: build
  #  runs-on: ubuntu-latest
@@ -60,7 +61,9 @@ jobs:
             release_name="chirp-$tag-linux-x64"
   
             # Build everything
-            dotnet publish src/Chirp.Razor/Chirp.Razor.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
+            dotnet publish src/Chirp.Core/Chirp.Core.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
+            dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
+            dotnet publish src/Chirp.Infrastructure/Chirp.Infrastructure.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
   
             # Pack files
             7z a -tzip "${release_name}.zip" "$release_name"
@@ -75,6 +78,8 @@ jobs:
   
             # Build everything
             dotnet publish src/Chirp.Razor/Chirp.Razor.csproj --framework net7.0 --runtime "win-x64" -c --self-contained -o "$release_name"
+            dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net7.0 --runtime "win-x64" -c --self-contained -o "$release_name"
+            dotnet publish src/Chirp.Infrastructure/Chirp.Infrastructure.csproj --framework net7.0 --runtime "win-x64" -c --self-contained -o "$release_name"
   
             # Pack files
             7z a -tzip "${release_name}.zip" "./${release_name}/*"

@@ -23,12 +23,14 @@ jobs:
           include-prerelease: true
   
       - name: Build with dotnet
-        run: dotnet build src/Chirp.Core/ --configuration Release
-        run: dotnet build src/Chirp.Infrastructure/ --configuration Release
+        run: | 
+        dotnet build src/Chirp.Core/ --configuration Release
+        dotnet build src/Chirp.Infrastructure/ --configuration Release
   
       - name: dotnet publish
-        run: dotnet publish src/Chirp.Core/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
-        run: dotnet publish src/Chirp.Infrastructure/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: | 
+        dotnet publish src/Chirp.Core/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        dotnet publish src/Chirp.Infrastructure/ -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
