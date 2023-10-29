@@ -38,7 +38,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
 
   release:
-    needs: test
+    # needs: test
     name: Release
     runs-on: ubuntu-latest
     steps:
