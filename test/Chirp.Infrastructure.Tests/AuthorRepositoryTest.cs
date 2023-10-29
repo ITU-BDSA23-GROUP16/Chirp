@@ -94,5 +94,11 @@ public class AuthorRepTest: IDisposable
         //Assert
         Assert.Equal(herman.Email, author.Email);
     }
-
+    
+    public void Dispose()
+    {
+        connection.Dispose();
+        context.Dispose();
+        SqliteConnection.ClearAllPools();
+    }
 }
