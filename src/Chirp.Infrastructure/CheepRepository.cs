@@ -40,4 +40,23 @@ public class CheepRepository : ICheepRepository
 
 
    }
+
+
+   public void CreateCheep(CheepDTO cheep, AuthorRepository rep)
+    {
+      //var newauthor = rep.FindAuthorByName(cheep.Author);
+      
+      //Find a Author type in the context(database) by using Find(string)
+      var aut = _context.Authors.Find(cheep.Author);
+      var newCheep = new Cheep
+      {
+           
+         Author = aut!,
+         Text = cheep.Message 
+      };
+
+        _context.Cheeps.Add(newCheep);
+        _context.SaveChanges();
+    }
+    
 }
