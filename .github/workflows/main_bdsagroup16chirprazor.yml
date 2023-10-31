@@ -24,7 +24,7 @@ jobs:
 
       - name: Build with dotnet
         run: | 
-        dotnet build src/Chirp.Core/ --configuration Release+
+        dotnet build src/Chirp.Core/ --configuration Release
         dotnet build src/Chirp.Web/ --configuration Release
   
       - name: dotnet publish

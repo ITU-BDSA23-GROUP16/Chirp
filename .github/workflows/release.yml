@@ -61,10 +61,8 @@ jobs:
             release_name="chirp-$tag-linux-x64"
   
             # Build everything
-            dotnet publish src/Chirp.Core/Chirp.Core.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
             dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
-            dotnet publish src/Chirp.Infrastructure/Chirp.Infrastructure.csproj --framework net7.0 --runtime "linux-x64" -c --self-contained -o "$release_name"
-  
+            
             # Pack files
             7z a -tzip "${release_name}.zip" "$release_name"
             
