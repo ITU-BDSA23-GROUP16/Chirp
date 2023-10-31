@@ -18,7 +18,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build core
-        run: | 
+      run: |
         dotnet build src/Chirp.Core/ --no-restore
         dotnet build src/Chirp.Web/ --no-restore
         dotnet build src/Chirp.Infrastructure/ --no-restore
