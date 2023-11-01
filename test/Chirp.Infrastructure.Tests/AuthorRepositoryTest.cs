@@ -12,7 +12,7 @@ Tests:
 
 public class AuthorRepTest: IDisposable
 {
-    AuthorRepository repository;
+    AuthorRepository? repository;
     ChirpDBContext context;
     SqliteConnection connection;
 
@@ -38,7 +38,7 @@ public class AuthorRepTest: IDisposable
         repository = new AuthorRepository(context);
         
         //ActDTO
-        await repository.Create(saynabDTO);
+        repository.CreateAuthor(saynabDTO);
 
         //Assert
         var created = await context.Authors.SingleOrDefaultAsync(c => c.Name == "Saynab");
@@ -54,10 +54,10 @@ public class AuthorRepTest: IDisposable
         context.Authors.Add(herman);
 
         //Act
-        await repository.Create(hermanDTO);
+        repository.CreateAuthor(hermanDTO);
 
         //Assert
-        await Assert.ThrowsAsync<ArgumentException>(async () => await repository.Create(hermanDTO));
+         Assert.Throws<ArgumentException>( () =>  repository.CreateAuthor(hermanDTO));
         var author = await context.Authors.Where(c => c.Name == "herman").ToListAsync();
         Assert.Single(author);
     }
@@ -72,10 +72,10 @@ public class AuthorRepTest: IDisposable
         context.Authors.Add(herman);
 
         //Act
-        await repository.Create(hermanDTO);
+        repository.CreateAuthor(hermanDTO);
 
         //Assert
-        var author = await repository.GetAuthorByName("herman");
+        var author = repository.FindAuthorByName("herman");
         Assert.Equal(author, hermanDTO);
     }
 
@@ -87,10 +87,10 @@ public class AuthorRepTest: IDisposable
         repository = new AuthorRepository(context);
 
         context.Authors.Add(herman);
-        await repository.Create(herman);
+        repository.CreateAuthor(hermanDTO);
 
         //Act
-        var author = await repository.GetAuthorByEmail("Herman@only.com");
+        var author =  repository.FindAuthorByEmail("Herman@only.com");
 
         //Assert
         Assert.Equal(herman.Email, author.Email);
