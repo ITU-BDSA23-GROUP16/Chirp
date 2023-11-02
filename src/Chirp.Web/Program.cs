@@ -12,7 +12,7 @@ Console.WriteLine($"Database path: {DbPath}.");
 builder.Services.AddRazorPages();
 //builder.Services.AddSingleton<ICheepService, CheepService>();
 //Read about GetConnectionString
-builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite($"Data Source={DbPath}"););
+builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite($"Data Source={DbPath}"));
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 
 
