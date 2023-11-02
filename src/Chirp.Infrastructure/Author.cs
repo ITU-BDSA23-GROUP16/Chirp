@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Chirp.Infrastructure;
-public class Author
+public class Author : IdentityUser
 {
 
-    public int AuthorId { get; set; }
+    public int AuthorId { get; set; }  //skal ændres til IdentityUser generic
 
     public required string Name { get; set; }
 
