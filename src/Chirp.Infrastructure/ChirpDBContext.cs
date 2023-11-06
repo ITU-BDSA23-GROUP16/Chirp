@@ -1,7 +1,22 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+//using Microsoft.Data.Entity;
+
+/*namespace Chirp.Authentication.Data;
+
+public class ApplicationDbContext : IdentityDbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+}
+*/
+
+
 
 namespace Chirp.Infrastructure;
-public class ChirpDBContext : DbContext
+public class ChirpDBContext : IdentityDbContext<Author>
 {
     //Name of tables are Authors and Cheeps
     public DbSet<Author> Authors { get; set; }
@@ -9,7 +24,8 @@ public class ChirpDBContext : DbContext
 
     public string DbPath { get; }
 
-    public ChirpDBContext()
+public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
+            : base(options)
     {
 
         var folder = Environment.SpecialFolder.LocalApplicationData;
@@ -20,11 +36,12 @@ public class ChirpDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         //Fluent API does not support minimum length
         //modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
         modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(100);
         modelBuilder.Entity<Author>().Property(a => a.Email).HasMaxLength(50);
-        
+
     }
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
