@@ -1,19 +1,5 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-//using Microsoft.Data.Entity;
-
-/*namespace Chirp.Authentication.Data;
-
-public class ApplicationDbContext : IdentityDbContext
-{
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
-}
-*/
-
-
 
 namespace Chirp.Infrastructure;
 public class ChirpDBContext : IdentityDbContext<Author>
@@ -33,7 +19,7 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         DbPath = System.IO.Path.Join(path, "chirp.db");
         Console.WriteLine($"Database path: {DbPath}.");
     }
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -41,7 +27,11 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         //modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
         modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(100);
         modelBuilder.Entity<Author>().Property(a => a.Email).HasMaxLength(50);
-
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Cheeps)
+        .WithOne(e => e.Author)
+        .HasForeignKey(e => e.AuthorId)
+        .HasPrincipalKey(e => e.AuthorId);
     }
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
