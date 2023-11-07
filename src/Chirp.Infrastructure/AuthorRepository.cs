@@ -19,10 +19,10 @@ public class AuthorRepository : IAuthorRepository
 
         var newAuthor = new Author
         {
-            Name = author.Name, //Name of AuthorDTO
+            UserName = author.Name, //Name of AuthorDTO
             Email = author.Email //Email of AuthorDTO
         };
-        var existing = await _context.Authors.Where(c => c.Name == author.Name).FirstOrDefaultAsync();
+        var existing = await _context.Authors.Where(c => c.UserName == author.Name).FirstOrDefaultAsync();
         if(existing!=null){
         throw new ArgumentException("Author already exists in database!", nameof(author));
         }
@@ -43,17 +43,17 @@ public class AuthorRepository : IAuthorRepository
     public async Task<AuthorDTO> FindAuthorByName(string author){
     
       return await _context.Authors
-      .Where(a => a.Name.Contains(author))
-      .OrderByDescending(a => a.Name)
-      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
+      .Where(a => a.UserName.Contains(author))
+      .OrderByDescending(a => a.UserName)
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
     } 
 
     
     public async Task<AuthorDTO> FindAuthorByEmail(string email){
     return await _context.Authors 
-      .Where(a => a.Name.Contains(email))
+      .Where(a => a.UserName.Contains(email))
       .OrderByDescending(a => a.Email)
-      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
         
 
     }
