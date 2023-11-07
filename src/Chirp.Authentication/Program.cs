@@ -27,7 +27,7 @@ builder.Services.AddDbContext<ChirpDBContext>(options =>
     //options.UseSqlite(connectionString));
     //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChirpDBContext>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChirpDBContext>()
                 .AddDefaultTokenProviders().AddDefaultUI();
 
         //builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)

@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Chirp.Infrastructure;
-public class ChirpDBContext : IdentityDbContext<Author>
+public class ChirpDBContext : IdentityDbContext<IdentityUser>
 {
     //Name of tables are Authors and Cheeps
+    public DbSet<IdentityUser> Users { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
 
