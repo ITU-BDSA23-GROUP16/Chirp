@@ -15,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 var folder = Environment.SpecialFolder.LocalApplicationData;
 var path = Environment.GetFolderPath(folder);
 var DbPath = System.IO.Path.Join(path, "chirp.db");
+
 Console.WriteLine($"Database path: {DbPath}.");
 
 // Add services to the container.
@@ -22,7 +23,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseSqlite($"Data Source={DbPath}"));
+    //options.UseSqlite(connectionString));
     //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChirpDBContext>()
