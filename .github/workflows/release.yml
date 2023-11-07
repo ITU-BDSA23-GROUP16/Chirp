@@ -20,7 +20,7 @@ jobs:
     - name: Build core
       run: |
         dotnet build src/Chirp.Core/ --no-restore
-        dotnet build src/Chirp.Web/ --no-restore
+        dotnet build src/Chirp.Authentication/ --no-restore
         dotnet build src/Chirp.Infrastructure/ --no-restore
  #test:
  #  needs: build
@@ -61,7 +61,7 @@ jobs:
             release_name="chirp-$tag-linux-x64"
   
             # Build everything
-            dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net7.0 --runtime "linux-x64" -p:PublishSingleFile=true -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true  --no-self-contained -o "$release_name"
+            dotnet publish src/Chirp.Authentication/Chirp.Authentication.csproj --framework net7.0 --runtime "linux-x64" -p:PublishSingleFile=true -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true  --no-self-contained -o "$release_name"
             
             # Pack files
             7z a -tzip "${release_name}.zip" "$release_name"
@@ -75,7 +75,7 @@ jobs:
             release_name="chirp-$tag-win-x64"
   
             # Build everything
-            dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net7.0 --runtime "win-x64" -p:PublishSingleFile=true -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true  --no-self-contained -o "$release_name"
+            dotnet publish src/Chirp.Authentication/Chirp.Authentication.csproj --framework net7.0 --runtime "win-x64" -p:PublishSingleFile=true -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true  --no-self-contained -o "$release_name"
            
             # Pack files
             7z a -tzip "${release_name}.zip" "./${release_name}/*"
@@ -89,7 +89,7 @@ jobs:
             release_name="chirp-$tag-osx-x64"
   
             # Build everything
-            dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net7.0 --runtime "osx-x64" -p:PublishSingleFile=true -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true  --no-self-contained -o "$release_name"
+            dotnet publish src/Chirp.Authentication/Chirp.Authentication.csproj --framework net7.0 --runtime "osx-x64" -p:PublishSingleFile=true -p:DebugType=embedded -p:IncludeNativeLibrariesForSelfExtract=true  --no-self-contained -o "$release_name"
   
             # Pack files
             7z a -tzip "${release_name}.zip" "$release_name"
