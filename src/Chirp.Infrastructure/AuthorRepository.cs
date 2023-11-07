@@ -20,9 +20,12 @@ public class AuthorRepository : IAuthorRepository
             Name = author.Name, //Name of AuthorDTO
             Email = author.Email //Email of AuthorDTO
         };
-
+        var existing = await _context.Authors.SingleOrDefaultAsync(c => c.Name == author.Name);
+        if(existing!=null){
+        throw new ArgumentsException("Author already exists in database!", nameof(author));
+        }
         _context.Authors.Add(newAuthor);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
    /* private static ICollection<CheepDTO> ConvertCheeps(ICollection<Cheep> cheeps) {
