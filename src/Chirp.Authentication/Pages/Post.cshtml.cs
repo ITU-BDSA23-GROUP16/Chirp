@@ -21,7 +21,7 @@ public class PostModel : PageModel
     }
     public void OnPost(string message)
     {
-        var newCheep = new CheepDTO(User.Identity.Name, message, new DateTime());
+        var newCheep = new CheepDTO(User.Identity!.Name!, message, new DateTime());
         _repository.CreateCheep(newCheep);
     }
 }

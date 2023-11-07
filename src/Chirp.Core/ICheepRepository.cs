@@ -3,11 +3,11 @@ public record CheepDTO(string Author, string Message, DateTime TimeStamp);
 
 public interface ICheepRepository
 {
-    IEnumerable<CheepDTO> GetCheeps(int pageSize, int page);
-    IEnumerable<CheepDTO> GetAuthor(int pageSize, int page);
-    IEnumerable<CheepDTO> GetByAuthor(string author);    
+    async Task<IEnumerable<CheepDTO>> GetCheeps(int pageSize, int page);
+    async Task<IEnumerable<CheepDTO>> GetAuthor(int pageSize, int page);
+    async Task<IEnumerable<CheepDTO>> GetByAuthor(string author);    
 
-   // public void CreateCheep(CheepDTO cheep);
+   async void CreateCheep(CheepDTO cheep);
 
     
     //Task Create(CheepDTO cheep);

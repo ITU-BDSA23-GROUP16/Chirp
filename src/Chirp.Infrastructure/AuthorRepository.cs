@@ -12,7 +12,7 @@ public class AuthorRepository : IAuthorRepository
 
     }
 
-    public void CreateAuthor(AuthorDTO author)
+    public async void CreateAuthor(AuthorDTO author)
     {
 
         var newAuthor = new Author
@@ -35,9 +35,9 @@ public class AuthorRepository : IAuthorRepository
     }*/
     
 
-    public AuthorDTO FindAuthorByName(string author){
+    public async Task<AuthorDTO> FindAuthorByName(string author){
     
-      return (AuthorDTO) _context.Authors
+      return await (AuthorDTO) _context.Authors
       .Where(a => a.Name.Contains(author))
       .OrderByDescending(a => a.Name)
       .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp))));
@@ -46,8 +46,8 @@ public class AuthorRepository : IAuthorRepository
     } 
 
     
-    public AuthorDTO FindAuthorByEmail(string email){
-        return (AuthorDTO)_context.Authors 
+    public async Task<AuthorDTO> FindAuthorByEmail(string email){
+    return await (AuthorDTO)_context.Authors 
       .Where(a => a.Name.Contains(email))
       .OrderByDescending(a => a.Email)
       .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp))));
