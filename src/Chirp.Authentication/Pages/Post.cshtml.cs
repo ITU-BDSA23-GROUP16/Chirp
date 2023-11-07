@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Chirp.Core;
 
 namespace Chirp.Authentication.Pages;
 
 public class PostModel : PageModel
 {
-    public String Text { get; set; }
     private readonly ILogger<PostModel> _logger;
+    private readonly ICheepRepository _repository;
+    public IEnumerable<CheepDTO>? Cheeps { get; set; }
 
-    public PostModel(ILogger<PostModel> logger)
+    public PostModel(ILogger<PostModel> logger, ICheepRepository repository)
     {
         _logger = logger;
+        _repository = repository;
     }
 
     public void OnGet()
@@ -18,7 +21,8 @@ public class PostModel : PageModel
     }
     public void OnPost(string message)
     {
-        Console.WriteLine($"{message}");
+        var newCheep = new CheepDTO(User.Identity.Name, message, new DateTime());
+        _repository.CreateCheep(newCheep);
     }
 }
 
