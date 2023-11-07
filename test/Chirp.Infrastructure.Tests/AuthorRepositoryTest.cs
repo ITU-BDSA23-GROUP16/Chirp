@@ -57,7 +57,7 @@ public class AuthorRepTest: IDisposable
         repository.CreateAuthor(hermanDTO);
 
         //Assert
-         Assert.Throws<ArgumentException>( () =>  repository.CreateAuthor(hermanDTO));
+        await Assert.ThrowsAsync<ArgumentException>( () =>  repository.CreateAuthor(hermanDTO));
         var author = await context.Authors.Where(c => c.Name == "herman").ToListAsync();
         Assert.Single(author);
     }
