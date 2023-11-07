@@ -42,7 +42,7 @@ public class CheepRepository : ICheepRepository
    }
 
 
-   public void CreateCheep(CheepDTO cheep, AuthorRepository rep)
+   public void CreateCheep(CheepDTO cheep)
     {
       //var newauthor = rep.FindAuthorByName(cheep.Author);
       

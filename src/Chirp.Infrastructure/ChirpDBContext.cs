@@ -10,14 +10,11 @@ public class ChirpDBContext : IdentityDbContext<Author>
 
     public string DbPath { get; }
 
+
 public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
             : base(options)
     {
 
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = System.IO.Path.Join(path, "chirp.db");
-        Console.WriteLine($"Database path: {DbPath}.");
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +34,5 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
     // special "local" folder for your platform.
     //create the migration that construct the sqlite by using the UseSqlite, which means that it understands Sqlite
 
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+
 }

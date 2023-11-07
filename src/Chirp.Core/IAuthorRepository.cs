@@ -6,7 +6,7 @@ public interface IAuthorRepository
 {
 // Task Create(AuthorDTO author);
 
-void CreateAuthor(AuthorDTO author);
+public void CreateAuthor(AuthorDTO author);
 
 public AuthorDTO FindAuthorByName(string name);
 
