@@ -1,25 +1,43 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Authentication.Data;
 using Chirp.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Chirp.Infrastructure;
+using Chirp.Core;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
+        
+var folder = Environment.SpecialFolder.LocalApplicationData;
+var path = Environment.GetFolderPath(folder);
+var DbPath = System.IO.Path.Join(path, "chirp.db");
+Console.WriteLine($"Database path: {DbPath}.");
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+
+builder.Services.AddControllers();
+builder.Services.AddDbContext<ChirpDBContext>(options =>
+    options.UseSqlite(connectionString));
     //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChirpDBContext>()
+                .AddDefaultTokenProviders().AddDefaultUI();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+        //builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)
+        //            .AddEntityFrameworkStores<ChirpDBContext>();
+builder.Services.AddMvc();
+
+
 builder.Services.AddRazorPages();
+//builder.Services.AddSingleton<ICheepService, CheepService>();
+//Read about GetConnectionString
+//builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite($"Data Source={DbPath}"));
+builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -55,7 +73,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
+// Seed database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ChirpDBContext>();
+    context.Database.Migrate();
+    //Then you can use the context to seed the database for example
+    DbInitializer.SeedDatabase(context);
+}
+
 // Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -63,9 +92,10 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
-// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -78,3 +108,4 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
+//public partial class Program { }
