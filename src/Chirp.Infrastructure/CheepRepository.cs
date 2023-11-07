@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 namespace Chirp.Infrastructure;
 public class CheepRepository : ICheepRepository
 {

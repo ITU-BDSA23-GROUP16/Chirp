@@ -45,7 +45,7 @@ public class AuthorRepository : IAuthorRepository
       return await _context.Authors
       .Where(a => a.Name.Contains(author))
       .OrderByDescending(a => a.Name)
-      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp))));
+      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
     } 
 
     
@@ -53,7 +53,7 @@ public class AuthorRepository : IAuthorRepository
     return await _context.Authors 
       .Where(a => a.Name.Contains(email))
       .OrderByDescending(a => a.Email)
-      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp))));
+      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
         
 
     }
