@@ -22,11 +22,12 @@ public class AuthorRepTest: IDisposable
         //Arrange
         connection = new SqliteConnection("Filename=:memory:");
         var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection); 
-        context = new ChirpDBContext();
+        var option = builder.Options;
+        context = new ChirpDBContext(option);
         
         saynabDTO = new AuthorDTO("Saynab", "saynab@jjj", new List<CheepDTO>());
         hermanDTO = new AuthorDTO("herman", "Herman@only.com", new List<CheepDTO>());
-        herman = new Author { Name = "herman", Email = "Herman@only.com" };
+        herman = new Author { UserName = "herman", Email = "Herman@only.com" };
     }
 
     //the infrastructurtest needs a reference from infrasturctor project
@@ -41,7 +42,7 @@ public class AuthorRepTest: IDisposable
         repository.CreateAuthor(saynabDTO);
 
         //Assert
-        var created = await context.Authors.SingleOrDefaultAsync(c => c.Name == "Saynab");
+        var created = await context.Authors.SingleOrDefaultAsync(c => c.UserName == "Saynab");
         Assert.NotNull(created);
     }
     [Fact]
@@ -58,7 +59,7 @@ public class AuthorRepTest: IDisposable
 
         //Assert
         await Assert.ThrowsAsync<ArgumentException>( () =>  repository.CreateAuthor(hermanDTO));
-        var author = await context.Authors.Where(c => c.Name == "herman").ToListAsync();
+        var author = await context.Authors.Where(c => c.UserName == "herman").ToListAsync();
         Assert.Single(author);
     }
 

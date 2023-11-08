@@ -25,7 +25,8 @@ public class CheepRepTest : IDisposable
         //Arrange
         connection = new SqliteConnection("Filename=:memory:");
         var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection);
-        context = new ChirpDBContext();
+        var option = builder.Options;
+        context = new ChirpDBContext(option);
 
         stanleyDTO = new CheepDTO("Stanley", "Once upon a time", new DateTime(1698150571));
         hermanDTO = new CheepDTO("herman", "Herman@only.com", DateTime.Parse("2022-08-01 13:14:37"));
@@ -90,7 +91,7 @@ public class CheepRepTest : IDisposable
         //Assert
         EnsureUnchanged(created0!, herman0!);
 
-        IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.Name == "herman").ToListAsync();
+        IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.UserName == "herman").ToListAsync();
         //https://stackoverflow.com/questions/168901/count-the-items-from-a-ienumerablet-without-iterating
         int result = 0;
         using (IEnumerator<Cheep> enumerator = created.GetEnumerator())
