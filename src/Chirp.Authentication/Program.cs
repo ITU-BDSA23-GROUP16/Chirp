@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
-        
+
 var folder = Environment.SpecialFolder.LocalApplicationData;
 var path = Environment.GetFolderPath(folder);
 var DbPath = System.IO.Path.Join(path, "chirp.db");
@@ -24,14 +24,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
     options.UseSqlite($"Data Source={DbPath}"));
-    //options.UseSqlite(connectionString));
-    //sqlserver?
+//options.UseSqlite(connectionString));
+//sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChirpDBContext>()
                 .AddDefaultTokenProviders().AddDefaultUI();
 
-        //builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)
-        //            .AddEntityFrameworkStores<ChirpDBContext>();
+//builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)
+//            .AddEntityFrameworkStores<ChirpDBContext>();
 builder.Services.AddMvc();
 
 
@@ -40,6 +40,7 @@ builder.Services.AddRazorPages();
 //Read about GetConnectionString
 //builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite($"Data Source={DbPath}"));
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -87,16 +88,16 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
-if (app.Environment.IsDevelopment())
-{
-    app.UseMigrationsEndPoint();
-}
-else
-{
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseMigrationsEndPoint();
+    }
+    else
+    {
+        app.UseExceptionHandler("/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
 
 
 app.UseHttpsRedirection();
