@@ -17,7 +17,7 @@ public class CheepRepository : ICheepRepository
        .OrderByDescending(c => c.TimeStamp)
        .Skip(page * pageSize)
        .Take(pageSize)
-       .Select(c => new CheepDTO(c.Author!.UserName, c.Text!, c.TimeStamp))
+       .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
        .ToListAsync();
    }
 
@@ -27,7 +27,7 @@ public class CheepRepository : ICheepRepository
       .OrderByDescending(c => c.Author)
       .Skip(page * pageSize)
       .Take(pageSize)
-      .Select(c => new CheepDTO(c.Author!.UserName, c.Text!, c.TimeStamp))
+      .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
       .ToListAsync();
    }
 
@@ -36,7 +36,7 @@ public class CheepRepository : ICheepRepository
       return await _context.Cheeps
       .Where(a => a.Author.UserName.Contains(author))
       .OrderByDescending(a => a.Author.UserName)
-      .Select(a => new CheepDTO(a.Author!.UserName, a.Text!, a.TimeStamp))
+      .Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp))
       .ToListAsync();
    }
 
@@ -50,7 +50,7 @@ public class CheepRepository : ICheepRepository
       var newCheep = new Cheep
       {
          Author = aut!,
-         Text = cheep.Message 
+         Message = cheep.Message 
       };
 
         _context.Cheeps.Add(newCheep);

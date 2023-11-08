@@ -33,7 +33,7 @@ public class AuthorRepository : IAuthorRepository
    /* private static ICollection<CheepDTO> ConvertCheeps(ICollection<Cheep> cheeps) {
         var dtoColl = new List<CheepDTO>();
         foreach (Cheep c in cheeps) {
-            var dtoConv = new CheepDTO(c.Author.Name,c.Text,c.TimeStamp);
+            var dtoConv = new CheepDTO(c.Author.Name,c.Message,c.TimeStamp);
             dtoColl.Add(dtoConv);
         }
         return dtoColl;
@@ -45,7 +45,7 @@ public class AuthorRepository : IAuthorRepository
       return await _context.Authors
       .Where(a => a.UserName.Contains(author))
       .OrderByDescending(a => a.UserName)
-      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Message,c.TimeStamp)))).FirstOrDefaultAsync();;
     } 
 
     
@@ -53,7 +53,7 @@ public class AuthorRepository : IAuthorRepository
     return await _context.Authors 
       .Where(a => a.UserName.Contains(email))
       .OrderByDescending(a => a.Email)
-      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Message,c.TimeStamp)))).FirstOrDefaultAsync();;
         
 
     }
