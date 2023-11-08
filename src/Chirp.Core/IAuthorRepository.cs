@@ -6,12 +6,12 @@ public interface IAuthorRepository
 {
 // Task Create(AuthorDTO author);
 
-public void CreateAuthor(AuthorDTO author);
+Task CreateAuthor(AuthorDTO author);
 
-public AuthorDTO FindAuthorByName(string name);
+Task <AuthorDTO> FindAuthorByName(string name);
 
 
-public AuthorDTO FindAuthorByEmail(string email);
+Task <AuthorDTO> FindAuthorByEmail(string email);
 
 
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace Chirp.Razor.Pages;
+using Chirp.Core;
+namespace Chirp.Authentication.Pages;
 
 public class UserTimelineModel : PageModel
 {
@@ -13,9 +13,9 @@ public class UserTimelineModel : PageModel
         _repository = repository;
     }
 
-    public ActionResult OnGet(string author)
+    public async Task<ActionResult> OnGetAsync(string author)
     {
-        Cheeps = _repository.GetByAuthor(author);
+        Cheeps = await _repository.GetByAuthor(author);
         return Page();
     }
 }

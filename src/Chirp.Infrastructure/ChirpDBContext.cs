@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Chirp.Infrastructure;
 public class ChirpDBContext : IdentityDbContext<Author>
@@ -22,7 +23,7 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         base.OnModelCreating(modelBuilder);
         //Fluent API does not support minimum length
         //modelBuilder.Entity<Cheep>().Property(c => c.Text).HasMaxLength(160);
-        modelBuilder.Entity<Author>().Property(a => a.Name).HasMaxLength(100);
+        modelBuilder.Entity<Author>().Property(a => a.UserName).HasMaxLength(100);
         modelBuilder.Entity<Author>().Property(a => a.Email).HasMaxLength(50);
         modelBuilder.Entity<Author>()
         .HasMany(e => e.Cheeps)

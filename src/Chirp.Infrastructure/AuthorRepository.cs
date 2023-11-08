@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Chirp.Infrastructure;
 
 
@@ -12,17 +14,20 @@ public class AuthorRepository : IAuthorRepository
 
     }
 
-    public void CreateAuthor(AuthorDTO author)
+    public async Task CreateAuthor(AuthorDTO author)
     {
 
         var newAuthor = new Author
         {
-            Name = author.Name, //Name of AuthorDTO
+            UserName = author.Name, //Name of AuthorDTO
             Email = author.Email //Email of AuthorDTO
         };
-
+        var existing = await _context.Authors.Where(c => c.UserName == author.Name).FirstOrDefaultAsync();
+        if(existing!=null){
+        throw new ArgumentException("Author already exists in database!", nameof(author));
+        }
         _context.Authors.Add(newAuthor);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
    /* private static ICollection<CheepDTO> ConvertCheeps(ICollection<Cheep> cheeps) {
@@ -35,22 +40,20 @@ public class AuthorRepository : IAuthorRepository
     }*/
     
 
-    public AuthorDTO FindAuthorByName(string author){
+    public async Task<AuthorDTO> FindAuthorByName(string author){
     
-      return (AuthorDTO) _context.Authors
-      .Where(a => a.Name.Contains(author))
-      .OrderByDescending(a => a.Name)
-      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp))));
-      
-    
+      return await _context.Authors
+      .Where(a => a.UserName.Contains(author))
+      .OrderByDescending(a => a.UserName)
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
     } 
 
     
-    public AuthorDTO FindAuthorByEmail(string email){
-        return (AuthorDTO)_context.Authors 
-      .Where(a => a.Name.Contains(email))
+    public async Task<AuthorDTO> FindAuthorByEmail(string email){
+    return await _context.Authors 
+      .Where(a => a.UserName.Contains(email))
       .OrderByDescending(a => a.Email)
-      .Select(a => new AuthorDTO(a!.Name, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.Name,c.Text,c.TimeStamp))));
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
         
 
     }

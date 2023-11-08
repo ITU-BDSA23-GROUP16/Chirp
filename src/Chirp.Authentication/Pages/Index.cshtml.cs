@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 using Chirp.Core;
 
 namespace Chirp.Authentication.Pages;
@@ -16,12 +17,12 @@ public class IndexModel : PageModel
         _repository = repository;
     }
 
-    public ActionResult OnGet()
+    public  async Task<ActionResult> OnGetAsync()
     {
         bool hasPage = int.TryParse(Request.Query["page"], out var page);
         var PageInt = Math.Max(hasPage ? page : 1, 1);
         var cheepsPerPage = 32;
-        Cheeps = _repository.GetCheeps(cheepsPerPage, PageInt);
+        Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
         /*
                 try
                 {
