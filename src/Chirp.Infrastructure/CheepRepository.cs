@@ -42,19 +42,21 @@ public class CheepRepository : ICheepRepository
 
 
    public async Task CreateCheep(CheepDTO cheep)
-    {
+   {
       //var newauthor = rep.FindAuthorByName(cheep.Author);
-      
+
       //Find a Author type in the context(database) by using Find(string)
-      var aut = _context.Authors.Find(cheep.Author);
+      var aut = await _context.Authors.SingleAsync(c => c.UserName == cheep.Author);
+
       var newCheep = new Cheep
       {
          Author = aut!,
-         Message = cheep.Message 
+         Message = cheep.Message,
+         TimeStamp = cheep.TimeStamp
       };
 
-        _context.Cheeps.Add(newCheep);
-        _context.SaveChanges();
-    }
-    
+      await _context.Cheeps.AddAsync(newCheep);
+      await _context.SaveChangesAsync();
+   }
+
 }

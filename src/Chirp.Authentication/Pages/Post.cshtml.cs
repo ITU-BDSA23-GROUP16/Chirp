@@ -22,6 +22,7 @@ public class PostModel : PageModel
     public async void OnPostAsync(string message)
     {
         var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
+        Console.WriteLine(DateTime.Now);
         await _repository.CreateCheep(newCheep);
     }
 }
