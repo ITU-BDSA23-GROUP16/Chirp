@@ -12,8 +12,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var folder = Environment.SpecialFolder.LocalApplicationData;
-var path = Environment.GetFolderPath(folder);
+//var folder = Environment.SpecialFolder.LocalApplicationData;
+//var path = Environment.GetFolderPath(folder);
+var path = Path.GetTempPath();
 var DbPath = System.IO.Path.Join(path, "chirp.db");
 
 Console.WriteLine($"Database path: {DbPath}.");
