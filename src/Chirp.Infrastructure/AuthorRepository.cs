@@ -45,15 +45,15 @@ public class AuthorRepository : IAuthorRepository
       return await _context.Authors
       .Where(a => a.UserName.Contains(author))
       .OrderByDescending(a => a.UserName)
-      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).SingleOrDefaultAsync();;
     } 
 
     
     public async Task<AuthorDTO> FindAuthorByEmail(string email){
     return await _context.Authors 
-      .Where(a => a.UserName.Contains(email))
+      .Where(a=>a.Email!= null && a.Email == email)
       .OrderByDescending(a => a.Email)
-      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).FirstOrDefaultAsync();;
+      .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName,c.Text,c.TimeStamp)))).SingleOrDefaultAsync();;
         
 
     }

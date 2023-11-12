@@ -47,6 +47,9 @@ public class CheepRepository : ICheepRepository
       
       //Find a Author type in the context(database) by using Find(string)
       var aut = _context.Authors.Find(cheep.Author);
+
+
+      
       var newCheep = new Cheep
       {
          Author = aut!,
