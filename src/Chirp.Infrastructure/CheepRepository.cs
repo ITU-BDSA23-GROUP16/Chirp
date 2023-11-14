@@ -14,12 +14,11 @@ public class CheepRepository : ICheepRepository
    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageSize = 32, int page = 0)
    {
       return await _context.Cheeps
-
-       .OrderByDescending(c => c.TimeStamp)
-       .Skip(page * pageSize)
-       .Take(pageSize)
-       .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
-       .ToListAsync();
+      .OrderByDescending(c => c.TimeStamp)
+      .Skip(page * pageSize)
+      .Take(pageSize)
+      .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
+      .ToListAsync();
    }
 
    public async Task<IEnumerable<CheepDTO>> GetAuthor(int pageSize = 32, int page = 0)
@@ -47,8 +46,7 @@ public class CheepRepository : ICheepRepository
       //var newauthor = rep.FindAuthorByName(cheep.Author);
 
       //Find a Author type in the context(database) by using Find(string)
-
-      var aut = _context.Authors.Find(cheep.Author);
+      var aut = await _context.Authors.SingleAsync(c => c.UserName == cheep.Author);
 
       var newCheep = new Cheep
       {
@@ -57,9 +55,8 @@ public class CheepRepository : ICheepRepository
          TimeStamp = cheep.TimeStamp
       };
 
-
-         _context.Cheeps.Add(newCheep);
-         _context.SaveChanges();
+      _context.Cheeps.Add(newCheep);
+      await _context.SaveChangesAsync();
    }
 
 }
