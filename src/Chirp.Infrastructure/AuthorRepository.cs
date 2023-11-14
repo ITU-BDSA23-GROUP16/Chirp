@@ -33,7 +33,7 @@ public class AuthorRepository : IAuthorRepository
    /* private static ICollection<CheepDTO> ConvertCheeps(ICollection<Cheep> cheeps) {
         var dtoColl = new List<CheepDTO>();
         foreach (Cheep c in cheeps) {
-            var dtoConv = new CheepDTO(c.Author.Name,c.Text,c.TimeStamp);
+            var dtoConv = new CheepDTO(c.Author.Name,c.Message,c.TimeStamp);
             dtoColl.Add(dtoConv);
         }
         return dtoColl;

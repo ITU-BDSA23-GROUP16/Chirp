@@ -43,7 +43,7 @@ public class CheepRepTest : IDisposable
         //Act
         await repository!.CreateCheep(helloDTO);
         //Assert
-        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Hello World");
+        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Hello World");
         Assert.NotNull(created);
     }
     //Identical Cheeps are allowed to exist
@@ -54,8 +54,8 @@ public class CheepRepTest : IDisposable
         await Arrange();
 
         //Act
-        Cheep? created = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Once upon a time");
-        Cheep? herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Herman@only.com");
+        Cheep? created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
+        Cheep? herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
         IEnumerable<CheepDTO> cheeps = await repository!.GetCheeps();
 
@@ -66,13 +66,13 @@ public class CheepRepTest : IDisposable
         CheepDTO cheep1 = cheeps.ElementAt(1);
         if (cheep0.Message.Equals("Once upon a time"))
         {
-            Assert.Equal(created!.Text, cheep0.Message);
-            Assert.Equal(herman!.Text, cheep1.Message);
+            Assert.Equal(created!.Message, cheep0.Message);
+            Assert.Equal(herman!.Message, cheep1.Message);
         }
         else
         {
-            Assert.Equal(created!.Text, cheep1.Message);
-            Assert.Equal(herman!.Text, cheep0.Message);
+            Assert.Equal(created!.Message, cheep1.Message);
+            Assert.Equal(herman!.Message, cheep0.Message);
         }
         //Compare the two
     }
@@ -84,8 +84,8 @@ public class CheepRepTest : IDisposable
         await Arrange();
 
         //Act
-        var created0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Once upon a time");
-        var herman0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Herman@only.com");
+        var created0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
+        var herman0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
         IEnumerable<CheepDTO> cheeps = await repository!.GetByAuthor("herman");
 
@@ -117,8 +117,8 @@ public class CheepRepTest : IDisposable
         await repository!.CreateCheep(helloDTO);
 
         //Act
-        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Once upon a time");
-        var herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == "Herman@only.com");
+        var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
+        var herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
         IEnumerable<CheepDTO> page1 = await repository.GetCheeps(2);
         IEnumerable<CheepDTO> page2 = await repository.GetCheeps(2, 2);
@@ -141,8 +141,8 @@ public class CheepRepTest : IDisposable
     private async Task EnsureUnchanged(Cheep created0, Cheep herman0)
     {
         //Assert
-        var created1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == created0.Text);
-        var herman1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Text == herman0.Text);
+        var created1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == created0.Message);
+        var herman1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == herman0.Message);
 
         //assert that no changes to the data have occurred during query
         Assert.Equal(created1, created0);

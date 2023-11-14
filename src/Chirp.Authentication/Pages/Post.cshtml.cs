@@ -19,10 +19,11 @@ public class PostModel : PageModel
     public void OnGet()
     {
     }
-    public void OnPost(string message)
+    public async void OnPostAsync(string message)
     {
-        var newCheep = new CheepDTO(User.Identity!.Name!, message, new DateTime());
-        _repository.CreateCheep(newCheep);
+        var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
+        Console.WriteLine(DateTime.Now);
+        await _repository.CreateCheep(newCheep);
     }
 }
 
