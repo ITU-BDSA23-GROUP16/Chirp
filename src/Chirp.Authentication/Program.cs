@@ -1,13 +1,12 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Chirp.Core;
 using Chirp.Authentication;
+using Chirp.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Chirp.Infrastructure;
-using Chirp.Core;
-using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +23,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlite($"Data Source={DbPath}"));
+    options.UseSqlServer($"Data Source={DbPath}"));
 //options.UseSqlite(connectionString));
 //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
