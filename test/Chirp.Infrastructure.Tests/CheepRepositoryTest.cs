@@ -25,9 +25,10 @@ public class CheepRepTest : IDisposable
         //Arrange
         connection = new SqliteConnection("Filename=:memory:");
         var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection);
+        connection.Open();
         var option = builder.Options;
         context = new ChirpDBContext(option);
-        connection.Open();
+        
         stanleyDTO = new CheepDTO("Stanley", "Once upon a time", new DateTime(1698150571));
         hermanDTO = new CheepDTO("herman", "Herman@only.com", DateTime.Parse("2022-08-01 13:14:37"));
         helloDTO = new CheepDTO("Stanley", "Hello World", DateTime.Parse("2022-12-01 17:14:37"));
