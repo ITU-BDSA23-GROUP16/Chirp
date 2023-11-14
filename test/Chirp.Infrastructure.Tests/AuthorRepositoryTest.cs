@@ -16,81 +16,88 @@ public class AuthorRepTest: IDisposable
     ChirpDBContext context;
     SqliteConnection connection;
 
-    AuthorDTO saynabDTO,hermanDTO;
+    AuthorDTO saynabDTO, hermanDTO;
     Author herman;
-    public AuthorRepTest(){
+    public AuthorRepTest()
+    {
         //Arrange
         connection = new SqliteConnection("Filename=:memory:");
         var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection); 
-        context = new ChirpDBContext();
+        var option = builder.Options;
+        context = new ChirpDBContext(option);
+        connection.Open();
         
         saynabDTO = new AuthorDTO("Saynab", "saynab@jjj", new List<CheepDTO>());
         hermanDTO = new AuthorDTO("herman", "Herman@only.com", new List<CheepDTO>());
-        herman = new Author { Name = "herman", Email = "Herman@only.com" };
+        herman = new Author { UserName = "herman", Email = "Herman@only.com" };
     }
 
-    //the infrastructurtest needs a reference from infrasturctor project
+    //the infrastructureTest needs a reference from infrastructure project
     [Fact]
-    public async void CreatedExists()
+    public async Task CreatedExists()
     {
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
         
         //ActDTO
-        repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(saynabDTO);
 
         //Assert
-        var created = await context.Authors.SingleOrDefaultAsync(c => c.Name == "Saynab");
+        var created = await context.Authors.SingleOrDefaultAsync(c => c.UserName == "Saynab");
         Assert.NotNull(created);
     }
+    // https://stackoverflow.com/questions/36856073/the-instance-of-entity-type-cannot-be-tracked-because-another-instance-of-this-t
     [Fact]
-    public async void CreatedIsUnique()
+    public async Task CreatedIsUnique()
     {
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
 
         context.Authors.Add(herman);
+        context.Entry(herman).State = EntityState.Detached;
 
         //Act
-        repository.CreateAuthor(hermanDTO);
+        await repository.CreateAuthor(hermanDTO);
 
         //Assert
         await Assert.ThrowsAsync<ArgumentException>( () =>  repository.CreateAuthor(hermanDTO));
-        var author = await context.Authors.Where(c => c.Name == "herman").ToListAsync();
+        var author = await context.Authors.Where(c => c.UserName == "herman").ToListAsync();
         Assert.Single(author);
     }
 
     [Fact]
-    public async void FindByName()
+    public async Task FindByName()
     {
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
 
         context.Authors.Add(herman);
+        context.Entry(herman).State = EntityState.Detached;
+        await repository.CreateAuthor(hermanDTO);
 
         //Act
-        repository.CreateAuthor(hermanDTO);
+        var author = await repository.FindAuthorByName("herman");
 
         //Assert
-        var author = repository.FindAuthorByName("herman");
-        Assert.Equal(author, hermanDTO);
+        Assert.Equal(author.Name, hermanDTO.Name);
     }
 
     [Fact]
-    public async void FindByEmail()
+    public async Task FindByEmail()
     {
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
 
         context.Authors.Add(herman);
-        repository.CreateAuthor(hermanDTO);
+        context.Entry(herman).State = EntityState.Detached;
+        await repository.CreateAuthor(hermanDTO);
 
         //Act
-        var author =  repository.FindAuthorByEmail("Herman@only.com");
+        var author = await repository.FindAuthorByEmail("Herman@only.com");
 
         //Assert
         Assert.Equal(herman.Email, author.Email);

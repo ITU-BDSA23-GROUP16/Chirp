@@ -25,40 +25,42 @@ public class CheepRepTest : IDisposable
         //Arrange
         connection = new SqliteConnection("Filename=:memory:");
         var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection);
-        context = new ChirpDBContext();
-
+        connection.Open();
+        var option = builder.Options;
+        context = new ChirpDBContext(option);
+        
         stanleyDTO = new CheepDTO("Stanley", "Once upon a time", new DateTime(1698150571));
         hermanDTO = new CheepDTO("herman", "Herman@only.com", DateTime.Parse("2022-08-01 13:14:37"));
         helloDTO = new CheepDTO("Stanley", "Hello World", DateTime.Parse("2022-12-01 17:14:37"));
     }
 
     [Fact]
-    public async void AddCheep()
+    public async Task AddCheep()
     {
         //Arrange
-        Arrange();
+        await Arrange();
 
         //Act
-        repository!.CreateCheep(helloDTO);
+        await repository!.CreateCheep(helloDTO);
         //Assert
         var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Hello World");
         Assert.NotNull(created);
     }
     //Identical Cheeps are allowed to exist
     [Fact]
-    public async void GetPublicCheeps()
+    public async Task GetPublicCheeps()
     {
         //Arrange
-        Arrange();
+        await Arrange();
 
         //Act
         Cheep? created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
         Cheep? herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
-        IEnumerable<CheepDTO> cheeps = repository!.GetCheeps();
+        IEnumerable<CheepDTO> cheeps = await repository!.GetCheeps();
 
         //Assert
-        EnsureUnchanged(created!, herman!);
+        await EnsureUnchanged(created!, herman!);
         // Make second variable that gets a cheep with the same text from the list
         CheepDTO cheep0 = cheeps.ElementAt(0);
         CheepDTO cheep1 = cheeps.ElementAt(1);
@@ -76,21 +78,21 @@ public class CheepRepTest : IDisposable
     }
 
     [Fact]
-    public async void GetAuthorCheeps()
+    public async Task GetAuthorCheeps()
     {
         //Arrange
-        Arrange();
+        await Arrange();
 
         //Act
         var created0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
         var herman0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
-        IEnumerable<CheepDTO> cheeps = repository!.GetByAuthor("herman");
+        IEnumerable<CheepDTO> cheeps = await repository!.GetByAuthor("herman");
 
         //Assert
-        EnsureUnchanged(created0!, herman0!);
+        await EnsureUnchanged(created0!, herman0!);
 
-        IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.Name == "herman").ToListAsync();
+        IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.UserName == "herman").ToListAsync();
         //https://stackoverflow.com/questions/168901/count-the-items-from-a-ienumerablet-without-iterating
         int result = 0;
         using (IEnumerator<Cheep> enumerator = created.GetEnumerator())
@@ -108,21 +110,21 @@ public class CheepRepTest : IDisposable
     }
 
     [Fact]
-    public async void GetPages()
+    public async Task GetPages()
     {
         //Arrange
-        Arrange();
-        repository!.CreateCheep(helloDTO);
+        await Arrange();
+        await repository!.CreateCheep(helloDTO);
 
         //Act
         var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
         var herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
-        IEnumerable<CheepDTO> page1 = repository.GetCheeps(2);
-        IEnumerable<CheepDTO> page2 = repository.GetCheeps(2, 2);
+        IEnumerable<CheepDTO> page1 = await repository.GetCheeps(2);
+        IEnumerable<CheepDTO> page2 = await repository.GetCheeps(2, 2);
 
         //Assert
-        EnsureUnchanged(created!, herman!);
+        await EnsureUnchanged(created!, herman!);
         var first1 = page1.ElementAt(0);
         var first2 = page2.ElementAt(0);
         //if hermanDTO is from August, then it is the earliest and should be on page 2
@@ -136,7 +138,7 @@ public class CheepRepTest : IDisposable
         context.Dispose();
         SqliteConnection.ClearAllPools();
     }
-    private async void EnsureUnchanged(Cheep created0, Cheep herman0)
+    private async Task EnsureUnchanged(Cheep created0, Cheep herman0)
     {
         //Assert
         var created1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == created0.Message);
@@ -146,11 +148,11 @@ public class CheepRepTest : IDisposable
         Assert.Equal(created1, created0);
         Assert.Equal(herman1, herman0);
     }
-    private async void Arrange()
+    private async Task Arrange()
     {
         await context.Database.EnsureCreatedAsync();
         repository = new CheepRepository(context);
-        repository.CreateCheep(stanleyDTO);
-        repository.CreateCheep(hermanDTO);
+        await repository.CreateCheep(stanleyDTO);
+        await repository.CreateCheep(hermanDTO);
     }
 }
