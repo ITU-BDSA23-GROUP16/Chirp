@@ -55,7 +55,7 @@ public class CheepRepository : ICheepRepository
          TimeStamp = cheep.TimeStamp
       };
 
-      await _context.Cheeps.AddAsync(newCheep);
+      _context.Cheeps.Add(newCheep);
       await _context.SaveChangesAsync();
    }
 
