@@ -13,17 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 //var folder = Environment.SpecialFolder.LocalApplicationData;
 //var path = Environment.GetFolderPath(folder);
-var path = Path.GetTempPath();
-var DbPath = System.IO.Path.Join(path, "chirp.db");
+//var path = Path.GetTempPath();
+//var DbPath = System.IO.Path.Join(path, "chirp.db");
 
-Console.WriteLine($"Database path: {DbPath}.");
+//Console.WriteLine($"Database path: {DbPath}.");
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlServer($"Data Source={DbPath}"));
+    options.UseSqlServer("Server=127.0.0.1,1433;Database=Master;User Id=SA;Password=Wak96tjz$;TrustServerCertificate=true"));
 //options.UseSqlite(connectionString));
 //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
