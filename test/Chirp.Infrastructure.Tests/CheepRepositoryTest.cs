@@ -19,6 +19,7 @@ public class CheepRepTest : IDisposable
     SqliteConnection connection;
 
     CheepDTO stanleyDTO, hermanDTO, helloDTO;
+    Author stanley, herman;
 
     public CheepRepTest()
     {
@@ -151,7 +152,13 @@ public class CheepRepTest : IDisposable
     private async Task Arrange()
     {
         await context.Database.EnsureCreatedAsync();
+        stanley = new Author{UserName = "Stanley", Email = "swlc@jjj"};
+        herman = new Author {UserName = "herman", Email = "Herman@only.com"};
         repository = new CheepRepository(context);
+        await context.Authors.AddAsync(herman);
+        context.Entry(herman).State = EntityState.Detached;
+        await context.Authors.AddAsync(stanley);
+        context.Entry(stanley).State = EntityState.Detached;
         await repository.CreateCheep(stanleyDTO);
         await repository.CreateCheep(hermanDTO);
     }
