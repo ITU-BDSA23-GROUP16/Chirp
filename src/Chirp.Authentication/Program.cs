@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Chirp.Infrastructure;
 using Chirp.Core;
 using Microsoft.EntityFrameworkCore;
-
+using AspNet.Security.OAuth.GitHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +34,14 @@ builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.Req
 //builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)
 //            .AddEntityFrameworkStores<ChirpDBContext>();
 builder.Services.AddMvc();
+
+builder.Services.AddAuthentication()
+    .AddGitHub(o =>
+    {
+        o.ClientId = builder.Configuration["authentication:github:clientId"];
+        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
+        o.CallbackPath = "/signin-github";
+    });
 
 
 builder.Services.AddRazorPages();
