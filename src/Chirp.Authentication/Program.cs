@@ -1,29 +1,30 @@
-using Chirp.Core;
-using Chirp.Authentication;
-using Chirp.Infrastructure;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Chirp.Authentication;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Chirp.Infrastructure;
+using Chirp.Core;
+using Microsoft.EntityFrameworkCore;
+using AspNet.Security.OAuth.GitHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //var folder = Environment.SpecialFolder.LocalApplicationData;
 //var path = Environment.GetFolderPath(folder);
-//var path = Path.GetTempPath();
-//var DbPath = System.IO.Path.Join(path, "chirp.db");
+var path = Path.GetTempPath();
+var DbPath = System.IO.Path.Join(path, "chirp.db");
 
-//Console.WriteLine($"Database path: {DbPath}.");
+Console.WriteLine($"Database path: {DbPath}.");
 
 // Add services to the container.
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+    options.UseSqlite($"Data Source={DbPath}"));
 //options.UseSqlite(connectionString));
 //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -33,6 +34,14 @@ builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.Req
 //builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)
 //            .AddEntityFrameworkStores<ChirpDBContext>();
 builder.Services.AddMvc();
+
+builder.Services.AddAuthentication()
+    .AddGitHub(o =>
+    {
+        o.ClientId = builder.Configuration["authentication_github_clientId"];
+        o.ClientSecret = builder.Configuration["authentication_github_clientSecret"];
+        o.CallbackPath = "/signin-github";
+    });
 
 
 builder.Services.AddRazorPages();
