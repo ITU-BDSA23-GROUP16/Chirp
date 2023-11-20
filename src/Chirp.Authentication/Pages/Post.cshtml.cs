@@ -19,7 +19,7 @@ public class PostModel : PageModel
     public void OnGet()
     {
     }
-    public async void OnPostAsync(string message)
+    public async Task OnPostAsync(string message)
     {
         var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
         Console.WriteLine(DateTime.Now);
