@@ -4,9 +4,24 @@
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
 }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
 
-<div>
-    <h2> Public Timeline </h2>
+@if (SignInManager.IsSignedIn(User))
+{
+
+<div class="cheepbox">
+    <h3>What's on your mind @(User.Identity.Name)?</h3>
+        <form method="post" style="display: flex;">
+            <input type="text" name="message">
+            <input type="submit" value="Share">
+        </form>
+</div>
+}
+
+
+<h2> Public Timeline </h2>
 
     @if (Model.Cheeps!.Any())
     {
@@ -16,7 +31,7 @@
                 <li>
                     <p>
                         <strong>
-                            <a href="/@cheep.Author">@cheep.Author</a>
+                            <a href="/author/@cheep.Author">@cheep.Author</a>
                         </strong>
                         @cheep.Message
                         <small>&mdash; @cheep.TimeStamp</small>
@@ -29,4 +44,5 @@
     {
         <em>There are no cheeps so far.</em>
     }
+</div>
 </div>
