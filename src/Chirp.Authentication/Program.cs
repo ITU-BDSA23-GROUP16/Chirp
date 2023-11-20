@@ -12,19 +12,9 @@ using AspNet.Security.OAuth.GitHub;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var folder = Environment.SpecialFolder.LocalApplicationData;
-//var path = Environment.GetFolderPath(folder);
-var path = Path.GetTempPath();
-var DbPath = System.IO.Path.Join(path, "chirp.db");
-
-Console.WriteLine($"Database path: {DbPath}.");
-
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlite($"Data Source={DbPath}"));
+    options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 //options.UseSqlite(connectionString));
 //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
