@@ -23,7 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlServer("Server=127.0.0.1,1433;Database=Master;User Id=SA;Password=Wak96tjz$;TrustServerCertificate=true"));
+    options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 //options.UseSqlite(connectionString));
 //sqlserver?
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
