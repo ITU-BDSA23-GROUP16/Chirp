@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Core;
+using System.ComponentModel;
 namespace Chirp.Infrastructure.Tests;
 
 /*
@@ -29,10 +30,12 @@ public class CheepRepTest : IDisposable
         connection.Open();
         var option = builder.Options;
         context = new ChirpDBContext(option);
-        
-        stanleyDTO = new CheepDTO("Stanley", "Once upon a time", new DateTime(1698150571));
+
+        stanleyDTO = new CheepDTO("Stanley", "Once upon a time", DateTimeOffset.FromUnixTimeSeconds(1698150571).UtcDateTime);
         hermanDTO = new CheepDTO("herman", "Herman@only.com", DateTime.Parse("2022-08-01 13:14:37"));
         helloDTO = new CheepDTO("Stanley", "Hello World", DateTime.Parse("2022-12-01 17:14:37"));
+        stanley = new Author { UserName = "Stanley", Email = "swlc@jjj" };
+        herman = new Author { UserName = "herman", Email = "Herman@only.com" };
     }
 
     [Fact]
@@ -121,8 +124,8 @@ public class CheepRepTest : IDisposable
         var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
         var herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
-        IEnumerable<CheepDTO> page1 = await repository.GetCheeps(2);
-        IEnumerable<CheepDTO> page2 = await repository.GetCheeps(2, 2);
+        IEnumerable<CheepDTO> page1 = await repository.GetCheeps(1);
+        IEnumerable<CheepDTO> page2 = await repository.GetCheeps(1, 2);
 
         //Assert
         await EnsureUnchanged(created!, herman!);
@@ -152,13 +155,15 @@ public class CheepRepTest : IDisposable
     private async Task Arrange()
     {
         await context.Database.EnsureCreatedAsync();
-        stanley = new Author{UserName = "Stanley", Email = "swlc@jjj"};
-        herman = new Author {UserName = "herman", Email = "Herman@only.com"};
         repository = new CheepRepository(context);
         await context.Authors.AddAsync(herman);
-        context.Entry(herman).State = EntityState.Detached;
         await context.Authors.AddAsync(stanley);
-        context.Entry(stanley).State = EntityState.Detached;
+        //Assert.Equal("Added", context.Entry(herman).State.ToString());
+        //Assert.Equal("Added", context.Entry(stanley).State.ToString());
+        context.SaveChanges();
+        //After this they say "Unchanged"
+        //Assert.Equal(2, context.Authors.Count<Author>());
+
         await repository.CreateCheep(stanleyDTO);
         await repository.CreateCheep(hermanDTO);
     }
