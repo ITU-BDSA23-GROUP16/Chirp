@@ -14,11 +14,11 @@ public class CheepRepository : ICheepRepository
    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageSize = 32, int page = 0)
    {
       return await _context.Cheeps
-       .OrderByDescending(c => c.TimeStamp)
-       .Skip(page * pageSize)
-       .Take(pageSize)
-       .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
-       .ToListAsync();
+      .OrderByDescending(c => c.TimeStamp)
+      .Skip(page * pageSize)
+      .Take(pageSize)
+      .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
+      .ToListAsync();
    }
 
    public async Task<IEnumerable<CheepDTO>> GetAuthor(int pageSize = 32, int page = 0)
@@ -55,7 +55,7 @@ public class CheepRepository : ICheepRepository
          TimeStamp = cheep.TimeStamp
       };
 
-      await _context.Cheeps.AddAsync(newCheep);
+      _context.Cheeps.Add(newCheep);
       await _context.SaveChangesAsync();
    }
 
