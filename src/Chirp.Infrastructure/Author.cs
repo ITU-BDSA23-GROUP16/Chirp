@@ -6,7 +6,14 @@ public class Author : IdentityUser
     //Default values for get-set properties:
     //https://www.tutorialsteacher.com/articles/set-default-value-to-property-in-csharp
     public ICollection<Cheep> Cheeps { get; set; } = new List<Cheep>();
+    public ICollection<Author> Follower;
+    public ICollection<Author> Followed;
 
 
+}
 
+public class Follow
+{
+    public string FollowerId;
+    public string FollowedId;
 }

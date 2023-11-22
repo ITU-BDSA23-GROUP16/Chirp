@@ -3,6 +3,7 @@ using System;
 using Chirp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,12 +11,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chirp.Infrastructure.Migrations
 {
     [DbContext(typeof(ChirpDBContext))]
-    partial class ChirpDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231122144007_Follow2")]
+    partial class Follow2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
+
+            modelBuilder.Entity("AuthorAuthor", b =>
+                {
+                    b.Property<string>("FollowersId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FollowingId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("FollowersId", "FollowingId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.ToTable("AuthorAuthor");
+                });
 
             modelBuilder.Entity("Chirp.Infrastructure.Author", b =>
                 {
@@ -104,21 +122,6 @@ namespace Chirp.Infrastructure.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Cheeps");
-                });
-
-            modelBuilder.Entity("Chirp.Infrastructure.Follow", b =>
-                {
-                    b.Property<string>("FollowerId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FollowedId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("FollowerId", "FollowedId");
-
-                    b.HasIndex("FollowedId");
-
-                    b.ToTable("Follows");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -249,6 +252,21 @@ namespace Chirp.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AuthorAuthor", b =>
+                {
+                    b.HasOne("Chirp.Infrastructure.Author", null)
+                        .WithMany()
+                        .HasForeignKey("FollowersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Chirp.Infrastructure.Author", null)
+                        .WithMany()
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Chirp.Infrastructure.Cheep", b =>
                 {
                     b.HasOne("Chirp.Infrastructure.Author", "Author")
@@ -258,21 +276,6 @@ namespace Chirp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("Chirp.Infrastructure.Follow", b =>
-                {
-                    b.HasOne("Chirp.Infrastructure.Author", null)
-                        .WithMany()
-                        .HasForeignKey("FollowedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Chirp.Infrastructure.Author", null)
-                        .WithMany()
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
