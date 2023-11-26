@@ -40,6 +40,19 @@ public class CheepRepository : ICheepRepository
       .ToListAsync();
    }
 
+    public async Task<IEnumerable<CheepDTO>> GetByFollower(string follower)
+   {
+      IEnumerable<Author> allfollowed = 
+      await _context.Follows.Where(f => f.Follower.UserName.Contains(follower))
+      .Select(f => f.Following)
+      .ToListAsync();
+
+      List<Cheep> cheeplist = new List<Cheep>();
+      foreach (Author aut in allfollowed)
+      {cheeplist.Concat(aut.Cheeps);}
+
+      return cheeplist.Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp));
+   }
 
    public async Task CreateCheep(CheepDTO cheep)
    {

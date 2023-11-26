@@ -7,14 +7,16 @@ public class TimelineModel : PageModel
 {
     protected readonly ILogger<TimelineModel> _logger;
     protected readonly ICheepRepository _repository;
+    protected readonly IAuthorRepository _authors;
     public IEnumerable<CheepDTO>? Cheeps { get; set; }
     protected int cheepsPerPage = 32;
 
 
-    public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository)
+    public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
     {
         _logger = logger;
         _repository = repository;
+        _authors = authors;
     }
 
     public async Task<ActionResult> OnGetAsync(string author)
@@ -24,12 +26,20 @@ public class TimelineModel : PageModel
         
         if (author == null){
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
+        } else if (author == User.Identity!.Name!) {
+            Cheeps = await _repository.GetByFollower(author);
         } else {
             Cheeps = await _repository.GetByAuthor(author);
         }
-        
+            
         return Page();
     }
 
+public async Task OnPutAsync(string follow)
+    {
+        AuthorDTO following= await _authors.FindAuthorByName(follow);
+        AuthorDTO follower= await _authors.FindAuthorByName(User.Identity!.Name!);
+        await _authors.CreateFollow(follower,following);
+    }
 
 }

@@ -161,7 +161,7 @@ public class AuthorRepTest: IDisposable
 
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
-
+        
         await repository.CreateFollow(saynabDTO, hermanDTO);
 
         //Act
@@ -171,6 +171,29 @@ public class AuthorRepTest: IDisposable
         //Assert
         Assert.Equal(herman.UserName, expected.Name);
     }
+
+      [Fact]
+    public async Task RemoveFollower()
+    {
+        
+        //Arrange
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+        await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+        await repository.CreateFollow(saynabDTO, hermanDTO);
+
+        //ActDTO
+        await repository.RemoveFollow(saynabDTO, hermanDTO);
+
+        //Assert
+        var created = await context.Follows.SingleOrDefaultAsync(c => c.Follower.UserName == "Saynab" && c.Following.UserName == "herman");
+
+            
+        Assert.Null(created);
+    }
+
+
         
     public void Dispose()
     {

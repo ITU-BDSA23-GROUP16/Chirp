@@ -60,7 +60,7 @@ public class AuthorRepository : IAuthorRepository
         var newFollow = new Follow
         {
             FollowerId = follower.Id,
-            FollowedId = followed.Id,
+            FollowingId = followed.Id,
             Follower = follower,
             Following = followed
         };
@@ -91,4 +91,12 @@ public class AuthorRepository : IAuthorRepository
         .ToListAsync();
         
     }
+
+        public async Task RemoveFollow(AuthorDTO followerDto, AuthorDTO followingDto)
+    {   
+        var follow = await _context.Follows
+        .SingleAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
+        _context.Follows.Remove(follow);
+        await _context.SaveChangesAsync();
+    }    
 }

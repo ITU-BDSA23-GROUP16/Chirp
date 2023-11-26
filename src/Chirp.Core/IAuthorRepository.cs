@@ -7,13 +7,16 @@ public interface IAuthorRepository
 // Task Create(AuthorDTO author);
 
 Task CreateAuthor(AuthorDTO author);
+Task CreateFollow(AuthorDTO followerDto, AuthorDTO followingDto);
+Task RemoveFollow(AuthorDTO followerDto, AuthorDTO followingDto);
 
 Task <AuthorDTO> FindAuthorByName(string name);
 
-
 Task <AuthorDTO> FindAuthorByEmail(string email);
 
+Task<IEnumerable<AuthorDTO>> GetFollowed(string author);
 
+Task<IEnumerable<AuthorDTO>> GetFollowing(string author);
 
 
 }
