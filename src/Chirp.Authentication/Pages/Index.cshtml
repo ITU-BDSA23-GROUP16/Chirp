@@ -1,4 +1,9 @@
 ﻿@page "/"
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+
 @model TimelineModel
 @{
     ViewData["Title"] = "Chirp!";
@@ -6,6 +11,13 @@
 }
 
 <div>
+    @if (SignInManager.IsSignedIn(User)){
+
+    <form asp-page-handler="Delete" method="post">
+        <button type="submit">Delete</button>
+    </form>
+    }
+    
     <h2> Public Timeline </h2>
 
     <partial name="_TimelinePartial" />

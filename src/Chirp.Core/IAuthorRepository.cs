@@ -13,7 +13,7 @@ Task <AuthorDTO> FindAuthorByName(string name);
 
 Task <AuthorDTO> FindAuthorByEmail(string email);
 
-
+Task DeleteAuthor(string author);
 
 
 }

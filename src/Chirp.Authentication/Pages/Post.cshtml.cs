@@ -24,6 +24,8 @@ public class PostModel : PageModel
         var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
         Console.WriteLine(DateTime.Now);
         await _repository.CreateCheep(newCheep);
+
+        RedirectToPage("/");
     }
 }
 

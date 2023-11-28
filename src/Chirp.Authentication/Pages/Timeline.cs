@@ -7,14 +7,16 @@ public class TimelineModel : PageModel
 {
     protected readonly ILogger<TimelineModel> _logger;
     protected readonly ICheepRepository _repository;
+    protected readonly IAuthorRepository _aut;
     public IEnumerable<CheepDTO>? Cheeps { get; set; }
     protected int cheepsPerPage = 32;
+    protected string print {get; set;}
 
-
-    public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository)
+    public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository aut)
     {
         _logger = logger;
         _repository = repository;
+        _aut = aut;
     }
 
     public async Task<ActionResult> OnGetAsync(string author)
@@ -30,6 +32,5 @@ public class TimelineModel : PageModel
         
         return Page();
     }
-
-
+    
 }

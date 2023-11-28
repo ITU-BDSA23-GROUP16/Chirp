@@ -1,0 +1,17 @@
+@page "/MyPage/{author}"
+@model MyPageModel
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+    var routeName = HttpContext.GetRouteValue("author");
+}
+
+<div>
+    <h2> Hello @routeName! This is your page </h2>
+
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-page-handler="Delete" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+        <button type="submit">Delete</button>
+    </form>
+    
+    
+</div>

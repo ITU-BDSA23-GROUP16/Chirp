@@ -60,13 +60,16 @@ public class AuthorRepository : IAuthorRepository
 
     }
 
+
     public async Task DeleteAuthor(string author) 
     {
-        var auth = await _context.Authors.SingleAsync(c => c.UserName == author);
-        if (auth.IsDeleted == false) {
-            auth.IsDeleted = true;
-            _context.Update(auth);
-            await _context.SaveChangesAsync();
-        }
+        
+        var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
+        auth.UserName = "HASBEENCHANGED";
+        auth.Email ="HASBEENCHANGED";
+
+        _context.Update(auth);
+        await _context.SaveChangesAsync();     
     }
+
 }

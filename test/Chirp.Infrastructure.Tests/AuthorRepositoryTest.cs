@@ -103,6 +103,22 @@ public class AuthorRepTest: IDisposable
         Assert.Equal(herman.Email, author.Email);
     }
     
+    [Fact]
+    public async Task UsernameChanged()
+    {
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+        
+        //ActDTO
+        await repository.CreateAuthor(saynabDTO);
+
+        //Assert
+        var author = await context.Authors.SingleOrDefaultAsync(c => c.UserName == "Saynab");
+        await repository.DeleteAuthor(author.UserName);
+
+        Assert.Equal("HASBEENCHANGED", author.UserName);
+    }
+
     public void Dispose()
     {
         connection.Dispose();
