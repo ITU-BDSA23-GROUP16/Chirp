@@ -10,7 +10,7 @@ public class TimelineModel : PageModel
     protected readonly IAuthorRepository _aut;
     public IEnumerable<CheepDTO>? Cheeps { get; set; }
     protected int cheepsPerPage = 32;
-    protected string print {get; set;}
+    protected string print { get; set; }
 
     public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository aut)
     {
@@ -23,14 +23,26 @@ public class TimelineModel : PageModel
     {
         bool hasPage = int.TryParse(Request.Query["page"], out var page);
         var PageInt = Math.Max(hasPage ? page : 1, 1);
-        
-        if (author == null){
+
+        if (author == null)
+        {
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
-        } else {
+        }
+        else
+        {
             Cheeps = await _repository.GetByAuthor(author);
         }
-        
+
         return Page();
     }
-    
+
+    public async Task<ActionResult> OnPostAsync(string message)
+    {
+        var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
+        Console.WriteLine(DateTime.Now);
+        await _repository.CreateCheep(newCheep);
+
+        return Redirect("/");
+    }
+
 }
