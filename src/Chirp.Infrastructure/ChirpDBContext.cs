@@ -31,6 +31,17 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         .WithOne(e => e.Author)
         .HasForeignKey(e => e.AuthorId)
         .HasPrincipalKey(e => e.Id);
+        //Follows
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Followers)
+        .WithOne(e => e.Follower)
+        .HasForeignKey(e =>  new { e.FollowerId})
+        .HasPrincipalKey(e => e.Id);
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Followings)
+        .WithOne(e => e.Following)
+        .HasForeignKey(e =>  new { e.FollowingId})
+        .HasPrincipalKey(e => e.Id);
         modelBuilder.Entity<Follow>()
         .HasKey(a => new { a.FollowerId, a.FollowingId });
         

@@ -9,5 +9,9 @@
 <div>
     <h2> @routeName's Timeline </h2>
 
+        <form asp-page-handler="update">
+             <button type= "submit" name="follow" value= @routeName >Follow</button>
+        </form>
+
    <partial name="_TimelinePartial" />
 </div>

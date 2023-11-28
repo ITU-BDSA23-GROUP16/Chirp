@@ -24,21 +24,15 @@ public class TimelineModel : PageModel
         bool hasPage = int.TryParse(Request.Query["page"], out var page);
         var PageInt = Math.Max(hasPage ? page : 1, 1);
         
-        string debug=null;
         if (author == null){
-            debug="Vi er inde i PublicTimeline";
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
         } else if (author == User.Identity!.Name!) {
-            debug="Vi er inde i GetByFollower";
             Cheeps = await _repository.GetByFollower(author);
         } else {
-            debug="Vi er inde i GetByAuthor";
             Cheeps = await _repository.GetByAuthor(author);
 
         }
             if (Cheeps==null) {
-            Console.WriteLine(debug);
-            Console.WriteLine(author);
             Cheeps = await _repository.GetCheeps(32, 1);
             }
         
