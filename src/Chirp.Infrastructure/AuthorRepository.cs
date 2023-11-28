@@ -54,9 +54,11 @@ public class AuthorRepository : IAuthorRepository
 
     public async Task CreateFollow(AuthorDTO followerDto, AuthorDTO followedDto )
     {
-        var follower = await _context.Authors.SingleAsync(c => c.UserName == followerDto.Name);
-        var followed = await _context.Authors.SingleAsync(c => c.UserName == followedDto.Name);        
+        var follower = await _context.Authors.SingleOrDefaultAsync(c => c.UserName == followerDto.Name);
+        var followed = await _context.Authors.SingleOrDefaultAsync(c => c.UserName == followedDto.Name);        
 
+        
+        
         var newFollow = new Follow
         {
             FollowerId = follower.Id,
@@ -98,5 +100,18 @@ public class AuthorRepository : IAuthorRepository
         .SingleAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
         _context.Follows.Remove(follow);
         await _context.SaveChangesAsync();
-    }    
+    }  
+
+         public async Task<Boolean> FollowExists(AuthorDTO followerDto, AuthorDTO followingDto){
+
+                var follow = await _context.Follows
+                .SingleOrDefaultAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
+
+                if (follow == null){
+                    return false;
+                } else{
+                    return true; 
+                }
+
+         }  
 }

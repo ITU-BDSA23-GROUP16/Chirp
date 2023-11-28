@@ -24,22 +24,54 @@ public class TimelineModel : PageModel
         bool hasPage = int.TryParse(Request.Query["page"], out var page);
         var PageInt = Math.Max(hasPage ? page : 1, 1);
         
+        string debug=null;
         if (author == null){
+            debug="Vi er inde i PublicTimeline";
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
         } else if (author == User.Identity!.Name!) {
+            debug="Vi er inde i GetByFollower";
             Cheeps = await _repository.GetByFollower(author);
         } else {
+            debug="Vi er inde i GetByAuthor";
             Cheeps = await _repository.GetByAuthor(author);
+
         }
-            
+            if (Cheeps==null) {
+            Console.WriteLine(debug);
+            Console.WriteLine(author);
+            Cheeps = await _repository.GetCheeps(32, 1);
+            }
+        
         return Page();
     }
 
-public async Task OnPutAsync(string follow)
+public async Task<ActionResult> OnPostUpdateAsync(string follow)
     {
         AuthorDTO following= await _authors.FindAuthorByName(follow);
         AuthorDTO follower= await _authors.FindAuthorByName(User.Identity!.Name!);
-        await _authors.CreateFollow(follower,following);
+        
+
+        if(await _authors.FollowExists(follower, following)){
+            
+            await _authors.RemoveFollow(follower, following);
+
+        } else{
+
+            await _authors.CreateFollow(follower,following);
+            
+            ////@try {Model.Cheeps!.Any();} catch (ArgumentNullException e) {Console.WriteLine(e); Console.WriteLine(Model.Cheeps.ToString());}
+
+        }
+        return RedirectToPage();
+        
+    }
+
+   
+    public async Task<Boolean> IfFollowExists(string follow){
+
+        AuthorDTO following= await _authors.FindAuthorByName(follow);
+        AuthorDTO follower= await _authors.FindAuthorByName(User.Identity!.Name!);
+        return await _authors.FollowExists(follower, following);
     }
 
 }

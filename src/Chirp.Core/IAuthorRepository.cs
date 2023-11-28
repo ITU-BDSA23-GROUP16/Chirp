@@ -18,5 +18,7 @@ Task<IEnumerable<AuthorDTO>> GetFollowed(string author);
 
 Task<IEnumerable<AuthorDTO>> GetFollowing(string author);
 
+Task<Boolean> FollowExists(AuthorDTO followerDto, AuthorDTO followingDto);
+
 
 }
