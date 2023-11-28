@@ -7,32 +7,36 @@
     <title>@ViewData["Title"]</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/png" href="/favicon/favicon.ico">
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Chirp.Authentication.styles.css" asp-append-version="true" />
+    @using Microsoft.AspNetCore.Identity
+    @inject SignInManager<Author> SignInManager
+    @inject UserManager<Author> UserManager
+
 </head>
 
 <body>
-    <header>
-        <h1><img src="/images/icon1.png" alt="Icon1" />Chirp!</h1>
-        <div class="container">
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Chirp!</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <partial name="_NavPartial" />
-                    <partial name="_LoginPartial" />
-                </div>
-            </nav>
+<div class=page>
+    <h1><img src="/images/icon1.png" alt="Icon1" />Chirp!</h1>
+        <div class=navigation>
+            <div>
+            <a href="/">Public timeline </a> |
+            @if (SignInManager.IsSignedIn(User))             
+            {
+                <a href="/author/@(User.Identity.Name)">My timeline </a>
+                <a href="/post">Post cheep</a> 
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
+                    <button  type="submit" >Logout</button>
+                </form>
+            } 
+            else 
+            {
+                <a asp-area="Identity" asp-page="/Account/Register">Register</a> 
+                <a asp-area="Identity" asp-page="/Account/Login">Login</a> 
+            }
+            </div>
         </div>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    
+    <div class="body">
             @RenderBody()
-        </main>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -41,11 +45,9 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
+
+</div>
 </body>
 
 </html>
