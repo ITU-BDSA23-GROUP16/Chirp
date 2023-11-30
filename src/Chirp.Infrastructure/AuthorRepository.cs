@@ -52,6 +52,24 @@ public class AuthorRepository : IAuthorRepository
 
     }
 
+    public async Task DeleteAuthor(string author)
+    {
+
+        var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
+        if (auth == null)
+        {
+            Console.WriteLine("author er null i delete author");
+        }
+
+        Console.WriteLine(auth.Email);
+
+        auth.IsDeleted = true;
+        //_context.Update(auth);
+        await _context.SaveChangesAsync();
+        Console.WriteLine(auth.IsDeleted);
+    }
+
+
     public async Task CreateFollow(AuthorDTO followerDto, AuthorDTO followedDto )
     {
         var follower = await _context.Authors.SingleOrDefaultAsync(c => c.UserName == followerDto.Name);
@@ -114,4 +132,5 @@ public class AuthorRepository : IAuthorRepository
                 }
 
          }  
+
 }

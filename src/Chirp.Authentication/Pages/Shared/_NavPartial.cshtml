@@ -10,7 +10,10 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <li class="nav-item">
+
+
                 <a class="nav-link text-dark" href="author/@User.Identity!.Name">My timeline</a>
+
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-page="/Post">Post Cheeps</a>

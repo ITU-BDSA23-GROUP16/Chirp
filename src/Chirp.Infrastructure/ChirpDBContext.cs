@@ -13,12 +13,12 @@ public class ChirpDBContext : IdentityDbContext<Author>
     public string DbPath { get; }
 
 
-public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
-            : base(options)
+    public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
+                : base(options)
     {
 
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -31,6 +31,11 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         .WithOne(e => e.Author)
         .HasForeignKey(e => e.AuthorId)
         .HasPrincipalKey(e => e.Id);
+
+
+        modelBuilder.Entity<Author>().HasQueryFilter(a => !a.IsDeleted);
+
+
         //Follows
         modelBuilder.Entity<Author>()
         .HasMany(e => e.Followers)
@@ -45,6 +50,7 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         modelBuilder.Entity<Follow>()
         .HasKey(a => new { a.FollowerId, a.FollowingId });
         
+
     }
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.

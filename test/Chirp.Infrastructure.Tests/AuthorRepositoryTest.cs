@@ -104,6 +104,9 @@ public class AuthorRepTest: IDisposable
         Assert.Equal(herman.Email, author.Email);
     }
 
+
+
+
     [Fact]
     public async Task FollowerExist()
     {
@@ -194,7 +197,6 @@ public class AuthorRepTest: IDisposable
     }
 
 
-        
     public void Dispose()
     {
         connection.Dispose();
