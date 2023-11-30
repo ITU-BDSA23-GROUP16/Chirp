@@ -40,9 +40,10 @@ public class TimelineModel : PageModel
     {
         var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
         Console.WriteLine(DateTime.Now);
+        Console.WriteLine(newCheep.TimeStamp);
         await _repository.CreateCheep(newCheep);
 
-        return Redirect("/");
+        return Page();
     }
 
 }
