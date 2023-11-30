@@ -7,16 +7,22 @@ public class TimelineModel : PageModel
 {
     protected readonly ILogger<TimelineModel> _logger;
     protected readonly ICheepRepository _repository;
-    protected readonly IAuthorRepository _aut;
+
+
+
+    protected readonly IAuthorRepository _authors;
+
     public IEnumerable<CheepDTO>? Cheeps { get; set; }
     protected int cheepsPerPage = 32;
     protected string print { get; set; }
 
-    public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository aut)
+
+    public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
     {
         _logger = logger;
         _repository = repository;
-        _aut = aut;
+        _authors = authors;
+
     }
 
     public async Task<ActionResult> OnGetAsync(string author)
@@ -27,10 +33,17 @@ public class TimelineModel : PageModel
         if (author == null)
         {
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
-        }
-        else
-        {
+
+        } else if (author == User.Identity!.Name!) {
+            Cheeps = await _repository.GetByFollower(author);
+        } else {
+
             Cheeps = await _repository.GetByAuthor(author);
+
+        }
+        
+        if (Cheeps==null) {
+        Cheeps = await _repository.GetCheeps(32,1);
         }
 
         return Page();
@@ -44,6 +57,38 @@ public class TimelineModel : PageModel
         await _repository.CreateCheep(newCheep);
 
         return Page();
+        
+       }
+
+
+public async Task<ActionResult> OnPostUpdateAsync(string follow)
+    {
+        AuthorDTO following= await _authors.FindAuthorByName(follow);
+        AuthorDTO follower= await _authors.FindAuthorByName(User.Identity!.Name!);
+        
+
+        if(await _authors.FollowExists(follower, following)){
+            
+            await _authors.RemoveFollow(follower, following);
+
+        } else{
+
+            await _authors.CreateFollow(follower,following);
+            
+            ////@try {Model.Cheeps!.Any();} catch (ArgumentNullException e) {Console.WriteLine(e); Console.WriteLine(Model.Cheeps.ToString());}
+
+        }
+        return RedirectToPage();
+        
+    }
+
+   
+    public async Task<Boolean> IfFollowExists(string follow){
+
+        AuthorDTO following= await _authors.FindAuthorByName(follow);
+        AuthorDTO follower= await _authors.FindAuthorByName(User.Identity!.Name!);
+        return await _authors.FollowExists(follower, following);
+
     }
 
 }

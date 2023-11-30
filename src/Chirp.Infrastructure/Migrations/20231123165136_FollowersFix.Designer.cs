@@ -3,6 +3,7 @@ using System;
 using Chirp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chirp.Infrastructure.Migrations
 {
     [DbContext(typeof(ChirpDBContext))]
-    partial class ChirpDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231123165136_FollowersFix")]
+    partial class FollowersFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
@@ -34,9 +37,6 @@ namespace Chirp.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("LockoutEnabled")
@@ -114,10 +114,14 @@ namespace Chirp.Infrastructure.Migrations
                     b.Property<string>("FollowerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FollowingId")
+                    b.Property<string>("FollowedId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("FollowerId", "FollowingId");
+                    b.Property<string>("FollowingId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("FollowerId", "FollowedId");
 
                     b.HasIndex("FollowingId");
 
@@ -266,13 +270,13 @@ namespace Chirp.Infrastructure.Migrations
             modelBuilder.Entity("Chirp.Infrastructure.Follow", b =>
                 {
                     b.HasOne("Chirp.Infrastructure.Author", "Follower")
-                        .WithMany("Followers")
+                        .WithMany()
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Chirp.Infrastructure.Author", "Following")
-                        .WithMany("Followings")
+                        .WithMany()
                         .HasForeignKey("FollowingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -336,10 +340,6 @@ namespace Chirp.Infrastructure.Migrations
             modelBuilder.Entity("Chirp.Infrastructure.Author", b =>
                 {
                     b.Navigation("Cheeps");
-
-                    b.Navigation("Followers");
-
-                    b.Navigation("Followings");
                 });
 #pragma warning restore 612, 618
         }

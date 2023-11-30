@@ -17,7 +17,7 @@ public class AuthorRepTest: IDisposable
     SqliteConnection connection;
 
     AuthorDTO saynabDTO, hermanDTO;
-    Author herman;
+    Author herman, saynab;
     public AuthorRepTest()
     {
         //Arrange
@@ -30,6 +30,7 @@ public class AuthorRepTest: IDisposable
         saynabDTO = new AuthorDTO("Saynab", "saynab@jjj", new List<CheepDTO>());
         hermanDTO = new AuthorDTO("herman", "Herman@only.com", new List<CheepDTO>());
         herman = new Author { UserName = "herman", Email = "Herman@only.com" };
+        saynab = new Author { UserName = "Saynab", Email = "saynab@jjj" };
     }
 
     //the infrastructureTest needs a reference from infrastructure project
@@ -102,22 +103,99 @@ public class AuthorRepTest: IDisposable
         //Assert
         Assert.Equal(herman.Email, author.Email);
     }
-    
+
+
+
+
     [Fact]
-    public async Task UsernameChanged()
+    public async Task FollowerExist()
     {
+        
+        //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
-        
-        //ActDTO
         await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+
+        //ActDTO
+        await repository.CreateFollow(saynabDTO, hermanDTO);
 
         //Assert
-        var author = await context.Authors.SingleOrDefaultAsync(c => c.UserName == "Saynab");
-        await repository.DeleteAuthor(author.UserName);
-
-        Assert.Equal("HASBEENCHANGED", author.UserName);
+        var created = await context.Follows.SingleOrDefaultAsync(c => c.Follower.UserName == "Saynab");
+            
+        Assert.NotNull(created);
     }
+
+
+    [Fact]
+    public async Task FindFollower()
+    {
+        //Arrange
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+
+
+        context.Authors.Add(saynab);
+        context.Entry(saynab).State = EntityState.Detached;
+
+        await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+
+        await repository.CreateFollow(saynabDTO, hermanDTO);
+
+        //Act
+        IEnumerable<AuthorDTO> followed = await repository.GetFollowed("herman");
+        AuthorDTO expected = followed.ElementAt(0);
+
+        //Assert
+        Assert.Equal(saynab.UserName, expected.Name);
+    }
+
+     [Fact]
+    public async Task FindFollowings()
+    {
+        //Arrange
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+
+
+        context.Authors.Add(saynab);
+        context.Entry(saynab).State = EntityState.Detached;
+
+        await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+        
+        await repository.CreateFollow(saynabDTO, hermanDTO);
+
+        //Act
+        IEnumerable<AuthorDTO> followed = await repository.GetFollowing("Saynab");
+        AuthorDTO expected = followed.ElementAt(0);
+
+        //Assert
+        Assert.Equal(herman.UserName, expected.Name);
+    }
+
+      [Fact]
+    public async Task RemoveFollower()
+    {
+        
+        //Arrange
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+        await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+        await repository.CreateFollow(saynabDTO, hermanDTO);
+
+        //ActDTO
+        await repository.RemoveFollow(saynabDTO, hermanDTO);
+
+        //Assert
+        var created = await context.Follows.SingleOrDefaultAsync(c => c.Follower.UserName == "Saynab" && c.Following.UserName == "herman");
+
+            
+        Assert.Null(created);
+    }
+
 
     public void Dispose()
     {
