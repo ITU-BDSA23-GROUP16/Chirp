@@ -31,15 +31,6 @@ public class AuthorRepository : IAuthorRepository
         await _context.SaveChangesAsync();
     }
 
-    /* private static ICollection<CheepDTO> ConvertCheeps(ICollection<Cheep> cheeps) {
-        var dtoColl = new List<CheepDTO>();
-        foreach (Cheep c in cheeps) {
-            var dtoConv = new CheepDTO(c.Author.Name,c.Message,c.TimeStamp);
-            dtoColl.Add(dtoConv);
-        }
-        return dtoColl;
-    }*/
-
 
     public async Task<AuthorDTO> FindAuthorByName(string author)
     {
@@ -60,16 +51,33 @@ public class AuthorRepository : IAuthorRepository
 
     }
 
-
-    public async Task DeleteAuthor(string author) 
+    public async Task DeleteAuthor(string author)
     {
-        
+
+        var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
+        if (auth == null)
+        {
+            Console.WriteLine("author er null i delete author");
+        }
+
+        Console.WriteLine(auth.Email);
+
+        auth.IsDeleted = true;
+        //_context.Update(auth);
+        await _context.SaveChangesAsync();
+        Console.WriteLine(auth.IsDeleted);
+    }
+
+
+    public async Task Delete(string author)
+    {
+
         var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
         auth.UserName = "HASBEENCHANGED";
-        auth.Email ="HASBEENCHANGED";
+        auth.Email = "HASBEENCHANGED";
 
         _context.Update(auth);
-        await _context.SaveChangesAsync();     
+        await _context.SaveChangesAsync();
     }
 
 }

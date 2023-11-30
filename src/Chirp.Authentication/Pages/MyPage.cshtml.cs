@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Chirp.Core;
 namespace Chirp.Authentication.Pages;
 
-public class MyPageModel: PageModel {
+public class MyPageModel : PageModel
+{
 
-    
+
     protected readonly ILogger<TimelineModel> _logger;
     protected readonly IAuthorRepository _repository;
 
@@ -21,14 +22,15 @@ public class MyPageModel: PageModel {
     }
 
 
-    public async Task<IActionResult> OnPostDeleteAsync(string author)
+    public async Task OnPostDeleteAsync(string author)
     {
-        if (author == null){
+        if (author == null)
+        {
             Console.WriteLine("hej");
-        } else {
+        }
+        else
+        {
             await _repository.DeleteAuthor(author);
         }
-
-        return Page();
     }
 }
