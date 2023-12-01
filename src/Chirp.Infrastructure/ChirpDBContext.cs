@@ -35,21 +35,24 @@ public class ChirpDBContext : IdentityDbContext<Author>
 
         modelBuilder.Entity<Author>().HasQueryFilter(a => !a.IsDeleted);
 
+        modelBuilder.Entity<Follow>().HasKey(a => new { a.FollowerId, a.FollowingId });
 
         //Follows
         modelBuilder.Entity<Author>()
         .HasMany(e => e.Followers)
         .WithOne(e => e.Follower)
-        .HasForeignKey(e =>  new { e.FollowerId})
+        .HasForeignKey(e => new { e.FollowerId })
+        //.OnDelete(DeleteBehavior.ClientSetNull)
         .HasPrincipalKey(e => e.Id);
+
         modelBuilder.Entity<Author>()
         .HasMany(e => e.Followings)
         .WithOne(e => e.Following)
-        .HasForeignKey(e =>  new { e.FollowingId})
+        .HasForeignKey(e => new { e.FollowingId })
+        //.OnDelete(DeleteBehavior.ClientSetNull)
         .HasPrincipalKey(e => e.Id);
-        modelBuilder.Entity<Follow>()
-        .HasKey(a => new { a.FollowerId, a.FollowingId });
-        
+
+
 
     }
     // The following configures EF to create a Sqlite database file in the

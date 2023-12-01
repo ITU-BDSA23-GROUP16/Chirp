@@ -13,16 +13,16 @@ using AspNet.Security.OAuth.GitHub;
 var builder = WebApplication.CreateBuilder(args);
 
 //__________________________
-var path = Path.GetTempPath();
-var DbPath = System.IO.Path.Join(path, "chirp.db");
+//var path = Path.GetTempPath();
+//var DbPath = System.IO.Path.Join(path, "chirp.db");
 
-Console.WriteLine($"Database path: {DbPath}.");
+//Console.WriteLine($"Database path: {DbPath}.");
 
 builder.Services.AddControllers();
-//builder.Services.AddDbContext<ChirpDBContext>(options =>
-    //options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 builder.Services.AddDbContext<ChirpDBContext>(options =>
-    options.UseSqlite($"Data Source={DbPath}"));
+    options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+//builder.Services.AddDbContext<ChirpDBContext>(options =>
+//options.UseSqlite($"Data Source={DbPath}"));
 //_________________________
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

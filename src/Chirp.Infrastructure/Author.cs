@@ -15,8 +15,8 @@ public class Author : IdentityUser
 
 public class Follow
 {
-    public string FollowerId { get; set; }
-    public string FollowingId { get; set; }
+    public string? FollowerId { get; set; }
+    public string? FollowingId { get; set; }
     public Author Follower { get; set; } // the people that follows you
     public Author Following { get; set; } // the people you follow
 

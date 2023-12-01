@@ -70,13 +70,13 @@ public class AuthorRepository : IAuthorRepository
     }
 
 
-    public async Task CreateFollow(AuthorDTO followerDto, AuthorDTO followedDto )
+    public async Task CreateFollow(AuthorDTO followerDto, AuthorDTO followedDto)
     {
         var follower = await _context.Authors.SingleOrDefaultAsync(c => c.UserName == followerDto.Name);
-        var followed = await _context.Authors.SingleOrDefaultAsync(c => c.UserName == followedDto.Name);        
+        var followed = await _context.Authors.SingleOrDefaultAsync(c => c.UserName == followedDto.Name);
 
-        
-        
+
+
         var newFollow = new Follow
         {
             FollowerId = follower.Id,
@@ -84,53 +84,57 @@ public class AuthorRepository : IAuthorRepository
             Follower = follower,
             Following = followed
         };
-        
+
         _context.Follows.Add(newFollow);
         await _context.SaveChangesAsync();
     }
 
 
 
-        //Find who follows specific author
-        public async Task<IEnumerable<AuthorDTO>> GetFollowed(string author)
-    {   
+    //Find who follows specific author
+    public async Task<IEnumerable<AuthorDTO>> GetFollowed(string author)
+    {
         return await _context.Follows
         .Where(f => f.Following.UserName == author)
         .Select(a => new AuthorDTO(a.Follower.UserName, a.Follower.Email, a.Follower.Cheeps.Select(c => new CheepDTO(c.Author.UserName, c.Message, c.TimeStamp))))
         .ToListAsync();
     }
-        
-        //Finds who a specific author follows
-        //f.Follower are all the potential people that follow someone
-        //f.Following is a group of people that are being followed by someone
-        public async Task<IEnumerable<AuthorDTO>> GetFollowing(string author)
+
+    //Finds who a specific author follows
+    //f.Follower are all the potential people that follow someone
+    //f.Following is a group of people that are being followed by someone
+    public async Task<IEnumerable<AuthorDTO>> GetFollowing(string author)
     {
         return await _context.Follows
         .Where(f => f.Follower.UserName == author)
         .Select(a => new AuthorDTO(a.Following.UserName, a.Following.Email, a.Following.Cheeps.Select(c => new CheepDTO(c.Author.UserName, c.Message, c.TimeStamp))))
         .ToListAsync();
-        
+
     }
 
-        public async Task RemoveFollow(AuthorDTO followerDto, AuthorDTO followingDto)
-    {   
+    public async Task RemoveFollow(AuthorDTO followerDto, AuthorDTO followingDto)
+    {
         var follow = await _context.Follows
         .SingleAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
         _context.Follows.Remove(follow);
         await _context.SaveChangesAsync();
-    }  
+    }
 
-         public async Task<Boolean> FollowExists(AuthorDTO followerDto, AuthorDTO followingDto){
+    public async Task<Boolean> FollowExists(AuthorDTO followerDto, AuthorDTO followingDto)
+    {
 
-                var follow = await _context.Follows
-                .SingleOrDefaultAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
+        var follow = await _context.Follows
+        .SingleOrDefaultAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
 
-                if (follow == null){
-                    return false;
-                } else{
-                    return true; 
-                }
+        if (follow == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
 
-         }  
+    }
 
 }
