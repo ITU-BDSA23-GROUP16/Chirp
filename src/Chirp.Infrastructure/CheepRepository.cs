@@ -13,6 +13,7 @@ public class CheepRepository : ICheepRepository
    //ChirpDBContext and repos
    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageSize = 32, int page = 0)
    {
+
       return await _context.Cheeps
       .OrderByDescending(c => c.TimeStamp)
       .Skip(page * pageSize)
@@ -20,6 +21,16 @@ public class CheepRepository : ICheepRepository
       .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
       .ToListAsync();
    }
+
+
+   public async Task<IEnumerable<CheepDTO>> GetCheeps()
+   {
+      return await _context.Cheeps
+            .OrderByDescending(c => c.TimeStamp)
+            .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
+            .ToListAsync();
+   }
+
 
    public async Task<IEnumerable<CheepDTO>> GetAuthor(int pageSize = 32, int page = 0)
    {
@@ -40,16 +51,16 @@ public class CheepRepository : ICheepRepository
       .ToListAsync();
    }
 
-    public async Task<IEnumerable<CheepDTO>> GetByFollower(string follower)
+   public async Task<IEnumerable<CheepDTO>> GetByFollower(string follower)
    {
-      IEnumerable<Author> allfollowed = 
+      IEnumerable<Author> allfollowed =
       await _context.Follows.Where(f => f.Follower.UserName.Contains(follower))
       .Select(f => f.Following)
       .ToListAsync();
 
       IEnumerable<Cheep> cheeplist = new List<Cheep>();
       foreach (Author aut in allfollowed)
-      {cheeplist = cheeplist.Concat(aut.Cheeps);}
+      { cheeplist = cheeplist.Concat(aut.Cheeps); }
 
       return cheeplist.Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp));
       //check null
