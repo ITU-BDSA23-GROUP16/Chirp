@@ -10,7 +10,7 @@ Tests:
     Find Author by email
 */
 
-public class AuthorRepTest: IDisposable
+public class AuthorRepTest : IDisposable
 {
     AuthorRepository? repository;
     ChirpDBContext context;
@@ -22,11 +22,11 @@ public class AuthorRepTest: IDisposable
     {
         //Arrange
         connection = new SqliteConnection("Filename=:memory:");
-        var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection); 
+        var builder = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection);
         var option = builder.Options;
         context = new ChirpDBContext(option);
         connection.Open();
-        
+
         saynabDTO = new AuthorDTO("Saynab", "saynab@jjj", new List<CheepDTO>());
         hermanDTO = new AuthorDTO("herman", "Herman@only.com", new List<CheepDTO>());
         herman = new Author { UserName = "herman", Email = "Herman@only.com" };
@@ -40,7 +40,7 @@ public class AuthorRepTest: IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
-        
+
         //ActDTO
         await repository.CreateAuthor(saynabDTO);
 
@@ -63,7 +63,7 @@ public class AuthorRepTest: IDisposable
         await repository.CreateAuthor(hermanDTO);
 
         //Assert
-        await Assert.ThrowsAsync<ArgumentException>( () =>  repository.CreateAuthor(hermanDTO));
+        await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAuthor(hermanDTO));
         var author = await context.Authors.Where(c => c.UserName == "herman").ToListAsync();
         Assert.Single(author);
     }
@@ -110,7 +110,7 @@ public class AuthorRepTest: IDisposable
     [Fact]
     public async Task FollowerExist()
     {
-        
+
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
@@ -122,7 +122,7 @@ public class AuthorRepTest: IDisposable
 
         //Assert
         var created = await context.Follows.SingleOrDefaultAsync(c => c.Follower.UserName == "Saynab");
-            
+
         Assert.NotNull(created);
     }
 
@@ -151,7 +151,7 @@ public class AuthorRepTest: IDisposable
         Assert.Equal(saynab.UserName, expected.Name);
     }
 
-     [Fact]
+    [Fact]
     public async Task FindFollowings()
     {
         //Arrange
@@ -164,7 +164,7 @@ public class AuthorRepTest: IDisposable
 
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
-        
+
         await repository.CreateFollow(saynabDTO, hermanDTO);
 
         //Act
@@ -175,10 +175,10 @@ public class AuthorRepTest: IDisposable
         Assert.Equal(herman.UserName, expected.Name);
     }
 
-      [Fact]
+    [Fact]
     public async Task RemoveFollower()
     {
-        
+
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
@@ -192,8 +192,28 @@ public class AuthorRepTest: IDisposable
         //Assert
         var created = await context.Follows.SingleOrDefaultAsync(c => c.Follower.UserName == "Saynab" && c.Following.UserName == "herman");
 
-            
+
         Assert.Null(created);
+    }
+
+    [Fact]
+    public async Task DoesFollowExist()
+    {
+
+        //Arrange
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+        await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+        await repository.CreateFollow(saynabDTO, hermanDTO);
+
+        //ActDTO
+        var created = await repository.FollowExists(saynabDTO, hermanDTO);
+
+        //Assert
+        //Assert.NotNull(created);
+        Assert.True(created);
+
     }
 
 
