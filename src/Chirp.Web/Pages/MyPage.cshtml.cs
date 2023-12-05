@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Chirp.Core;
-namespace Chirp.Authentication.Pages;
+namespace Chirp.Web.Pages;
 
 public class MyPageModel : PageModel
 {
