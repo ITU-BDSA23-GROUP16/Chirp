@@ -114,6 +114,38 @@ public class CheepRepTest : IDisposable
     }
 
     [Fact]
+    public async Task GetFollowerCheeps()
+    {
+        //Arrange
+        await Arrange();
+
+        //Act
+        var created0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
+        var herman0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
+
+        IEnumerable<CheepDTO> cheeps = await repository!.GetByFollower("herman");
+
+        //Assert
+        await EnsureUnchanged(created0!, herman0!);
+
+        IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.UserName == "Stanley").ToListAsync();
+        //https://stackoverflow.com/questions/168901/count-the-items-from-a-ienumerablet-without-iterating
+        int result = 0;
+        using (IEnumerator<Cheep> enumerator = created.GetEnumerator())
+        {
+            while (enumerator.MoveNext())
+                result++;
+        }
+        int resultdto = 0;
+        using (IEnumerator<CheepDTO> enumerator = cheeps.GetEnumerator())
+        {
+            while (enumerator.MoveNext())
+                resultdto++;
+        }
+        Assert.Equal(resultdto, result);
+    }
+
+    [Fact]
     public async Task GetPages()
     {
         //Arrange
@@ -167,6 +199,16 @@ public class CheepRepTest : IDisposable
 
         await repository.CreateCheep(stanleyDTO);
         await repository.CreateCheep(hermanDTO);
+
+        //Herman follows Stanley
+        await context.Follows.AddAsync(new Follow
+        {
+            FollowerId = herman.Id,
+            FollowingId = stanley.Id,
+            Follower = herman,
+            Following = stanley
+        });
+        context.SaveChanges();
     }
 
 
