@@ -29,7 +29,7 @@ public class TimelineModel : PageModel
     public async Task<ActionResult> OnGetAsync(string author)
     {
         hasPage = int.TryParse(Request.Query["page"], out var page);
-        PageInt = Math.Max(hasPage ? page : 1, 1)-1;
+        PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
         Console.WriteLine(PageInt);
         Console.WriteLine(hasPage);
 
@@ -39,24 +39,24 @@ public class TimelineModel : PageModel
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
             CheepCount = (await _repository.GetCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
-            //Console.WriteLine(CheepCount);
+            Console.WriteLine(Pages);
+            Console.WriteLine(CheepCount);
         }
         else if (author == User.Identity!.Name!)
         {
             Cheeps = await _repository.GetByFollower(author);
             CheepCount = Cheeps.Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
+            Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
         }
         else
         {
 
-            Cheeps = await _repository.GetByAuthor(author);
-            CheepCount = Cheeps.Count();
+            Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
+            CheepCount = (await _repository.GetByAuthor(author)).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
+            Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
         }
 
@@ -65,7 +65,7 @@ public class TimelineModel : PageModel
             Cheeps = await _repository.GetCheeps(32, 1);
             CheepCount = (await _repository.GetCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
+            Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
         }
 
