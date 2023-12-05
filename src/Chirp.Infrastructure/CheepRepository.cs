@@ -58,19 +58,25 @@ public class CheepRepository : ICheepRepository
       .Select(f => f.Following)
       .ToListAsync();
 
+
       IEnumerable<Cheep> cheeplist = new List<Cheep>();
       foreach (Author aut in allfollowed)
-      { cheeplist = cheeplist.Concat(aut.Cheeps); }
+      {
+         var autlist = await _context.Cheeps
+         .Where(a => a.Author == aut)
+         .ToListAsync();
+         //Console.WriteLine($"The authors username:{aut.UserName}");
 
-      return cheeplist.Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp));
+         cheeplist = cheeplist.Concat(autlist);
+      }
+
+      return cheeplist.OrderByDescending(c => c.TimeStamp).Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp));
       //check null
    }
 
    public async Task CreateCheep(CheepDTO cheep)
    {
-      //var newauthor = rep.FindAuthorByName(cheep.Author);
 
-      //Find a Author type in the context(database) by using Find(string)
       var aut = await _context.Authors.SingleAsync(c => c.UserName == cheep.Author);
 
       var newCheep = new Cheep

@@ -29,7 +29,7 @@ public class TimelineModel : PageModel
     public async Task<ActionResult> OnGetAsync(string author)
     {
         hasPage = int.TryParse(Request.Query["page"], out var page);
-        PageInt = Math.Max(hasPage ? page : 1, 1)-1;
+        PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
         Console.WriteLine(PageInt);
         Console.WriteLine(hasPage);
 
@@ -46,6 +46,7 @@ public class TimelineModel : PageModel
         {
             Cheeps = await _repository.GetByFollower(author);
             CheepCount = Cheeps.Count();
+            //Console.WriteLine(CheepCount);
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
             //Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
