@@ -75,6 +75,24 @@ div.page div.navigation a {
   font-weight: bold;
 }
 
+div.page div.paging {
+  display: inline-block;
+}
+
+div.page div.paging a {
+  display: inline-block;
+  margin-bottom: 10px;
+  background-color: #e6c0bf;
+  border-radius: 10px;
+  text-align: center;
+  padding: 5px 10px;
+}
+
+div.page div.paging a.active {
+  color: #F0FAF9;
+  background-color: #a2706e;
+}
+
 div.page h2 {
   margin: 0 0 15px 0;
   color: #571010;
@@ -226,3 +244,5 @@ li.topic {
   -webkit-border-radius: 5px;
   min-height: 20px;
 }
+
+
