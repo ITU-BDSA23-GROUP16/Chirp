@@ -8,16 +8,17 @@ public class ChirpDBContext : IdentityDbContext<Author>
     //Name of tables are Authors and Cheeps
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
+    public DbSet<Follow> Follows { get; set; }
 
     public string DbPath { get; }
 
 
-public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
-            : base(options)
+    public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
+                : base(options)
     {
 
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -30,6 +31,29 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         .WithOne(e => e.Author)
         .HasForeignKey(e => e.AuthorId)
         .HasPrincipalKey(e => e.Id);
+
+
+        modelBuilder.Entity<Author>().HasQueryFilter(a => !a.IsDeleted);
+
+        modelBuilder.Entity<Follow>().HasKey(a => new { a.FollowerId, a.FollowingId });
+
+        //Follows
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Followers)
+        .WithOne(e => e.Follower)
+        .HasForeignKey(e => new { e.FollowerId })
+        //.OnDelete(DeleteBehavior.ClientSetNull)
+        .HasPrincipalKey(e => e.Id);
+
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Followings)
+        .WithOne(e => e.Following)
+        .HasForeignKey(e => new { e.FollowingId })
+        //.OnDelete(DeleteBehavior.ClientSetNull)
+        .HasPrincipalKey(e => e.Id);
+
+
+
     }
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.
