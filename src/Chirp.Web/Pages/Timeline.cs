@@ -39,8 +39,8 @@ public class TimelineModel : PageModel
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
             CheepCount = (await _repository.GetCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
-            //Console.WriteLine(CheepCount);
+            Console.WriteLine(Pages);
+            Console.WriteLine(CheepCount);
         }
         else if (author == User.Identity!.Name!)
         {
@@ -48,16 +48,16 @@ public class TimelineModel : PageModel
             CheepCount = Cheeps.Count();
             //Console.WriteLine(CheepCount);
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
+            Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
         }
         else
         {
 
-            Cheeps = await _repository.GetByAuthor(author);
-            CheepCount = Cheeps.Count();
+            Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
+            CheepCount = (await _repository.GetByAuthor(author)).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
+            Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
         }
 
@@ -66,7 +66,7 @@ public class TimelineModel : PageModel
             Cheeps = await _repository.GetCheeps(32, 1);
             CheepCount = (await _repository.GetCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            //Console.WriteLine(Pages);
+            Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
         }
 

@@ -19,18 +19,18 @@
     </ul>
 
 
-    @if (Model.hasPage || Model.PageInt == 1)
+    @if (Model.hasPage || Model.PageInt == 0)
     {
         <div class="paging">
-    @for (var i = 1; i <= Model.Pages; i++)
+    @for (var i = 1; i <= Model.Pages + 1; i++)
             {
-                @if (i == Model.PageInt)
+                @if (i == Model.PageInt + 1)
                 {
-                    <a class="active" href="?page=@i">@i</a>
+                    <a class="active" href="?page=@(i)">@(i)</a>
                 }
                 else
                 {
-                    <a href="?page=@i">@i</a>
+                    <a href="?page=@(i)">@(i)</a>
                 }
 
             }
