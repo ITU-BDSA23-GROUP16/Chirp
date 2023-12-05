@@ -17,6 +17,7 @@ public class TimelineModel : PageModel
 
     public int Pages;
 
+    public string Author;
 
     public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
     {
@@ -32,7 +33,7 @@ public class TimelineModel : PageModel
         PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
         Console.WriteLine(PageInt);
         Console.WriteLine(hasPage);
-
+        Author = author;
 
         if (author == null)
         {
@@ -53,7 +54,6 @@ public class TimelineModel : PageModel
         }
         else
         {
-
             Cheeps = await _repository.GetByAuthor(author);
             CheepCount = Cheeps.Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);

@@ -1,5 +1,9 @@
 ﻿@page "/author/{author}"
 @model Chirp.Web.Pages.TimelineModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
@@ -9,13 +13,21 @@
 <div>
     <h2> @routeName's Timeline </h2>
 
-
-
-
+    @if (SignInManager.IsSignedIn(User))
+    {
         <form asp-page-handler="update">
-             <button type= "submit" name="follow" value= @routeName >Follow</button>
-        </form>
+            @if (await Model.IfFollowExists(Model.Author))
+            {
+                <button type="submit" name="follow" value=@routeName>Unfollow</button>
 
-   <partial name="_TimelinePartial" />
+            }
+            else
+            {
+
+                <button type="submit" name="follow" value=@routeName>Follow</button>
+            }
+        </form>
+    }
+    <partial name="_TimelinePartial" />
 
 </div>
