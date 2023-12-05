@@ -29,7 +29,7 @@ public class TimelineModel : PageModel
     public async Task<ActionResult> OnGetAsync(string author)
     {
         hasPage = int.TryParse(Request.Query["page"], out var page);
-        PageInt = Math.Max(hasPage ? page : 1, 1);
+        PageInt = Math.Max(hasPage ? page : 1, 1)-1;
         Console.WriteLine(PageInt);
         Console.WriteLine(hasPage);
 
@@ -79,7 +79,7 @@ public class TimelineModel : PageModel
         Console.WriteLine(newCheep.TimeStamp);
         await _repository.CreateCheep(newCheep);
 
-        return Page();
+        return RedirectToPage();
 
     }
 
