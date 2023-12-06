@@ -53,3 +53,23 @@ public class FollowingAuthorsModel : AuthorsModel
         return Page();
     }
 }
+
+public class AllAuthorsModel : AuthorsModel
+{
+    public AllAuthorsModel(ILogger<AuthorsModel> logger, IAuthorRepository repository)
+    : base(logger, repository)
+    {
+    }
+    public async Task<ActionResult> OnGetAsync(string author)
+    {
+        hasPage = int.TryParse(Request.Query["page"], out var page);
+        PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
+
+            Authors = await _repository.FindAllAuthors();
+            AuthorCount = (await _repository.FindAllAuthors()).Count();
+            Pages = (int)Math.Ceiling(AuthorCount / authorsPerPage * 1.0);
+        
+
+        return Page();
+    }
+}

@@ -32,7 +32,16 @@ public class AuthorRepository : IAuthorRepository
     }
 
 
-    public async Task<AuthorDTO> FindAuthorByName(string author)
+    public async Task<IEnumerable<AuthorDTO>> FindAllAuthors()
+    {
+
+        return await _context.Authors
+        .OrderByDescending(a => a.UserName)
+        .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName, c.Message, c.TimeStamp))))
+        .ToListAsync();
+    }
+
+   public async Task<AuthorDTO> FindAuthorByName(string author)
     {
 
         return await _context.Authors

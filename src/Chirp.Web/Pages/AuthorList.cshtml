@@ -1,0 +1,31 @@
+﻿@page "/author/all"
+@model Chirp.Web.Pages.AllAuthorsModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+}
+
+<div>
+    <h2> All authors </h2>
+
+    @if (Model.Authors.Any())
+    {
+        <ul id="messagelist" class="authors">
+            @foreach (var aut in Model.Authors!)
+            {
+                <li>
+                    <p>
+                        <strong>
+                            <a href="/author/@aut.Name">@aut.Name</a>
+                        </strong>
+                    </p>
+                </li>
+            }
+        </ul>
+    }
+
+</div>
