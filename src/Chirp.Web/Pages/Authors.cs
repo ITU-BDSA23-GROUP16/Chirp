@@ -45,8 +45,8 @@ public class FollowingAuthorsModel : AuthorsModel
         hasPage = int.TryParse(Request.Query["page"], out var page);
         PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
 
-            Authors = await _repository.GetFollowing(author);
-            AuthorCount = (await _repository.GetFollowing(author)).Count();
+            Authors = await _repository.GetFollowing(author, authorsPerPage, PageInt);
+            AuthorCount = (await _repository.GetAllFollowing(author)).Count();
             Pages = (int)Math.Ceiling(AuthorCount / authorsPerPage * 1.0);
         
 
@@ -65,8 +65,8 @@ public class AllAuthorsModel : AuthorsModel
         hasPage = int.TryParse(Request.Query["page"], out var page);
         PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
 
-            Authors = await _repository.FindAllAuthors();
-            AuthorCount = (await _repository.FindAllAuthors()).Count();
+            Authors = await _repository.GetAuthors(authorsPerPage, PageInt);
+            AuthorCount = (await _repository.GetAllAuthors()).Count();
             Pages = (int)Math.Ceiling(AuthorCount / authorsPerPage * 1.0);
         
 

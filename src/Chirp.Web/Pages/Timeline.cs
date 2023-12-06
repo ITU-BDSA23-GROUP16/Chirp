@@ -65,7 +65,7 @@ public class TimelineModel : PageModel
     }
 
 
-    public async Task<Boolean> IfFollowExists(string follow)
+    public async Task<bool> IfFollowExists(string follow)
     {
 
         AuthorDTO following = await _authors.FindAuthorByName(follow);
@@ -92,7 +92,7 @@ public class PublicTimeline : TimelineModel
         if (author == null)
         {
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
-            CheepCount = (await _repository.GetCheeps()).Count();
+            CheepCount = (await _repository.GetAllCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
             Console.WriteLine(Pages);
             Console.WriteLine(CheepCount);
@@ -100,8 +100,8 @@ public class PublicTimeline : TimelineModel
         else
         {
 
-            Cheeps = await _repository.GetByAuthor(author);//, cheepsPerPage, PageInt);
-            CheepCount = (await _repository.GetByAuthor(author)).Count();
+            Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
+            CheepCount = (await _repository.GetAllByAuthor(author)).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
             Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
@@ -110,7 +110,7 @@ public class PublicTimeline : TimelineModel
         if (Cheeps == null)
         {
             Cheeps = await _repository.GetCheeps(32, 1);
-            CheepCount = (await _repository.GetCheeps()).Count();
+            CheepCount = (await _repository.GetAllCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
             Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
@@ -132,7 +132,7 @@ public class FollowTimeline : TimelineModel
         Author = author;
 
 
-        Cheeps = await _repository.GetByFollower(User.Identity!.Name!);
+        Cheeps = await _repository.GetByFollower(User.Identity!.Name!, cheepsPerPage, PageInt);
         CheepCount = Cheeps.Count();
         //Console.WriteLine(CheepCount);
         Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
