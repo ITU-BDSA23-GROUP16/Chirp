@@ -1,0 +1,17 @@
+﻿@page "/following"
+@model Chirp.Web.Pages.FollowTimeline
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+}
+
+<div>
+    <h2> Curated Timeline </h2>
+
+    <partial name="_TimelinePartial" />
+
+</div>
