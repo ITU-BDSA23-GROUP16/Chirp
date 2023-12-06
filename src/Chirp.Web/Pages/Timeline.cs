@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Chirp.Core;
+using NuGet.Protocol.Core.Types;
 namespace Chirp.Web.Pages;
 
 public class TimelineModel : PageModel
@@ -25,53 +26,6 @@ public class TimelineModel : PageModel
         _repository = repository;
         _authors = authors;
 
-    }
-
-    public async Task<ActionResult> OnGetAsync(string author)
-    {
-        hasPage = int.TryParse(Request.Query["page"], out var page);
-        PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
-        Console.WriteLine(PageInt);
-        Console.WriteLine(hasPage);
-        Author = author;
-
-        if (author == null)
-        {
-            Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
-            CheepCount = (await _repository.GetCheeps()).Count();
-            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            Console.WriteLine(Pages);
-            Console.WriteLine(CheepCount);
-        }
-        else if (author == User.Identity!.Name!)
-        {
-            Cheeps = await _repository.GetByFollower(author);
-            CheepCount = Cheeps.Count();
-            //Console.WriteLine(CheepCount);
-            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            Console.WriteLine(Pages);
-            //Console.WriteLine(CheepCount);
-        }
-        else
-        {
-
-            Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
-            CheepCount = (await _repository.GetByAuthor(author)).Count();
-            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            Console.WriteLine(Pages);
-            //Console.WriteLine(CheepCount);
-        }
-
-        if (Cheeps == null)
-        {
-            Cheeps = await _repository.GetCheeps(32, 1);
-            CheepCount = (await _repository.GetCheeps()).Count();
-            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            Console.WriteLine(Pages);
-            //Console.WriteLine(CheepCount);
-        }
-
-        return Page();
     }
 
     public async Task<ActionResult> OnPostAsync(string message)
@@ -111,7 +65,7 @@ public class TimelineModel : PageModel
     }
 
 
-    public async Task<Boolean> IfFollowExists(string follow)
+    public async Task<bool> IfFollowExists(string follow)
     {
 
         AuthorDTO following = await _authors.FindAuthorByName(follow);
@@ -120,4 +74,71 @@ public class TimelineModel : PageModel
 
     }
 
+}
+public class PublicTimeline : TimelineModel
+{
+    public PublicTimeline(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
+    : base(logger, repository, authors)
+    {
+    }
+    public async Task<ActionResult> OnGetAsync(string author)
+    {
+        hasPage = int.TryParse(Request.Query["page"], out var page);
+        PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
+        Console.WriteLine(PageInt);
+        Console.WriteLine(hasPage);
+        Author = author;
+
+        if (author == null)
+        {
+            Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
+            CheepCount = (await _repository.GetAllCheeps()).Count();
+            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
+            Console.WriteLine(Pages);
+            Console.WriteLine(CheepCount);
+        }
+        else
+        {
+
+            Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
+            CheepCount = (await _repository.GetAllByAuthor(author)).Count();
+            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
+            Console.WriteLine(Pages);
+            //Console.WriteLine(CheepCount);
+        }
+
+        if (Cheeps == null)
+        {
+            Cheeps = await _repository.GetCheeps(32, 1);
+            CheepCount = (await _repository.GetAllCheeps()).Count();
+            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
+            Console.WriteLine(Pages);
+            //Console.WriteLine(CheepCount);
+        }
+
+        return Page();
+    }
+}
+public class FollowTimeline : TimelineModel
+{
+    public FollowTimeline(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
+    : base(logger, repository, authors)
+    {
+    }
+    public async Task<ActionResult> OnGetAsync(string author)
+    {
+        hasPage = int.TryParse(Request.Query["page"], out var page);
+        PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
+        Author = author;
+
+
+        Cheeps = await _repository.GetByFollower(User.Identity!.Name!, cheepsPerPage, PageInt);
+        CheepCount = Cheeps.Count();
+        //Console.WriteLine(CheepCount);
+        Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
+        Console.WriteLine(Pages);
+        //Console.WriteLine(CheepCount);
+
+        return Page();
+    }
 }
