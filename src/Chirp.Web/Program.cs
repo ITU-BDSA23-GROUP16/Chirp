@@ -15,7 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 var path = Path.GetTempPath();
 var DbPath = System.IO.Path.Join(path, "chirp.db");
 
-// Console.WriteLine($"Database path: {DbPath}.");
 
 builder.Services.AddControllers();
 //builder.Services.AddDbContext<ChirpDBContext>(options =>

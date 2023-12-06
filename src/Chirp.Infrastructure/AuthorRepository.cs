@@ -76,13 +76,10 @@ public class AuthorRepository : IAuthorRepository
         {
             auth.IsDeleted = true;
             await _context.SaveChangesAsync();
-            //Console.WriteLine("author er null i delete author");
         }
 
-        // Console.WriteLine(auth.Email);
 
         //_context.Update(auth);
-        // Console.WriteLine(auth.IsDeleted);
     }
 
 

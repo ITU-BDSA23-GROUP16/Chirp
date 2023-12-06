@@ -69,7 +69,6 @@ public class CheepRepository : ICheepRepository
          var autlist = await _context.Cheeps
          .Where(a => a.Author == aut)
          .ToListAsync();
-         //Console.WriteLine($"The authors username:{aut.UserName}");
 
          cheeplist = cheeplist.Concat(autlist);
       }
