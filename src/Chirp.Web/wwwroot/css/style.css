@@ -255,3 +255,16 @@ li.topic {
   font-family: 'Trebuchet MS', sans-serif;
 }
 
+.pink-back {
+background-color: #eac4c4; 
+border-radius: 10px;
+padding: 5px;
+margin-top: 10px;
+border-color: #e29494;
+}
+
+.bodyText {
+color: #3b0707;
+font-family: 'Trebuchet MS', sans-serif;
+font-weight: bold;
+}
