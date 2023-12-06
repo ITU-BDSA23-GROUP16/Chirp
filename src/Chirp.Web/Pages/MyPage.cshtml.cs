@@ -26,7 +26,7 @@ public class MyPageModel : PageModel
     }
     public async void OnGetAsync(string author)
     {
-       var aut = await _repository.FindAuthorByName(author);
+        var aut = await _repository.FindAuthorByName(author);
         //User.Identity!.Name!
         UserName = aut.Name;
         Email = aut.Email; 

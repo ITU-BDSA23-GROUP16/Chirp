@@ -9,7 +9,7 @@ public class AuthorsModel : PageModel
     protected readonly ILogger<AuthorsModel> _logger;
     protected readonly IAuthorRepository _repository;
 
-    public IEnumerable<AuthorDTO>? Authors { get; set; }
+    public IEnumerable<AuthorDTO> Authors { get; set; } = new List<AuthorDTO>();
     protected int authorsPerPage = 32;
     public bool hasPage;
     public int PageInt = 1;

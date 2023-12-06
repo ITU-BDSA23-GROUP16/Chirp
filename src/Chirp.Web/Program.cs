@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Chirp.Infrastructure;
 using Chirp.Core;
-using Microsoft.EntityFrameworkCore;
 using AspNet.Security.OAuth.GitHub;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 var path = Path.GetTempPath();
 var DbPath = System.IO.Path.Join(path, "chirp.db");
 
-Console.WriteLine($"Database path: {DbPath}.");
+// Console.WriteLine($"Database path: {DbPath}.");
 
 builder.Services.AddControllers();
 //builder.Services.AddDbContext<ChirpDBContext>(options =>
@@ -36,8 +35,10 @@ builder.Services.AddMvc();
 builder.Services.AddAuthentication()
     .AddGitHub(o =>
     {
+#pragma warning disable CS8601 // Possible null reference assignment.
         o.ClientId = builder.Configuration["authentication_github_clientId"];
         o.ClientSecret = builder.Configuration["authentication_github_clientSecret"];
+#pragma warning restore CS8601 // Possible null reference assignment.
         o.CallbackPath = "/signin-github";
     });
 

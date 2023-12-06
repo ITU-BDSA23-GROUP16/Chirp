@@ -18,7 +18,7 @@ public class CheepRepository : ICheepRepository
       .OrderByDescending(c => c.TimeStamp)
       .Skip(page * pageSize)
       .Take(pageSize)
-      .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
+      .Select(c => new CheepDTO(c.Author!.UserName!, c.Message!, c.TimeStamp))
       .ToListAsync();
    }
 
@@ -35,18 +35,18 @@ public class CheepRepository : ICheepRepository
       .OrderByDescending(c => c.Author)
       .Skip(page * pageSize)
       .Take(pageSize)
-      .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
+      .Select(c => new CheepDTO(c.Author!.UserName!, c.Message!, c.TimeStamp))
       .ToListAsync();
    }
 
    public async Task<IEnumerable<CheepDTO>> GetByAuthor(string author, int pageSize = 32, int page = 0)
    {
       return await _context.Cheeps
-      .Where(a => a.Author.UserName.Contains(author))
+      .Where(a => a.Author.UserName!.Contains(author))
       .OrderByDescending(a => a.Author.UserName)
       .Skip(page * pageSize)
       .Take(pageSize)
-      .Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp))
+      .Select(a => new CheepDTO(a.Author!.UserName!, a.Message!, a.TimeStamp))
       .ToListAsync();
    }
 
@@ -58,7 +58,7 @@ public class CheepRepository : ICheepRepository
    public async Task<IEnumerable<CheepDTO>> GetByFollower(string follower, int pageSize = 32, int page = 0)
    {
       IEnumerable<Author> allfollowed =
-      await _context.Follows.Where(f => f.Follower.UserName.Contains(follower))
+      await _context.Follows.Where(f => f.Follower.UserName!.Contains(follower))
       .Select(f => f.Following)
       .ToListAsync();
 
@@ -77,7 +77,7 @@ public class CheepRepository : ICheepRepository
       return cheeplist.OrderByDescending(c => c.TimeStamp)
       .Skip(page * pageSize)
       .Take(pageSize)
-      .Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp));
+      .Select(a => new CheepDTO(a.Author!.UserName!, a.Message!, a.TimeStamp));
       //check null
    }
 public async Task<IEnumerable<CheepDTO>> GetAllByFollower(string follower)

@@ -10,7 +10,7 @@ public class TimelineModel : PageModel
     protected readonly ICheepRepository _repository;
     protected readonly IAuthorRepository _authors;
 
-    public IEnumerable<CheepDTO>? Cheeps { get; set; }
+    public IEnumerable<CheepDTO> Cheeps { get; set; } = new List<CheepDTO>();
     protected int cheepsPerPage = 32;
     public bool hasPage;
     public int PageInt = 1;
@@ -18,14 +18,13 @@ public class TimelineModel : PageModel
 
     public int Pages;
 
-    public string Author;
+    public string Author="";
 
     public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
     {
         _logger = logger;
         _repository = repository;
         _authors = authors;
-
     }
 
     public async Task<ActionResult> OnPostAsync(string message)
