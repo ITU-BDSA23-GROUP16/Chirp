@@ -67,6 +67,12 @@ public class TimelineModel : PageModel
     }
 
 
+    public async Task<bool> IfAuthorExists(string author)
+    {
+
+        AuthorDTO aut = await _authors.FindAuthorByName(author);
+        if (aut==null) return false; else return true;
+    }
     public async Task<bool> IfFollowExists(string follow)
     {
 
