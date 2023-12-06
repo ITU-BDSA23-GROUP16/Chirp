@@ -45,6 +45,8 @@ public class TimelineModel : PageModel
         AuthorDTO following = await _authors.FindAuthorByName(follow);
         AuthorDTO follower = await _authors.FindAuthorByName(User.Identity!.Name!);
 
+        if(following !=null && follower != null){
+
 
         if (await _authors.FollowExists(follower, following))
         {
@@ -60,6 +62,9 @@ public class TimelineModel : PageModel
             ////@try {Model.Cheeps!.Any();} catch (ArgumentNullException e) {Console.WriteLine(e); Console.WriteLine(Model.Cheeps.ToString());}
 
         }
+
+        }
+       
         return RedirectToPage();
 
     }
@@ -85,8 +90,8 @@ public class PublicTimeline : TimelineModel
     {
         hasPage = int.TryParse(Request.Query["page"], out var page);
         PageInt = Math.Max(hasPage ? page : 1, 1) - 1;
-        Console.WriteLine(PageInt);
-        Console.WriteLine(hasPage);
+        //Console.WriteLine(PageInt);
+        //Console.WriteLine(hasPage);
         Author = author;
 
         if (author == null)
@@ -94,17 +99,21 @@ public class PublicTimeline : TimelineModel
             Cheeps = await _repository.GetCheeps(cheepsPerPage, PageInt);
             CheepCount = (await _repository.GetAllCheeps()).Count();
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            Console.WriteLine(Pages);
-            Console.WriteLine(CheepCount);
+            //Console.WriteLine(Pages);
+            //Console.WriteLine(CheepCount);
         }
         else
         {
-
             Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
-            CheepCount = (await _repository.GetAllByAuthor(author)).Count();
+            if(Cheeps.Count() == 0) {
+                Console.WriteLine("hej");
+            } else {
+            CheepCount = (await _repository.GetAllByAuthor(author)).Count();    
             Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
-            Console.WriteLine(Pages);
+            //Console.WriteLine(Pages);
             //Console.WriteLine(CheepCount);
+            }
+
         }
 
         if (Cheeps == null)

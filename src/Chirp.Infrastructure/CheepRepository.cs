@@ -14,12 +14,16 @@ public class CheepRepository : ICheepRepository
    public async Task<IEnumerable<CheepDTO>> GetCheeps(int pageSize = 32, int page = 0)
    {
 
-      return await _context.Cheeps
+      var toReturn = await _context.Cheeps
       .OrderByDescending(c => c.TimeStamp)
       .Skip(page * pageSize)
       .Take(pageSize)
       .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
       .ToListAsync();
+      if (toReturn==null) {
+      return new List<CheepDTO>();
+      }
+      else return toReturn;
    }
 
 
@@ -31,23 +35,39 @@ public class CheepRepository : ICheepRepository
 
    public async Task<IEnumerable<CheepDTO>> OrderByAuthor(int pageSize = 32, int page = 0)
    {
-      return await _context.Cheeps
+      
+      var toReturn =  await _context.Cheeps
       .OrderByDescending(c => c.Author)
       .Skip(page * pageSize)
       .Take(pageSize)
       .Select(c => new CheepDTO(c.Author!.UserName, c.Message!, c.TimeStamp))
       .ToListAsync();
+
+      if (toReturn == null){
+         return new List<CheepDTO>();
+      } else {
+         return toReturn;
+      }
+
    }
 
    public async Task<IEnumerable<CheepDTO>> GetByAuthor(string author, int pageSize = 32, int page = 0)
    {
-      return await _context.Cheeps
-      .Where(a => a.Author.UserName.Contains(author))
+      var toReturn = await _context.Cheeps
+      .Where(a => a.Author.UserName.Equals(author))
       .OrderByDescending(a => a.Author.UserName)
       .Skip(page * pageSize)
       .Take(pageSize)
       .Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp))
       .ToListAsync();
+
+      if(toReturn== null){
+         return new List<CheepDTO>();
+
+      } else{
+         return toReturn;
+
+      }
    }
 
    public async Task<IEnumerable<CheepDTO>> GetAllByAuthor(string author)
@@ -74,11 +94,15 @@ public class CheepRepository : ICheepRepository
          cheeplist = cheeplist.Concat(autlist);
       }
 
-      return cheeplist.OrderByDescending(c => c.TimeStamp)
+      var toReturn = cheeplist.OrderByDescending(c => c.TimeStamp)
       .Skip(page * pageSize)
       .Take(pageSize)
       .Select(a => new CheepDTO(a.Author!.UserName, a.Message!, a.TimeStamp));
       //check null
+      if (toReturn==null) {
+      return new List<CheepDTO>();
+      }
+      else return toReturn;
    }
 public async Task<IEnumerable<CheepDTO>> GetAllByFollower(string follower)
    {
