@@ -29,11 +29,13 @@ public class TimelineModel : PageModel
 
     public async Task<ActionResult> OnPostAsync(string message)
     {
+        if(message != null && message.Length > 5 && message.Length < 160) 
+        {
         var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
         await _repository.CreateCheep(newCheep);
-
+            
+        }
         return RedirectToPage();
-
     }
 
 
