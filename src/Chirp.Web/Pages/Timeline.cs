@@ -18,7 +18,7 @@ public class TimelineModel : PageModel
 
     public int Pages;
 
-    public string Author="";
+    public string Author = "";
 
     public TimelineModel(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
     {
@@ -42,25 +42,26 @@ public class TimelineModel : PageModel
         AuthorDTO following = await _authors.FindAuthorByName(follow);
         AuthorDTO follower = await _authors.FindAuthorByName(User.Identity!.Name!);
 
-        if(following !=null && follower != null){
-
-
-        if (await _authors.FollowExists(follower, following))
+        if (following != null && follower != null)
         {
 
-            await _authors.RemoveFollow(follower, following);
+
+            if (await _authors.FollowExists(follower, following))
+            {
+
+                await _authors.RemoveFollow(follower, following);
+
+            }
+            else
+            {
+
+                await _authors.CreateFollow(follower, following);
+
+
+            }
 
         }
-        else
-        {
 
-            await _authors.CreateFollow(follower, following);
-
-
-        }
-
-        }
-       
         return RedirectToPage();
 
     }
@@ -97,13 +98,16 @@ public class PublicTimeline : TimelineModel
         else
         {
             Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
-            if(Cheeps.Count() == 0) {
+            if (Cheeps.Count() == 0)
+            {
                 Console.WriteLine("hej");
-            } else {
-            CheepCount = (await _repository.GetAllByAuthor(author)).Count();    
-            Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
+            }
+            else
+            {
+                CheepCount = (await _repository.GetAllByAuthor(author)).Count();
+                Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
+            }
         }
-
         if (Cheeps == null)
         {
             Cheeps = await _repository.GetCheeps(32, 1);
@@ -112,6 +116,7 @@ public class PublicTimeline : TimelineModel
         }
 
         return Page();
+
     }
 }
 public class FollowTimeline : TimelineModel

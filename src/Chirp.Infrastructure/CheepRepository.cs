@@ -53,7 +53,7 @@ public class CheepRepository : ICheepRepository
 
    public async Task<IEnumerable<CheepDTO>> GetByAuthor(string author, int pageSize = 32, int page = 0)
    {
-      return await _context.Cheeps
+      var toReturn = await _context.Cheeps
       .Where(a => a.Author.UserName!.Contains(author))
       .OrderByDescending(a => a.Author.UserName)
       .Skip(page * pageSize)
