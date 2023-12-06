@@ -51,21 +51,23 @@ public class AuthorRepository : IAuthorRepository
     public async Task<AuthorDTO> FindAuthorByName(string author)
     {
 
+#pragma warning disable CS8603 // Possible null reference return.
         return await _context.Authors
         .Where(a => a.UserName!.Contains(author))
         .OrderByDescending(a => a.UserName!)
         .Select(a => new AuthorDTO(a!.UserName!, a.Email!, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName!, c.Message, c.TimeStamp)))).SingleOrDefaultAsync();
+#pragma warning restore CS8603 // Possible null reference return.
     }
 
 
     public async Task<AuthorDTO> FindAuthorByEmail(string email)
     {
+#pragma warning disable CS8603 // Possible null reference return.
         return await _context.Authors
         .Where(a => a.Email != null && a.Email == email)
         .OrderByDescending(a => a.Email)
-        .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName, c.Message, c.TimeStamp)))).SingleOrDefaultAsync();
-
-
+        .Select(a => new AuthorDTO(a!.UserName!, a.Email!, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName!, c.Message, c.TimeStamp)))).SingleOrDefaultAsync();
+#pragma warning restore CS8603 // Possible null reference return.
     }
 
     public async Task DeleteAuthor(string author)
