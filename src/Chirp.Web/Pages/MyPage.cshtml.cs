@@ -24,12 +24,12 @@ public class MyPageModel : PageModel
         _signInManager = signInManager;
 
     }
-    public async void OnGetAsync(string author)
+    public async void OnGetAsync()
     {
-        var aut = await _repository.FindAuthorByName(author);
+        var aut = await _repository.FindAuthorByName(User!.Identity!.Name);
         //User.Identity!.Name!
         UserName = aut.Name;
-        Email = aut.Email; 
+        Email = aut.Email;
 
     }
 

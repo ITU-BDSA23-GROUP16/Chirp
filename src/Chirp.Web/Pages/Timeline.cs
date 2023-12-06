@@ -138,4 +138,11 @@ public class FollowTimeline : TimelineModel
 
         return Page();
     }
+
+    public async Task<IActionResult> OnPostFollowingAsync() {
+        var toReturn = "/author/" + User!.Identity.Name + "/following";
+        return Redirect(toReturn);
+
+    }
+
 }

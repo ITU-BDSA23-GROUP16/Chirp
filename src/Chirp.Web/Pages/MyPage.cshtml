@@ -1,4 +1,4 @@
-@page "/MyPage/{author}"
+@page "/MyPage"
 @model MyPageModel
 @{
     ViewData["Title"] = "Chirp!";
@@ -7,7 +7,7 @@
 }
 
 <div>
-    <h2> Hello @routeName! This is your page </h2>
+    <h2> My page </h2>
 
     <div>
         <dl>
@@ -36,14 +36,14 @@
 
 
     <p> <em>
-        
-       Want to delete account? 
-       
-       <br>
 
-       Your account will no longer be accessible.
+            Want to delete account?
 
-    </em>
+            <br>
+
+            Your account will no longer be accessible.
+
+        </em>
 
 
     </p>
