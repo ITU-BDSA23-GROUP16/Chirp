@@ -39,7 +39,7 @@ public class AuthorRepository : IAuthorRepository
         .OrderByDescending(a => a.UserName)
         .Skip(page * pageSize)
         .Take(pageSize)
-        .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName, c.Message, c.TimeStamp))))
+        .Select(a => new AuthorDTO(a!.UserName!, a.Email!, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName!, c.Message, c.TimeStamp))))
         .ToListAsync();
     }
     public async Task<IEnumerable<AuthorDTO>> GetAllAuthors()
@@ -48,13 +48,13 @@ public class AuthorRepository : IAuthorRepository
         return await GetAuthors(int.MaxValue,0);
     }
 
-   public async Task<AuthorDTO> FindAuthorByName(string author)
+    public async Task<AuthorDTO> FindAuthorByName(string author)
     {
 
         return await _context.Authors
-        .Where(a => a.UserName.Equals(author))
-        .OrderByDescending(a => a.UserName)
-        .Select(a => new AuthorDTO(a!.UserName, a.Email, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName, c.Message, c.TimeStamp)))).SingleOrDefaultAsync();
+        .Where(a => a.UserName!.Contains(author))
+        .OrderByDescending(a => a.UserName!)
+        .Select(a => new AuthorDTO(a!.UserName!, a.Email!, a.Cheeps.Select(c => new CheepDTO(c.Author.UserName!, c.Message, c.TimeStamp)))).SingleOrDefaultAsync();
     }
 
 
@@ -72,17 +72,14 @@ public class AuthorRepository : IAuthorRepository
     {
 
         var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
-        if (auth == null)
+        if (auth != null)
         {
-            Console.WriteLine("author er null i delete author");
+            auth.IsDeleted = true;
+            await _context.SaveChangesAsync();
         }
 
-        Console.WriteLine(auth.Email);
 
-        auth.IsDeleted = true;
         //_context.Update(auth);
-        await _context.SaveChangesAsync();
-        Console.WriteLine(auth.IsDeleted);
     }
 
 

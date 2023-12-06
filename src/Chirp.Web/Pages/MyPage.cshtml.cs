@@ -26,7 +26,7 @@ public class MyPageModel : PageModel
     }
     public async void OnGetAsync(string author)
     {
-       var aut = await _repository.FindAuthorByName(author);
+        var aut = await _repository.FindAuthorByName(author);
         //User.Identity!.Name!
         UserName = aut.Name;
         Email = aut.Email; 
@@ -36,15 +36,10 @@ public class MyPageModel : PageModel
 
     public async Task<IActionResult> OnPostDeleteAsync(string author)
     {
-        if (author == null)
-        {
-            Console.WriteLine("hej");
-        }
-        else
+        if (author != null)
         {
             await _repository.DeleteAuthor(author);
             await _signInManager.SignOutAsync();
-
         }
         return Redirect("/");
     }
