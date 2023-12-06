@@ -11,23 +11,29 @@
 }
 
 <div>
-    <h2> @routeName's Timeline </h2>
-
-    @if (SignInManager.IsSignedIn(User))
+    @if (await Model.IfAuthorExists(Model.Author))
     {
-        <form asp-page-handler="update">
-            @if (await Model.IfFollowExists(Model.Author))
-            {
-                <button type="submit" name="follow" value=@routeName>Unfollow</button>
+        <h2> @routeName's Timeline </h2>
 
-            }
-            else
-            {
+        @if (SignInManager.IsSignedIn(User) && Model.Author != User.Identity.Name)
+        {
+            <form asp-page-handler="update">
+                @if (await Model.IfFollowExists(Model.Author))
+                {
+                    <button type="submit" name="follow" value=@routeName>Unfollow</button>
 
-                <button type="submit" name="follow" value=@routeName>Follow</button>
-            }
-        </form>
+                }
+                else
+                {
+
+                    <button type="submit" name="follow" value=@routeName>Follow</button>
+                }
+            </form>
+        }
+        <partial name="_TimelinePartial" />
     }
-    <partial name="_TimelinePartial" />
-
+    else
+    {
+        <h2> @routeName does not exist </h2>
+    }
 </div>
