@@ -45,7 +45,7 @@ public class AuthorRepository : IAuthorRepository
     public async Task<IEnumerable<AuthorDTO>> GetAllAuthors()
     {
 
-        return await GetAuthors(int.MaxValue,0);
+        return await GetAuthors(int.MaxValue, 0);
     }
 
     public async Task<AuthorDTO> FindAuthorByName(string author)
@@ -116,7 +116,7 @@ public class AuthorRepository : IAuthorRepository
     }
     public async Task<IEnumerable<AuthorDTO>> GetAllFollowed(string author)
     {
-        return await GetFollowed(author,int.MaxValue,0);
+        return await GetFollowed(author, int.MaxValue, 0);
     }
 
     //Finds who a specific author follows
@@ -134,11 +134,15 @@ public class AuthorRepository : IAuthorRepository
     }
     public async Task<IEnumerable<AuthorDTO>> GetAllFollowing(string author)
     {
-        return await GetFollowing(author,int.MaxValue,0);
+        return await GetFollowing(author, int.MaxValue, 0);
     }
 
     public async Task RemoveFollow(AuthorDTO followerDto, AuthorDTO followingDto)
     {
+        if (followerDto == null || followingDto == null)
+        {
+            return;
+        }
         var follow = await _context.Follows
         .SingleAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
         _context.Follows.Remove(follow);
@@ -147,7 +151,10 @@ public class AuthorRepository : IAuthorRepository
 
     public async Task<bool> FollowExists(AuthorDTO followerDto, AuthorDTO followingDto)
     {
-
+        if (followerDto == null || followingDto == null)
+        {
+            return false;
+        }
         var follow = await _context.Follows
         .SingleOrDefaultAsync(f => f.Following.UserName == followingDto.Name && f.Follower.UserName == followerDto.Name);
 
