@@ -1,0 +1,17 @@
+﻿@page "/author/all"
+@model Chirp.Web.Pages.AllAuthorsModel
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+}
+
+<div>
+    <h2> All authors </h2>
+
+   <partial name="_AuthorsPartial" />
+
+</div>

@@ -1,4 +1,4 @@
-@page "/MyPage/{author}"
+@page "/MyPage"
 @model MyPageModel
 @{
     ViewData["Title"] = "Chirp!";
@@ -7,10 +7,49 @@
 }
 
 <div>
-    <h2> Hello @routeName! This is your page </h2>
+    <h2> My page </h2>
+
+    <div>
+        <dl>
+            <div class="pink-back">
+                <dt class="bodyText">
+                    Username
+                </dt>
+                <dd>
+                    @Model.UserName
+                </dd>
+
+            </div>
+            <div class="pink-back">
+                <dt class="bodyText">
+                    E-mail
+                </dt>
+                <dd>
+                    @Model.Email
+                </dd>
+
+            </div>
+
+        </dl>
+
+    </div>
+
+
+    <p> <em>
+
+            Want to delete account?
+
+            <br>
+
+            Your account will no longer be accessible.
+
+        </em>
+
+
+    </p>
 
     <form asp-page-handler="delete" method="post">
-        <button class="btn btn-default">Delete</button>
+        <button type="submit" class="forget">Forget me!</button>
     </form>
 
 

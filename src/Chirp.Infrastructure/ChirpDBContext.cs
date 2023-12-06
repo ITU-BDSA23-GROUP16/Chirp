@@ -10,8 +10,6 @@ public class ChirpDBContext : IdentityDbContext<Author>
     public DbSet<Cheep> Cheeps { get; set; }
     public DbSet<Follow> Follows { get; set; }
 
-    public string DbPath { get; }
-
 
     public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
                 : base(options)

@@ -1,24 +1,30 @@
-@model Chirp.Web.Pages.TimelineModel
+@model Chirp.Web.Pages.AuthorsModel
 
+<head>
+    <title>Title of the document</title>
+    <style>
+    ul {
+        columns: 2;
+        -webkit-columns: 2;
+        -moz-columns: 2;
+    }
+    </style>
+</head>
 
-@if (Model.Cheeps.Any())
+@if (Model.Authors.Any())
 {
-    <ul id="messagelist" class="cheeps">
-        @foreach (var cheep in Model.Cheeps!)
+    <ul id="messagelist" class="authors">
+        @foreach (var aut in Model.Authors!)
         {
             <li>
                 <p>
                     <strong>
-                        <a href="/author/@cheep.Author">@cheep.Author</a>
+                        <a href="/author/@aut.Name">@aut.Name</a>
                     </strong>
-                    @cheep.Message
-                    <small>&mdash; @cheep.TimeStamp</small>
                 </p>
             </li>
         }
     </ul>
-
-
     @if (Model.hasPage || Model.PageInt == 0)
     {
         <div class="paging">
@@ -36,9 +42,8 @@
             }
         </div>
     }
-
-} 
+}   
 else
 {
-    <em>There are no cheeps so far.</em>
+    <em>There are no authors here.</em>
 }

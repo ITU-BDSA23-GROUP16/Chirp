@@ -61,7 +61,7 @@ public class CheepRepTest : IDisposable
         Cheep? created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
         Cheep? herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
-        IEnumerable<CheepDTO> cheeps = await repository!.GetCheeps();
+        IEnumerable<CheepDTO> cheeps = await repository!.GetAllCheeps();
 
         //Assert
         await EnsureUnchanged(created!, herman!);
