@@ -9,8 +9,6 @@ public class Author : IdentityUser
 
     public bool IsDeleted { get; set; }
 
-    public ICollection<Follow> Followers;
-    public ICollection<Follow> Followings;
 }
 
 public class Follow
