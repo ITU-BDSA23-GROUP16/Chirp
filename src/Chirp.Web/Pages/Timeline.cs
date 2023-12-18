@@ -104,11 +104,7 @@ public class PublicTimeline : TimelineModel
         else
         {
             Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
-            if (Cheeps.Count() == 0)
-            {
-                Console.WriteLine("hej");
-            }
-            else
+            if (Cheeps.Count() != 0)
             {
                 CheepCount = (await _repository.GetAllByAuthor(author)).Count();
                 Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);

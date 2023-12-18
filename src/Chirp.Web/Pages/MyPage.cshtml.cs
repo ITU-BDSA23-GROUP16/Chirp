@@ -37,15 +37,11 @@ public class MyPageModel : PageModel
 
     public async Task<ActionResult> OnPostDeleteAsync()
     {
-        Console.WriteLine("hej her slet");
-        //Console.WriteLine(author);
 
         if (User!.Identity!.Name != null)
         {
-            Console.WriteLine("Hej efter if");
             await _signInManager.SignOutAsync();
             await _repository.DeleteAuthor(User!.Identity!.Name);
-            // Console.WriteLine(_signInManager.IsSignedIn(User));
         }
         return Redirect("/");
     }
