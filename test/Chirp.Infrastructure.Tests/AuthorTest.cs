@@ -4,7 +4,7 @@ using Chirp.Core;
 using System.ComponentModel;
 namespace Chirp.Infrastructure.Tests;
 
-
+//This class contains all the unit tests regarding the author properties
 public class AuthorTest
 {
 
