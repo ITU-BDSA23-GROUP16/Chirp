@@ -43,9 +43,9 @@ public class MyPageModel : PageModel
         if (User!.Identity!.Name != null)
         {
             Console.WriteLine("Hej efter if");
-            await _repository.DeleteAuthor(User!.Identity!.Name);
             await _signInManager.SignOutAsync();
-            Console.WriteLine(_signInManager.IsSignedIn(User));
+            await _repository.DeleteAuthor(User!.Identity!.Name);
+            // Console.WriteLine(_signInManager.IsSignedIn(User));
         }
         return Redirect("/");
     }

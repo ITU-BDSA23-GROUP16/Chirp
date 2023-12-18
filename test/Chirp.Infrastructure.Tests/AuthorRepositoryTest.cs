@@ -197,6 +197,25 @@ public class AuthorRepTest : IDisposable
     }
 
     [Fact]
+    public async Task RemoveUser()
+    {
+
+        //Arrange
+        await context.Database.EnsureCreatedAsync();
+        repository = new AuthorRepository(context);
+        await repository.CreateAuthor(saynabDTO);
+        await repository.CreateAuthor(hermanDTO);
+
+        //ActDTO
+        await repository.DeleteAuthor(saynabDTO.Name);
+
+        //Assert
+        var created = await context.Authors.SingleOrDefaultAsync(c => c.UserName == "Saynab");
+
+        Assert.Null(created);
+    }
+
+    [Fact]
     public async Task DoesFollowExist()
     {
 
