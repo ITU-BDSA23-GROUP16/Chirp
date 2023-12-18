@@ -12,8 +12,8 @@ public class MyPageModel : PageModel
     protected readonly IAuthorRepository _repository;
     private readonly SignInManager<Author> _signInManager;
 
-    public string UserName;
-    public string Email;
+    public string UserName = "";
+    public string Email = "";
 
 
 
@@ -26,11 +26,12 @@ public class MyPageModel : PageModel
     }
     public async Task<ActionResult> OnGetAsync()
     {
-        var aut = await _repository.FindAuthorByName(User!.Identity!.Name);
-        //User.Identity!.Name!
+        var aut = await _repository.FindAuthorByName(User!.Identity!.Name!);
+        if(aut != null)
+        {
         UserName = aut.Name;
         Email = aut.Email;
-
+        }
         return Page();
     }
 
