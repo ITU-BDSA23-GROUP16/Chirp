@@ -29,11 +29,17 @@ public class TimelineModel : PageModel
 
     public async Task<ActionResult> OnPostAsync(string message)
     {
-        var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
-        await _repository.CreateCheep(newCheep);
-
+        if (message != null && message.Length > 5 && message.Length < 160)
+        {
+            var newCheep = new CheepDTO(User.Identity!.Name!, message, DateTime.Now);
+            await _repository.CreateCheep(newCheep);
+            ViewData["confirmation"] = $"";
+        }
+        else
+        {
+            ViewData["confirmation"] = $"Cheeps must be between 5 and 160 characters";
+        }
         return RedirectToPage();
-
     }
 
 
@@ -81,7 +87,6 @@ public class TimelineModel : PageModel
         return await _authors.FollowExists(follower, following);
 
     }
-
 }
 public class PublicTimeline : TimelineModel
 {

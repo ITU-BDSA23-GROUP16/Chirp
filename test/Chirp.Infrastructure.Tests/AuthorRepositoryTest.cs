@@ -55,7 +55,7 @@ public class AuthorRepTest : IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
-
+        
         context.Authors.Add(herman);
         context.Entry(herman).State = EntityState.Detached;
 

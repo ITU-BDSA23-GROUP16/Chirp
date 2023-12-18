@@ -7,9 +7,6 @@ public class Author : IdentityUser
     //https://www.tutorialsteacher.com/articles/set-default-value-to-property-in-csharp
     public ICollection<Cheep> Cheeps { get; set; } = new List<Cheep>();
 
-    public ICollection<Follow> Followers;
-    public ICollection<Follow> Followings;
-}
 
 public class Follow
 {
