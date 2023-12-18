@@ -8,7 +8,7 @@ public class MyPageModel : PageModel
 {
 
 
-    protected readonly ILogger<TimelineModel> _logger;
+    protected readonly ILogger<MyPageModel> _logger;
     protected readonly IAuthorRepository _repository;
     private readonly SignInManager<Author> _signInManager;
 
@@ -17,29 +17,35 @@ public class MyPageModel : PageModel
 
 
 
-    public MyPageModel(ILogger<TimelineModel> logger, IAuthorRepository repository, SignInManager<Author> signInManager)
+    public MyPageModel(ILogger<MyPageModel> logger, IAuthorRepository repository, SignInManager<Author> signInManager)
     {
         _logger = logger;
         _repository = repository;
         _signInManager = signInManager;
 
     }
-    public async void OnGetAsync()
+    public async Task<ActionResult> OnGetAsync()
     {
         var aut = await _repository.FindAuthorByName(User!.Identity!.Name);
         //User.Identity!.Name!
         UserName = aut.Name;
         Email = aut.Email;
 
+        return Page();
     }
 
 
-    public async Task<IActionResult> OnPostDeleteAsync(string author)
+    public async Task<ActionResult> OnPostDeleteAsync()
     {
-        if (author != null)
+        Console.WriteLine("hej her slet");
+        //Console.WriteLine(author);
+
+        if (User!.Identity!.Name != null)
         {
-            await _repository.DeleteAuthor(author);
+            Console.WriteLine("Hej efter if");
+            await _repository.DeleteAuthor(User!.Identity!.Name);
             await _signInManager.SignOutAsync();
+            Console.WriteLine(_signInManager.IsSignedIn(User));
         }
         return Redirect("/");
     }

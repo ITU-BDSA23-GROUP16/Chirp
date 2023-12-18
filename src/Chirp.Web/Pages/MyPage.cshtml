@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
-    var routeName = HttpContext.GetRouteValue("author");
 }
 
 <div>
@@ -44,11 +43,9 @@
             Your account will no longer be accessible.
 
         </em>
-
-
     </p>
 
-    <form asp-page-handler="delete" method="post">
+    <form asp-route-returnUrl="/" asp-page-handler="delete" method="post">
         <button type="submit" class="forget">Forget me!</button>
     </form>
 
