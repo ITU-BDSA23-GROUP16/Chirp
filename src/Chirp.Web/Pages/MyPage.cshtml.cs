@@ -8,38 +8,41 @@ public class MyPageModel : PageModel
 {
 
 
-    protected readonly ILogger<TimelineModel> _logger;
+    protected readonly ILogger<MyPageModel> _logger;
     protected readonly IAuthorRepository _repository;
     private readonly SignInManager<Author> _signInManager;
 
-    public string UserName;
-    public string Email;
+    public string UserName = "";
+    public string Email = "";
 
 
 
-    public MyPageModel(ILogger<TimelineModel> logger, IAuthorRepository repository, SignInManager<Author> signInManager)
+    public MyPageModel(ILogger<MyPageModel> logger, IAuthorRepository repository, SignInManager<Author> signInManager)
     {
         _logger = logger;
         _repository = repository;
         _signInManager = signInManager;
 
     }
-    public async void OnGetAsync()
+    public async Task<ActionResult> OnGetAsync()
     {
-        var aut = await _repository.FindAuthorByName(User!.Identity!.Name);
-        //User.Identity!.Name!
+        var aut = await _repository.FindAuthorByName(User!.Identity!.Name!);
+        if(aut != null)
+        {
         UserName = aut.Name;
         Email = aut.Email;
-
+        }
+        return Page();
     }
 
 
-    public async Task<IActionResult> OnPostDeleteAsync(string author)
+    public async Task<ActionResult> OnPostDeleteAsync()
     {
-        if (author != null)
+
+        if (User!.Identity!.Name != null)
         {
-            await _repository.DeleteAuthor(author);
             await _signInManager.SignOutAsync();
+            await _repository.DeleteAuthor(User!.Identity!.Name);
         }
         return Redirect("/");
     }

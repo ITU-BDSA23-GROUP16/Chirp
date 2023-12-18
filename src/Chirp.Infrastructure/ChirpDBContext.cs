@@ -31,8 +31,6 @@ public class ChirpDBContext : IdentityDbContext<Author>
         .HasPrincipalKey(e => e.Id);
 
 
-        modelBuilder.Entity<Author>().HasQueryFilter(a => !a.IsDeleted);
-
         modelBuilder.Entity<Follow>().HasKey(a => new { a.FollowerId, a.FollowingId });
 
 
