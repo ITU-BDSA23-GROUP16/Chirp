@@ -10,6 +10,12 @@
     var routeName = HttpContext.GetRouteValue("author");
 }
 
+
+<!-- 
+This page displays the User timeline when the user is signed in.
+Here the user is able to view other people's timelines as well as be able to follow/unfollow the certain user.
+-->
+
 <div>
     @if (await Model.IfAuthorExists(Model.Author))
     {

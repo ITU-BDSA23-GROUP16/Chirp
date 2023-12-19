@@ -1,7 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-
 namespace Chirp.Infrastructure;
 
+/// <summary>
+/// Repository implementing IAuthorRepository for querying Authors in the database by their properties, 
+/// and making changes to them like creating and deleting an author/follower, retrieving one and their properties.
+/// It transfers the data by using AuthorDTOs. 
+/// </summary>
 
 public class AuthorRepository : IAuthorRepository
 {
@@ -19,8 +22,8 @@ public class AuthorRepository : IAuthorRepository
 
         var newAuthor = new Author
         {
-            UserName = author.Name, //Name of AuthorDTO
-            Email = author.Email //Email of AuthorDTO
+            UserName = author.Name, 
+            Email = author.Email 
         };
         var existing = await _context.Authors.Where(c => c.UserName == author.Name).FirstOrDefaultAsync();
         if (existing != null)
@@ -79,8 +82,6 @@ public class AuthorRepository : IAuthorRepository
             await _context.SaveChangesAsync();
         }
         
-
-        //_context.Update(auth);
     }
 
 

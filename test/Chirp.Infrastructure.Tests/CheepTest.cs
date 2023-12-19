@@ -1,24 +1,20 @@
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Chirp.Core;
-using System.ComponentModel;
 namespace Chirp.Infrastructure.Tests;
 
+/// <summary>
+///This class contains all the unit tests regarding the cheep properties and the equivalent CheepDTO properties
+/// </summary>
 public class CheepTest
 {
-    //UNIX Timestamp conversion to user readable time
-    [Fact]
-    public void UNIX_1695054881_2ActualDateTest()
-    {
 
+    [Fact]
+    public void DateTime_2ActualTimeStamp()
+    {
         // Arrange
-        //long UNIX2Convert = 1695054881;
         string time = "09/18/23 16:34:41";
-        DateTime expected = DateTime.Parse(time); 
-        
+        DateTime expected = DateTime.Parse(time);
+        CheepDTO cheep = new CheepDTO("Saynab", "Hej med dig min ven", expected);
 
         // Act
-        CheepDTO cheep = new CheepDTO("Saynab", "Hej med dig min ven",expected);
         DateTime actual = cheep.TimeStamp;
 
         // Assert
@@ -26,15 +22,14 @@ public class CheepTest
     }
 
     [Fact]
-    public void UNIX_1660239950_2ActualDateTest()
+    public void DateTime_2ActualTimeStamp2()
     {
         // Arrange
-       // long UNIX2Convert = 1660239950;
         string time = "08/11/22 17:45:50";
-        DateTime expected = DateTime.Parse(time); 
+        DateTime expected = DateTime.Parse(time);
 
         // Act
-        CheepDTO cheep = new CheepDTO("Dima", "Vises",expected);
+        CheepDTO cheep = new CheepDTO("Dima", "Vises", expected);
         DateTime actual = cheep.TimeStamp;
 
         // Assert
@@ -42,15 +37,14 @@ public class CheepTest
     }
 
     [Fact]
-    public void UNIX_1695054881_2WrongDateTest()
+    public void DateTime_2WrongTimeStampTest2()
     {
         // Arrange
-        //long UNIX2Convert = 1695054881;
         DateTime notExpected = DateTime.Parse("07/10/23 17:25:09");
-        DateTime expected = DateTime.Parse("08/11/22 17:45:50");  
+        DateTime expected = DateTime.Parse("08/11/22 17:45:50");
+        CheepDTO cheep = new CheepDTO("Mikkel", "Who?", expected);
 
         // Act
-        CheepDTO cheep = new CheepDTO("Mikkel", "Who?",expected);
         DateTime actual = cheep.TimeStamp;
 
         // Assert
@@ -58,21 +52,20 @@ public class CheepTest
     }
 
     [Fact]
-    public void UNIX_1695063038_2WrongDateTest()
+    public void DateTime_2WrongDateTest2()
     {
         // Arrange
         //long UNIX2Convert = 1695063038;
         DateTime notExpected = DateTime.Parse("09/19/23 18:10:55");
         DateTime expected = DateTime.Parse("07/10/23 17:25:09");
+        CheepDTO cheep = new CheepDTO("Herman", "Hello folks", expected);
+
         // Act
-        CheepDTO cheep = new CheepDTO("Herman", "Hello folks",expected);
         DateTime actual = cheep.TimeStamp;
 
         // Assert
         Assert.NotEqual(notExpected, actual);
     }
-
-
 
 
     //Formatting of a Cheep record to user interface 
@@ -127,9 +120,6 @@ public class CheepTest
         Assert.NotEqual(expected, actual);
     }
 
-
-
-
     [Fact]
     public void FormatCheep_2WrongMessageTest2()
     {
@@ -137,8 +127,8 @@ public class CheepTest
         string author = "haiwan";
         string message = "Hejhej jeg går min vej";
         DateTime date = DateTime.Parse("08/11/22 17:45:50");
-        string expected = "Ses med dig broski";
         CheepDTO cheep = new CheepDTO(author, message, date);
+        string expected = "Ses med dig broski";
 
         // Act
         string actual = cheep.Message;
@@ -146,6 +136,5 @@ public class CheepTest
         // Assert
         Assert.NotEqual(expected, actual);
     }
-
 
 }

@@ -1,10 +1,12 @@
 namespace Chirp.Core;
 public record AuthorDTO(string Name, string Email, IEnumerable<CheepDTO> Cheeps);
-//Skal en authorDTO's liste være en ICollection eller IEnumerable, Og hvis det skal være Icollection, skal alt returneres som Icollection i CheepRepository?
-//Gør det en forskel for vores one to many relationships?
+/// <summary>
+/// IAuthorRepository is the interface defining the methods for retrieving data, using data transfer objects. 
+/// This interface defines all the relevant methods of an AuthorDTO and its properties.
+/// The interface defines methods that can retrieve, delete, and create Authors, as well as forming a follow relation.
+/// </summary>
 public interface IAuthorRepository
 {
-// Task Create(AuthorDTO author);
 
 Task CreateAuthor(AuthorDTO author);
 Task CreateFollow(AuthorDTO followerDto, AuthorDTO followingDto);

@@ -9,6 +9,11 @@ using Chirp.Infrastructure;
 using Chirp.Core;
 using AspNet.Security.OAuth.GitHub;
 
+/// <summary>
+/// The main process of Chirp!
+/// Along with the general setup, this defines what kind of Authorizations are available
+/// </summary>
+
 var builder = WebApplication.CreateBuilder(args);
 
 //__________________________
@@ -17,8 +22,11 @@ var DbPath = System.IO.Path.Join(path, "chirp.db");
 
 
 builder.Services.AddControllers();
-//builder.Services.AddDbContext<ChirpDBContext>(options =>
-//options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+//DBContext definition for SQLServer
+/*builder.Services.AddDbContext<ChirpDBContext>(options =>
+options.UseSqlServer("Server=tcp:bdsagroup16-chirpdb.database.windows.net,1433;Initial Catalog=bdsagroup16-chirpdb;Persist Security Info=False;User ID=bdsagroup16adminlogin;Password=Bdsagroup16adminpassword!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+*/
+//DBContext definition for SQLite
 builder.Services.AddDbContext<ChirpDBContext>(options =>
     options.UseSqlite($"Data Source={DbPath}"));
 //_________________________
@@ -27,10 +35,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<Author, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ChirpDBContext>()
                 .AddDefaultTokenProviders().AddDefaultUI();
 
-//builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = true)
-//            .AddEntityFrameworkStores<ChirpDBContext>();
 builder.Services.AddMvc();
 
+//Github authentication only works on the web app;
+//It must be removed in the local, SQLite release
 builder.Services.AddAuthentication()
     .AddGitHub(o =>
     {
@@ -43,9 +51,6 @@ builder.Services.AddAuthentication()
 
 
 builder.Services.AddRazorPages();
-//builder.Services.AddSingleton<ICheepService, CheepService>();
-//Read about GetConnectionString
-//builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite($"Data Source={DbPath}"));
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
@@ -89,7 +94,6 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ChirpDBContext>();
     context.Database.Migrate();
-    //Then you can use the context to seed the database for example
     DbInitializer.SeedDatabase(context);
 }
 
@@ -102,7 +106,7 @@ if (!app.Environment.IsDevelopment())
     else
     {
         app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        // The default HSTS value is 30 days.
         app.UseHsts();
     }
 
@@ -118,4 +122,4 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
-//public partial class Program { }
+

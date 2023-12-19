@@ -1,6 +1,9 @@
 @model Chirp.Web.Pages.TimelineModel
 
-
+<!-- 
+Partial for displaying a list of Cheeps from the TimelineModel
+At the bottom, a set of buttons lets the user select which page to display
+-->
 @if (Model.Cheeps.Any())
 {
     <ul id="messagelist" class="cheeps">

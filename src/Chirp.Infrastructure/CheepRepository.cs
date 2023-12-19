@@ -1,5 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 namespace Chirp.Infrastructure;
+
+/// <summary>
+/// The CheepRepository class transfers data to from the ChirpDBContext to the Chirp.Web domain using CheepDTOs.
+/// It implements the ICheepRepository interface and provides methods for 
+/// retrieving cheeps, ordering cheeps by different criteria and creating Cheeps. 
+/// </summary>
+
+
 public class CheepRepository : ICheepRepository
 {
 
