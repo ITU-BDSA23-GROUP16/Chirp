@@ -18,9 +18,6 @@ public class Author : IdentityUser
     //Default values for get-set properties:
     //https://www.tutorialsteacher.com/articles/set-default-value-to-property-in-csharp
     public ICollection<Cheep> Cheeps { get; set; } = new List<Cheep>();
-
-    public bool IsDeleted { get; set; }
-
 }
 /// <summary>
 

@@ -109,11 +109,7 @@ public class PublicTimeline : TimelineModel
         else
         {
             Cheeps = await _repository.GetByAuthor(author, cheepsPerPage, PageInt);
-            if (Cheeps.Count() == 0)
-            {
-                Console.WriteLine("hej");
-            }
-            else
+            if (Cheeps.Count() != 0)
             {
                 CheepCount = (await _repository.GetAllByAuthor(author)).Count();
                 Pages = (int)Math.Ceiling(CheepCount / cheepsPerPage * 1.0);
@@ -150,8 +146,8 @@ public class FollowTimeline : TimelineModel
         return Page();
     }
 
-    public async Task<IActionResult> OnPostFollowingAsync() {
-        var toReturn = "/author/" + User!.Identity.Name + "/following";
+    public IActionResult OnPostFollowing() {
+        var toReturn = "/author/" + User!.Identity!.Name + "/following";
         return Redirect(toReturn);
 
     }

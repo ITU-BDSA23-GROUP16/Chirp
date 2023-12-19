@@ -76,14 +76,13 @@ public class AuthorRepository : IAuthorRepository
 
     public async Task DeleteAuthor(string author)
     {
-
         var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
         if (auth != null)
         {
-            auth.IsDeleted = true;
+            _context.Authors.Remove(auth);
             await _context.SaveChangesAsync();
         }
-
+        
 
         //_context.Update(auth);
     }

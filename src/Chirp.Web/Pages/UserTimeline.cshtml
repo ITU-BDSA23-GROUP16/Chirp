@@ -15,7 +15,7 @@
     {
         <h2> @routeName's Timeline </h2>
 
-        @if (SignInManager.IsSignedIn(User) && Model.Author != User.Identity.Name)
+        @if (SignInManager.IsSignedIn(User) && Model.Author != User!.Identity!.Name)
         {
             <form asp-page-handler="update">
                 @if (await Model.IfFollowExists(Model.Author))
