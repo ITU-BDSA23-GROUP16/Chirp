@@ -1,16 +1,14 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-
 namespace Chirp.Infrastructure;
 
 /// <summary>
 /// ChirpDBContext represents a database session derived from IdentityDbContext.
-/// It can be used to query and save instances of Chirp! entities.
+/// It is used to query and save instances of Chirp! entities.
 /// </summary>
+/// <remarks>
+/// Authors, Cheeps and Follows are equivalent to relations
+/// </remarks>
 public class ChirpDBContext : IdentityDbContext<Author>
 {
-    //Name of tables are Authors and Cheeps
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
     public DbSet<Follow> Follows { get; set; }

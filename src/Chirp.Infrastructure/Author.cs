@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Identity;
 namespace Chirp.Infrastructure;
 
 
 /// <summary>
 
-/// Represents the user accounts in Chirp! 
+/// Represents the user accounts in Chirp! Inherits from the IdentityUser class in the AspNetCore.Identity package
 
 ///</summary>
 /// <remarks>
@@ -14,23 +13,22 @@ namespace Chirp.Infrastructure;
 
 public class Author : IdentityUser
 {
-    //
+
     //Default values for get-set properties:
     //https://www.tutorialsteacher.com/articles/set-default-value-to-property-in-csharp
     public ICollection<Cheep> Cheeps { get; set; } = new List<Cheep>();
 }
 /// <summary>
-
 /// Represents follow-relationships in Chirp!
-/// Follows are queried when deciding what cheeps are displayed in the Chirp.Web/Pages/FollowTimeline.cshtml
-
+/// Follows are queried when deciding what cheeps are displayed in the Follow Timeline and the list of followed users.
 ///</summary>
+
 public class Follow
 {
     public string? FollowerId { get; set; }
     public string? FollowingId { get; set; }
-    public Author Follower { get; set; } // the people that follows you
-    public Author Following { get; set; } // the people you follow
+    public required Author Follower { get; set; } // the people that follow you
+    public required Author Following { get; set; } // the people you follow
 
 
 }
