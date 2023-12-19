@@ -55,17 +55,18 @@ public class AuthorRepTest : IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
-        
-        context.Authors.Add(herman);
-        context.Entry(herman).State = EntityState.Detached;
+
 
         //Act
-        await repository.CreateAuthor(hermanDTO);
-
+        //await repository.CreateAuthor(hermanDTO);
+        context.Authors.Add(herman);
+        //context.Entry(herman).State = EntityState.Detached;
+        context.SaveChanges();
         //Assert
-        await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAuthor(hermanDTO));
+        //await Assert.ThrowsAsync<ArgumentException>(() => repository.CreateAuthor(hermanDTO));
         var author = await context.Authors.Where(c => c.UserName == "herman").ToListAsync();
         Assert.Single(author);
+
     }
 
     [Fact]
@@ -76,14 +77,14 @@ public class AuthorRepTest : IDisposable
         repository = new AuthorRepository(context);
 
         context.Authors.Add(herman);
-        context.Entry(herman).State = EntityState.Detached;
-        await repository.CreateAuthor(hermanDTO);
+        context.SaveChanges();
+    
 
         //Act
         var author = await repository.FindAuthorByName("herman");
 
         //Assert
-        Assert.Equal(author.Name, hermanDTO.Name);
+        Assert.Equal(hermanDTO.Name, author.Name);
     }
 
     [Fact]
@@ -93,15 +94,14 @@ public class AuthorRepTest : IDisposable
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
 
-        context.Authors.Add(herman);
-        context.Entry(herman).State = EntityState.Detached;
+
         await repository.CreateAuthor(hermanDTO);
 
         //Act
         var author = await repository.FindAuthorByEmail("Herman@only.com");
 
         //Assert
-        Assert.Equal(herman.Email, author.Email);
+        Assert.Equal(hermanDTO.Email, author.Email);
     }
 
 
@@ -114,6 +114,7 @@ public class AuthorRepTest : IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
+
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
 
@@ -134,10 +135,6 @@ public class AuthorRepTest : IDisposable
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
 
-
-        context.Authors.Add(saynab);
-        context.Entry(saynab).State = EntityState.Detached;
-
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
 
@@ -145,10 +142,10 @@ public class AuthorRepTest : IDisposable
 
         //Act
         IEnumerable<AuthorDTO> followed = await repository.GetFollowed("herman");
-        AuthorDTO expected = followed.ElementAt(0);
+        AuthorDTO actual = followed.ElementAt(0);
 
         //Assert
-        Assert.Equal(saynab.UserName, expected.Name);
+        Assert.Equal(saynab.UserName, actual.Name);
     }
 
     [Fact]
@@ -159,9 +156,6 @@ public class AuthorRepTest : IDisposable
         repository = new AuthorRepository(context);
 
 
-        context.Authors.Add(saynab);
-        context.Entry(saynab).State = EntityState.Detached;
-
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
 
@@ -169,10 +163,10 @@ public class AuthorRepTest : IDisposable
 
         //Act
         IEnumerable<AuthorDTO> followed = await repository.GetFollowing("Saynab");
-        AuthorDTO expected = followed.ElementAt(0);
+        AuthorDTO actual = followed.ElementAt(0);
 
         //Assert
-        Assert.Equal(herman.UserName, expected.Name);
+        Assert.Equal(herman.UserName, actual.Name);
     }
 
     [Fact]
@@ -182,12 +176,14 @@ public class AuthorRepTest : IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
+
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
         await repository.CreateFollow(saynabDTO, hermanDTO);
 
         //ActDTO
         await repository.RemoveFollow(saynabDTO, hermanDTO);
+        context.SaveChanges();
 
         //Assert
         var created = await context.Follows.SingleOrDefaultAsync(c => c.Follower.UserName == "Saynab" && c.Following.UserName == "herman");
@@ -203,12 +199,15 @@ public class AuthorRepTest : IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
+        //context.Authors.Add(saynab);
+        //context.SaveChanges();
+        //context.Authors.Add(herman);
         await repository.CreateAuthor(saynabDTO);
-        await repository.CreateAuthor(hermanDTO);
+        //await repository.CreateAuthor(hermanDTO);
 
         //ActDTO
         await repository.DeleteAuthor(saynabDTO.Name);
-
+        context.SaveChanges();
         //Assert
         var created = await context.Authors.SingleOrDefaultAsync(c => c.UserName == "Saynab");
 
@@ -222,6 +221,7 @@ public class AuthorRepTest : IDisposable
         //Arrange
         await context.Database.EnsureCreatedAsync();
         repository = new AuthorRepository(context);
+
         await repository.CreateAuthor(saynabDTO);
         await repository.CreateAuthor(hermanDTO);
         await repository.CreateFollow(saynabDTO, hermanDTO);

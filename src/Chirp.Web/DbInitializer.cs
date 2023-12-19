@@ -3,6 +3,12 @@ using Chirp.Infrastructure;
 
 namespace Chirp.Infrastructure;
 
+
+/// <summary>
+/// This class initializes all the data that resides in our database.
+/// It gives us all the users with their corresponding messages, as well as their Emails.
+/// </summary>
+
 public static class DbInitializer {
     public static void SeedDatabase(this ChirpDBContext chirpContext) {
         if (!(chirpContext.Authors.Any()))

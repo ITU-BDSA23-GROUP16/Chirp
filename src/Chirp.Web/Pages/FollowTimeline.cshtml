@@ -1,6 +1,8 @@
 ﻿@page "/following"
 @model Chirp.Web.Pages.FollowTimeline
-
+<!-- 
+A timeline for viewing only Cheeps from Authors that the logged in user is following
+-->
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<Author> SignInManager
 @inject UserManager<Author> UserManager

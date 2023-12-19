@@ -1,8 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Chirp.Core;
-using NuGet.Protocol.Core.Types;
 namespace Chirp.Web.Pages;
+
+
+/// <summary>
+/// AuthorsModel class inherits from PageModel
+/// Contains properties for storing a collection of authors, authors to display per page, page number and total number of authors and pages
+/// It also checks whether another user is followed
+/// </summary>
 
 public class AuthorsModel : PageModel
 {
@@ -34,6 +39,12 @@ public class AuthorsModel : PageModel
     }
 
 }
+
+/// <summary>
+/// FollowerAuthorsModel inherits from AuthorsModel
+/// It retrieves the authors that the user is following
+/// </summary>
+
 public class FollowingAuthorsModel : AuthorsModel
 {
     public FollowingAuthorsModel(ILogger<AuthorsModel> logger, IAuthorRepository repository)
@@ -53,6 +64,12 @@ public class FollowingAuthorsModel : AuthorsModel
         return Page();
     }
 }
+
+/// <summary>
+/// AllAuthorsModel inherits from AuthorsModel
+/// It retrieves all of the users in the application
+/// </summary>
+
 
 public class AllAuthorsModel : AuthorsModel
 {

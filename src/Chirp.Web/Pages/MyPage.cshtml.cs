@@ -4,6 +4,14 @@ using Chirp.Core;
 using Microsoft.AspNetCore.Identity;
 namespace Chirp.Web.Pages;
 
+
+/// <summary>
+/// This class displays the username and email of the user that is signed in.
+/// Since the Email is the same as the Username, the same name is displayed twice.
+/// This page also contains the 'Forget Me' button that deletes the user and automatically logs them out when it's pressed.
+/// </summary>
+
+
 public class MyPageModel : PageModel
 {
 

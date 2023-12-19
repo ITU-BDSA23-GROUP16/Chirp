@@ -4,6 +4,10 @@ using Chirp.Core;
 using NuGet.Protocol.Core.Types;
 namespace Chirp.Web.Pages;
 
+/// <summary>
+/// TimelineModel inherits from PageModel. It defines the methods for handling posting of cheeps and following users.
+/// </summary>
+
 public class TimelineModel : PageModel
 {
     protected readonly ILogger<TimelineModel> _logger;
@@ -88,6 +92,10 @@ public class TimelineModel : PageModel
 
     }
 }
+
+/// <summary>
+/// PublicTimeline inherits from TimelineModel. It defines the method for retrieving relevant cheeps through a GET request.
+/// </summary>
 public class PublicTimeline : TimelineModel
 {
     public PublicTimeline(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
@@ -126,6 +134,11 @@ public class PublicTimeline : TimelineModel
 
     }
 }
+
+/// <summary>
+/// FollowTimeline inherits from TimelineModel. It defines the method for retrieving relevant Cheeps through a GET request. 
+/// Also handles a POST request redirecting to an endpoint displaying followed users.
+/// </summary>
 public class FollowTimeline : TimelineModel
 {
     public FollowTimeline(ILogger<TimelineModel> logger, ICheepRepository repository, IAuthorRepository authors)
