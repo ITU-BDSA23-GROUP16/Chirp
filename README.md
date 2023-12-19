@@ -4,9 +4,9 @@ Chirp! is a razor page application created for the BSc course "Analysis, Design,
 
 
 ### Installation
-- Clone the project by running this command in the terminal: git clone 
+- Clone the project by running this command in the terminal: 
 ```
-https://github.com/ITU-BDSA23-GROUP16/Chirp.git
+git clone https://github.com/ITU-BDSA23-GROUP16/Chirp.git
 ```
 
 ### Run the Program
