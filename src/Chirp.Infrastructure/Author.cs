@@ -1,8 +1,20 @@
 using Microsoft.AspNetCore.Identity;
 namespace Chirp.Infrastructure;
+
+
+/// <summary>
+
+/// Represents the user accounts in Chirp! 
+
+///</summary>
+/// <remarks>
+/// Newly created users have identical Username and Email fields
+/// </remarks>
+
+
 public class Author : IdentityUser
 {
-    //Name is used for searching and queries, Email is used to log in.
+    //
     //Default values for get-set properties:
     //https://www.tutorialsteacher.com/articles/set-default-value-to-property-in-csharp
     public ICollection<Cheep> Cheeps { get; set; } = new List<Cheep>();
@@ -10,7 +22,12 @@ public class Author : IdentityUser
     public bool IsDeleted { get; set; }
 
 }
+/// <summary>
 
+/// Represents follow-relationships in Chirp!
+/// Follows are queried when deciding what cheeps are displayed in the Chirp.Web/Pages/FollowTimeline.cshtml
+
+///</summary>
 public class Follow
 {
     public string? FollowerId { get; set; }

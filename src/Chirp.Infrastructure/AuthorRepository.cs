@@ -2,6 +2,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.Infrastructure;
 
+/// <summary>
+/// The Repository interacts with the Author entity and the properties regarding an author, such as creating and deleting 
+/// an author/follower, retrieving one and their properties. 
+/// </summary>
 
 public class AuthorRepository : IAuthorRepository
 {

@@ -4,6 +4,9 @@ using Chirp.Core;
 using System.ComponentModel;
 namespace Chirp.Infrastructure.Tests;
 
+//This class contains all the unit tests regarding the cheep properties
+
+
 public class CheepTest
 {
     //UNIX Timestamp conversion to user readable time

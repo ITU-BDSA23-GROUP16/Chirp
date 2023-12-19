@@ -1,5 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 namespace Chirp.Infrastructure;
+
+/// <summary>
+/// The CheepRepository class interacts with the database using EF Core.
+/// It implements the ICheepRepository interface and provides methods for 
+/// retrieving cheeps, ordering cheeps by different criteria and creating Cheeps. 
+/// </summary>
+
+
 public class CheepRepository : ICheepRepository
 {
 
