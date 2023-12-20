@@ -52,6 +52,6 @@ public class MyPageModel : PageModel
             await _repository.DeleteAuthor(User!.Identity!.Name);
             await _signInManager.SignOutAsync();
         }
-        return RedirectToPage();
+        return Redirect("/");
     }
 }
