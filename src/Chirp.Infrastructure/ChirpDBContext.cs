@@ -1,23 +1,25 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-
 namespace Chirp.Infrastructure;
+
+/// <summary>
+/// ChirpDBContext represents a database session derived from IdentityDbContext.
+/// It is used to query and save instances of Chirp! entities.
+/// </summary>
+/// <remarks>
+/// Authors, Cheeps and Follows are equivalent to relations
+/// </remarks>
 public class ChirpDBContext : IdentityDbContext<Author>
 {
-    //Name of tables are Authors and Cheeps
     public DbSet<Author> Authors { get; set; }
     public DbSet<Cheep> Cheeps { get; set; }
+    public DbSet<Follow> Follows { get; set; }
 
-    public string DbPath { get; }
 
-
-public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
-            : base(options)
+    public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
+                : base(options)
     {
 
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -30,6 +32,11 @@ public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
         .WithOne(e => e.Author)
         .HasForeignKey(e => e.AuthorId)
         .HasPrincipalKey(e => e.Id);
+
+
+        modelBuilder.Entity<Follow>().HasKey(a => new { a.FollowerId, a.FollowingId });
+
+
     }
     // The following configures EF to create a Sqlite database file in the
     // special "local" folder for your platform.

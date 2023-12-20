@@ -1,0 +1,32 @@
+﻿@page "/following"
+@model Chirp.Web.Pages.FollowTimeline
+<!-- 
+A timeline for viewing only Cheeps from Authors that the logged in user is following
+-->
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+}
+
+<div>
+
+
+<h2> See who you follow </h2>
+
+<form asp-page-handler="following" method="post">
+<button class="follow">
+Here
+</button>
+</form>
+
+<br>
+
+
+    <h2> Curated Timeline </h2>
+
+    <partial name="_TimelinePartial" />
+
+</div>

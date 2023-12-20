@@ -1,0 +1,32 @@
+﻿@page "/"
+<!-- 
+The public timeline. This is also the home page of the app.
+-->
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+
+@model PublicTimeline
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+}
+
+<div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="cheepbox">
+            <h3>What's on your mind @(User.Identity!.Name)?</h3>
+            <form method="post">
+                <input style="float: left" type="text" name="message">
+                <input type="submit" value="Share">
+            </form>
+        </div>
+
+
+    }
+    <h3>@ViewData["confirmation"]</h3>
+    <h2> Public Timeline </h2>
+
+    <partial name="_TimelinePartial" />
+</div>

@@ -1,0 +1,22 @@
+﻿@page "/author/{author}/following"
+@model Chirp.Web.Pages.FollowingAuthorsModel
+
+   <!--
+    The purpose of FollowingList view is to display a list of all authors that a specific user follows, by using the 
+    AuthorsPartial for rendering  
+    -->
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
+@{
+    ViewData["Title"] = "Chirp!";
+    Layout = "Shared/_Layout";
+    var routeName = HttpContext.GetRouteValue("author");
+}
+
+<div>
+    <h2> Your following </h2>
+
+    <partial name="_AuthorsPartial" />
+</div>

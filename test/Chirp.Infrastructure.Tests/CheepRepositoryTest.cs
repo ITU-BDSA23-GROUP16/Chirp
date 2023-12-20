@@ -1,17 +1,11 @@
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Chirp.Core;
-using System.ComponentModel;
 namespace Chirp.Infrastructure.Tests;
-
-/*
-Tests:
-    Retrieve Cheeps from a page of the Public Timeline
-    Retrieve Cheeps from a page of an Author's timeline
-    Create a new cheep in the database
-
-    Queries do not change database
-*/
+/// <summary>
+/// Integration test between CheepRepository and ChirpDBContext
+/// These are tightly coupled.
+/// </summary> 
+/// <remarks>
+/// 
+/// </remarks>
 
 public class CheepRepTest : IDisposable
 {
@@ -46,11 +40,12 @@ public class CheepRepTest : IDisposable
 
         //Act
         await repository!.CreateCheep(helloDTO);
+
         //Assert
         var created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Hello World");
         Assert.NotNull(created);
     }
-    //Identical Cheeps are allowed to exist
+
     [Fact]
     public async Task GetPublicCheeps()
     {
@@ -61,11 +56,11 @@ public class CheepRepTest : IDisposable
         Cheep? created = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
         Cheep? herman = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
 
-        IEnumerable<CheepDTO> cheeps = await repository!.GetCheeps();
+        IEnumerable<CheepDTO> cheeps = await repository!.GetAllCheeps();
 
         //Assert
         await EnsureUnchanged(created!, herman!);
-        // Make second variable that gets a cheep with the same text from the list
+        
         CheepDTO cheep0 = cheeps.ElementAt(0);
         CheepDTO cheep1 = cheeps.ElementAt(1);
         if (cheep0.Message.Equals("Once upon a time"))
@@ -78,7 +73,7 @@ public class CheepRepTest : IDisposable
             Assert.Equal(created!.Message, cheep1.Message);
             Assert.Equal(herman!.Message, cheep0.Message);
         }
-        //Compare the two
+        
     }
 
     [Fact]
@@ -97,7 +92,39 @@ public class CheepRepTest : IDisposable
         await EnsureUnchanged(created0!, herman0!);
 
         IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.UserName == "herman").ToListAsync();
-        //https://stackoverflow.com/questions/168901/count-the-items-from-a-ienumerablet-without-iterating
+        //Following iteration has been found from this: https://stackoverflow.com/questions/168901/count-the-items-from-a-ienumerablet-without-iterating
+        int result = 0;
+        using (IEnumerator<Cheep> enumerator = created.GetEnumerator())
+        {
+            while (enumerator.MoveNext())
+                result++;
+        }
+        int resultdto = 0;
+        using (IEnumerator<CheepDTO> enumerator = cheeps.GetEnumerator())
+        {
+            while (enumerator.MoveNext())
+                resultdto++;
+        }
+        Assert.Equal(resultdto, result);
+    }
+
+    [Fact]
+    public async Task GetFollowerCheeps()
+    {
+        //Arrange
+        await Arrange();
+
+        //Act
+        var created0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Once upon a time");
+        var herman0 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == "Herman@only.com");
+
+        IEnumerable<CheepDTO> cheeps = await repository!.GetByFollower("herman");
+
+        //Assert
+        await EnsureUnchanged(created0!, herman0!);
+
+        IEnumerable<Cheep> created = await context.Cheeps.Where(c => c.Author.UserName == "Stanley").ToListAsync();
+        //Following iteration has been found from this: https://stackoverflow.com/questions/168901/count-the-items-from-a-ienumerablet-without-iterating
         int result = 0;
         using (IEnumerator<Cheep> enumerator = created.GetEnumerator())
         {
@@ -131,10 +158,11 @@ public class CheepRepTest : IDisposable
         await EnsureUnchanged(created!, herman!);
         var first1 = page1.ElementAt(0);
         var first2 = page2.ElementAt(0);
-        //if hermanDTO is from August, then it is the earliest and should be on page 2
+
         Assert.Equal(first1, stanleyDTO);
         Assert.Equal(first2, hermanDTO);
     }
+
 
     public void Dispose()
     {
@@ -144,11 +172,11 @@ public class CheepRepTest : IDisposable
     }
     private async Task EnsureUnchanged(Cheep created0, Cheep herman0)
     {
-        //Assert
+        //Act
         var created1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == created0.Message);
         var herman1 = await context.Cheeps.SingleOrDefaultAsync(c => c.Message == herman0.Message);
 
-        //assert that no changes to the data have occurred during query
+        //Assert
         Assert.Equal(created1, created0);
         Assert.Equal(herman1, herman0);
     }
@@ -158,13 +186,19 @@ public class CheepRepTest : IDisposable
         repository = new CheepRepository(context);
         await context.Authors.AddAsync(herman);
         await context.Authors.AddAsync(stanley);
-        //Assert.Equal("Added", context.Entry(herman).State.ToString());
-        //Assert.Equal("Added", context.Entry(stanley).State.ToString());
         context.SaveChanges();
-        //After this they say "Unchanged"
-        //Assert.Equal(2, context.Authors.Count<Author>());
-
+        
         await repository.CreateCheep(stanleyDTO);
         await repository.CreateCheep(hermanDTO);
+
+        //Herman follows Stanley
+        await context.Follows.AddAsync(new Follow
+        {
+            FollowerId = herman.Id,
+            FollowingId = stanley.Id,
+            Follower = herman,
+            Following = stanley
+        });
+        context.SaveChanges();
     }
 }

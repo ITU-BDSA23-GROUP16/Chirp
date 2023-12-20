@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{24100C72-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Infrastructure.Tests", "test\Chirp.Infrastructure.Tests\Chirp.Infrastructure.Tests.csproj", "{DE0B2C3A-8EDC-45F3-B49F-0DF4399A4C91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Authentication", "src\Chirp.Authentication\Chirp.Authentication.csproj", "{6BF6A604-4597-4A8C-AE85-4AF7F601AD85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Web", "src\Chirp.Web\Chirp.Web.csproj", "{6BF6A604-4597-4A8C-AE85-4AF7F601AD85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,13 +77,13 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {758D44C4-3CF3-4251-830D-7887443DF9EC}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5CE591DE-70BD-4546-BDDE-7EA7E422BF59} = {D65A3041-3B0B-4CA1-8EA8-B611EC7A7394}
 		{4CC52E5B-4D80-44EF-BCD5-5AC16646021A} = {D65A3041-3B0B-4CA1-8EA8-B611EC7A7394}
 		{DE0B2C3A-8EDC-45F3-B49F-0DF4399A4C91} = {24100C72-4CB4-460F-A208-41073C9A83E7}
 		{6BF6A604-4597-4A8C-AE85-4AF7F601AD85} = {D65A3041-3B0B-4CA1-8EA8-B611EC7A7394}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {758D44C4-3CF3-4251-830D-7887443DF9EC}
 	EndGlobalSection
 EndGlobal
