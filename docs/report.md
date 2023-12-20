@@ -14,7 +14,8 @@ numbersections: true
 
 ## Domain model
 
-Here comes a description of our domain model.
+ 
+
 
 ## Architecture — In the small
 
@@ -36,6 +37,8 @@ The endpoints we cover in the diagrams are as follows, for the following wishes 
 - to delete one’s account.
 
 ![UML Sequence diagram showing an unauthorized user's call to root endpoint “/”.](./images/RootEndpoint.png)
+
+![DESPACITO](./images/Onion-architecture.png)
 
 # Process
 

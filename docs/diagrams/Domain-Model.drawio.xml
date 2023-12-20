@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2023-12-20T12:36:33.119Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="gJQY2NHYJU5ON7xaSfJA" version="22.1.11" type="google">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1506" dy="1271" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="3ejO63ign9ZNz1L-ou57-0" value="&lt;font face=&quot;Times New Roman&quot;&gt;Author&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1342" y="396" width="240" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-1" value="&lt;font face=&quot;Times New Roman&quot;&gt;ICollection&amp;lt;Cheep&amp;gt; Cheeps&lt;br&gt;bool IsDeleted&lt;/font&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-0">
+          <mxGeometry y="26" width="240" height="51" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-2" value="&lt;font face=&quot;Times New Roman&quot;&gt;IdentityUser&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1342" y="194" width="240" height="97" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-3" value="&lt;font face=&quot;Times New Roman&quot;&gt;id int&lt;br&gt;UserName string&lt;br&gt;Email string&lt;/font&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-2">
+          <mxGeometry y="26" width="240" height="71" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-4" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="3ejO63ign9ZNz1L-ou57-30">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2165" y="733" as="sourcePoint" />
+            <mxPoint x="2165.5" y="636" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-5" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="3ejO63ign9ZNz1L-ou57-0">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1189" y="435" as="sourcePoint" />
+            <mxPoint x="1342" y="467.53999999999996" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-6" value="&lt;font face=&quot;Times New Roman&quot;&gt;Follower&lt;br&gt;Following&lt;/font&gt;" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-5">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="98" y="34" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-7" value="&lt;font face=&quot;Times New Roman&quot;&gt;Cheep&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#ff0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1681" y="368.5" width="157" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-8" value="&lt;font face=&quot;Times New Roman&quot;&gt;int CheepId&lt;br&gt;string AuthorId&lt;br&gt;Author author&lt;br&gt;string Message&lt;br&gt;Datetime Timestamp&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=#D60202;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-7">
+          <mxGeometry y="26" width="157" height="106" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-9" value="&lt;font face=&quot;Times New Roman&quot;&gt;ChirpDBContext&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1233" y="810" width="430" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-10" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="3ejO63ign9ZNz1L-ou57-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-2" y="68" as="sourcePoint" />
+            <mxPoint x="-182" y="-331" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-182" y="68" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-11" value="&lt;font face=&quot;Times New Roman&quot;&gt;*Follower&lt;br&gt;*Following&lt;/font&gt;" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-10">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="95" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-12" value="&lt;font face=&quot;Times New Roman&quot;&gt;Follows&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="3ejO63ign9ZNz1L-ou57-10">
+          <mxGeometry x="0.8387" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-13" value="&lt;font face=&quot;Times New Roman&quot;&gt;DbSet&amp;lt;Author&amp;gt;Authors&lt;br&gt;DbSet&amp;lt;Cheep&amp;gt;Cheeps&lt;br&gt;DbSet&amp;lt;Follow&amp;gt; Follows&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-9">
+          <mxGeometry y="26" width="430" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-14" value="&lt;font face=&quot;Times New Roman&quot;&gt;ChirpDBContext(DbContextOptions&amp;lt;ChirpDBContext&amp;gt; options)&lt;br&gt;OnModelCreating(ModelBuilder modelBuilder)&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-9">
+          <mxGeometry y="91" width="430" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-15" value="&lt;font face=&quot;Times New Roman&quot;&gt;Follow&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="946" y="368.5" width="240" height="109" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-16" value="&lt;font face=&quot;Times New Roman&quot;&gt;string FollowerId&lt;br&gt;string FollowingId&lt;br&gt;Author Follower&lt;br&gt;Author Following&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-15">
+          <mxGeometry y="26" width="240" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-17" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#FF0000;exitX=1;exitY=0.062;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.443;entryY=0.985;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-14" target="3ejO63ign9ZNz1L-ou57-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1675" y="905" as="sourcePoint" />
+            <mxPoint x="1751" y="507" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1748" y="905" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-18" value="&lt;font face=&quot;Times New Roman&quot;&gt;Cheeps&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="3ejO63ign9ZNz1L-ou57-17">
+          <mxGeometry x="0.7604" relative="1" as="geometry">
+            <mxPoint x="1" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-19" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1674" y="451" as="sourcePoint" />
+            <mxPoint x="1585" y="448" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-20" value="&lt;font face=&quot;Times New Roman&quot;&gt;author&lt;/font&gt;" style="edgeLabel;resizable=0;html=1;align=left;verticalAlign=bottom;" connectable="0" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1593" y="463.50200000000007" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-21" value="&lt;font face=&quot;Times New Roman&quot;&gt;AuthorDTO&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=27;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#ff0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="2474" y="228" width="517" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-22" value="&lt;font face=&quot;Times New Roman&quot;&gt;AuthorDTO(string Name, string Email, IEnumerable&amp;lt;CheepDTO&amp;gt; Cheeps)&lt;br&gt;&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=#D60202;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-21">
+          <mxGeometry y="27" width="517" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-23" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IAuthorRepository&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;font-family: _gZh-zn4m0QAnk0bA8vL; background-color: initial;&quot;&gt;Task CreateAuthor(AuthorDTO author)&lt;/span&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task CreateFollow(AuthorDTO followDto, AuthorDTO followingDto)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task RemoveFollow(AuthorDTO followDto, AuthorDTO followingDto)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task &amp;lt;AuthorDTO&amp;gt; FindAuthorByName(string name)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task &amp;lt;AuthorDTO&amp;gt; FindAuthorByEmail(string email)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task DeleteAuthor(string author)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetFollowed(string author, in pageSize, int page )&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAllFollowed(string auhtor)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetFollowing(string author, int pageSize, int page)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAllFollowing(string author)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAllAuthors()&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAuthors(int pageSize, int page)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;bool&amp;gt; FollowExists(AuthorDTO followerDto, AuthorDTO followingDto)&lt;/font&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="2533" y="368.5" width="435" height="243.5" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-24" value="&lt;font face=&quot;Times New Roman&quot;&gt;CheepDTO&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=27;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#ff0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1936" y="228" width="435" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-25" value="&lt;font face=&quot;Times New Roman&quot;&gt;CheepDTO(string Author, string Message, DateTime TimeStamp)&lt;br&gt;&lt;/font&gt;" style="text;strokeColor=#D60202;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-24">
+          <mxGeometry y="27" width="435" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-26" value="" style="endArrow=classic;html=1;rounded=0;exitX=-0.003;exitY=0.168;exitDx=0;exitDy=0;exitPerimeter=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-25">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1936" y="256" as="sourcePoint" />
+            <mxPoint x="1506" y="390" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1638" y="266" />
+              <mxPoint x="1638" y="357" />
+              <mxPoint x="1506" y="357" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-27" value="&lt;font face=&quot;Times New Roman&quot;&gt;Author&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-26">
+          <mxGeometry x="0.7519" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-28" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2468" y="265" as="sourcePoint" />
+            <mxPoint x="2371" y="265.29" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-29" value="&lt;font face=&quot;Times New Roman&quot;&gt;Cheeps&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-28">
+          <mxGeometry x="0.7251" y="-1" relative="1" as="geometry">
+            <mxPoint x="30" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-30" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ICheepRepository&lt;/b&gt;&lt;/font&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;FxLuGfvcrhp_LosD3bIe&quot;&gt;Task CreateCheep()&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;FxLuGfvcrhp_LosD3bIe&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetCheeps(int pageSize, int page)&lt;/font&gt;&lt;/p&gt;&lt;font face=&quot;FxLuGfvcrhp_LosD3bIe&quot;&gt;&amp;nbsp;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetAllCheeps()&lt;/font&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetByAuthor(string author, int pageSize, int page)&lt;/font&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetAllByAuthor(string author)&lt;/font&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetByFollower(string follower, int pageSize, int page)&lt;br&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetAllByFollower(string follower)&lt;br&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Task CreateCheep(CheepDTO cheep)&lt;/font&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1942" y="376" width="444" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-31" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="2676" y="368.5" as="sourcePoint" />
+            <mxPoint x="2676" y="303.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-32" value="&lt;font face=&quot;Times New Roman&quot;&gt;AuthorDTO&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="2672.9991073988717" y="335.99948789020755" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-33" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="2147" y="373" as="sourcePoint" />
+            <mxPoint x="2147" y="308" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-34" value="&lt;font face=&quot;Times New Roman&quot;&gt;CheepDTO&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-33">
+          <mxGeometry x="0.4769" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-35" value="&lt;font face=&quot;Times New Roman&quot;&gt;CheepRepository&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#FF0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1924" y="677" width="491" height="238" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-36" value="&lt;p style=&quot;border-color: var(--border-color); margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;font-size: 13px;&quot; face=&quot;Times New Roman&quot;&gt;ChirpDBContext _context&lt;/font&gt;&lt;br&gt;&lt;/p&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-35">
+          <mxGeometry y="26" width="491" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-37" value="&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;FxLuGfvcrhp_LosD3bIe&quot;&gt;Task CreateCheep()&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;FxLuGfvcrhp_LosD3bIe&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetCheeps(int pageSize, int page)&lt;/font&gt;&lt;/p&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 12px;&quot; face=&quot;FxLuGfvcrhp_LosD3bIe&quot;&gt;&amp;nbsp;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetAllCheeps()&lt;/font&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetByAuthor(string author, int pageSize, int page)&lt;/font&gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetAllByAuthor(string author)&lt;/font&gt;&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetByFollower(string follower, int pageSize, int page)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Times New Roman&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;CheepDTO&amp;gt;&amp;gt; GetAllByFollower(string follower)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;Times New Roman&quot;&gt;Task CreateCheep(CheepDTO cheep)&lt;/font&gt;&lt;/p&gt;" style="text;strokeColor=#FF0000;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-35">
+          <mxGeometry y="72" width="491" height="166" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-38" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="3ejO63ign9ZNz1L-ou57-35" source="3ejO63ign9ZNz1L-ou57-35" target="3ejO63ign9ZNz1L-ou57-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-39" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.465;entryY=1.006;entryDx=0;entryDy=0;entryPerimeter=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="3ejO63ign9ZNz1L-ou57-3">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1452.94" y="396" as="sourcePoint" />
+            <mxPoint x="1453.38" y="296" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-40" value="&lt;font face=&quot;Times New Roman&quot;&gt;AuthorRepository&lt;br&gt;&lt;/font&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#fff2cc;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fontSize=16;strokeColor=#ff0000;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="2530.5" y="714" width="441" height="302" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-41" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;ChirpDBContext _context&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="text;strokeColor=#D60202;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-40">
+          <mxGeometry y="26" width="441" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-42" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;ChirpDBContext _context&lt;/font&gt;&lt;br&gt;&lt;/font&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task CreateAuthor(AuthorDTO author)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task CreateFollow(AuthorDTO followDto, AuthorDTO followingDto)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task RemoveFollow(AuthorDTO followDto, AuthorDTO followingDto)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task &amp;lt;AuthorDTO&amp;gt; FindAuthorByName(string name)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task &amp;lt;AuthorDTO&amp;gt; FindAuthorByEmail(string email)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;Task DeleteAuthor(string author)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetFollowed(string author, in pageSize, int page )&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAllFollowed(string auhtor)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetFollowing(string author, int pageSize, int page)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAllFollowing(string author)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAllAuthors()&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;IEnumerable&amp;lt;AuthorDTO&amp;gt;&amp;gt; GetAuthors(int pageSize, int page)&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;border-color: var(--border-color); font-size: 12px; margin: 0px 0px 0px 4px;&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot; face=&quot;_gZh-zn4m0QAnk0bA8vL&quot;&gt;Task&amp;lt;bool&amp;gt; FollowExists(AuthorDTO followerDto, AuthorDTO followingDto)&lt;/font&gt;&lt;/p&gt;" style="text;strokeColor=#D60202;fillColor=#fff2cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;fontSize=16;" vertex="1" parent="3ejO63ign9ZNz1L-ou57-40">
+          <mxGeometry y="71" width="441" height="231" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-43" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#FF0000;exitX=0.594;exitY=1.011;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-37">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2233" y="959" as="sourcePoint" />
+            <mxPoint x="1666" y="956" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2216" y="956" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-44" value="&lt;font style=&quot;font-size: 13px;&quot; face=&quot;Times New Roman&quot;&gt;_context&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-43">
+          <mxGeometry x="0.8387" relative="1" as="geometry">
+            <mxPoint x="16" y="9" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-45" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="2736.0000000000005" y="714" as="sourcePoint" />
+            <mxPoint x="2737" y="613" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-46" value="IdentityDBContext&lt;br&gt;" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;fontSize=16;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1328.5" y="574" width="239" height="123" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-47" value="&lt;font face=&quot;Times New Roman&quot;&gt;_context&lt;/font&gt;" style="html=1;verticalAlign=bottom;endArrow=block;fontSize=12;startSize=8;endSize=8;rounded=0;entryX=0.453;entryY=1.013;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.46;exitY=0.995;exitDx=0;exitDy=0;exitPerimeter=0;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-42" target="3ejO63ign9ZNz1L-ou57-14">
+          <mxGeometry x="0.9601" y="-27" width="80" relative="1" as="geometry">
+            <mxPoint x="2715" y="1044" as="sourcePoint" />
+            <mxPoint x="1344" y="1085" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2733" y="1121" />
+              <mxPoint x="1428" y="1124" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-48" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#FF0000;exitX=0.487;exitY=-0.003;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-9">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1444" y="803" as="sourcePoint" />
+            <mxPoint x="1443.5" y="697" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-49" value="" style="endArrow=classic;html=1;rounded=0;fontSize=12;startSize=8;endSize=8;curved=1;fillColor=#f8cecc;strokeColor=#FF0000;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1447.29" y="589" as="sourcePoint" />
+            <mxPoint x="1447" y="478" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-50" value="&lt;font face=&quot;Times New Roman&quot;&gt;IdentityDbContext&amp;lt;Author&amp;gt;&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="3ejO63ign9ZNz1L-ou57-49">
+          <mxGeometry x="0.4769" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-51" value="&lt;font style=&quot;font-size: 23px;&quot;&gt;Chirp.Core&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1914.5" y="133.5" width="306" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-52" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1914.5" y="203.5" width="1097" height="439" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-53" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="902" y="176" width="988" height="992" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-54" value="&lt;span style=&quot;font-size: 23px;&quot;&gt;Chirp.Infrastructure&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="904" y="106" width="306" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-55" value="" style="endArrow=none;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#ffffff;endFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="3ejO63ign9ZNz1L-ou57-57">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2162" y="915" as="sourcePoint" />
+            <mxPoint x="1998" y="956" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-56" value="" style="endArrow=none;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#ffffff;endFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="3ejO63ign9ZNz1L-ou57-57">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2162" y="915" as="sourcePoint" />
+            <mxPoint x="1998" y="956" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2162" y="956" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="3ejO63ign9ZNz1L-ou57-57" value="" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=16;fillColor=none;strokeColor=default;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="1892" y="657" width="1119.5" height="511" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
