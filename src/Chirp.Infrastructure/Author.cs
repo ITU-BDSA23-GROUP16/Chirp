@@ -17,6 +17,9 @@ public class Author : IdentityUser
     //Default values for get-set properties:
     //https://www.tutorialsteacher.com/articles/set-default-value-to-property-in-csharp
     public ICollection<Cheep> Cheeps { get; set; } = new List<Cheep>();
+
+    public ICollection<Follow> Followers;
+    public ICollection<Follow> Followings;
 }
 /// <summary>
 /// Represents follow-relationships in Chirp!

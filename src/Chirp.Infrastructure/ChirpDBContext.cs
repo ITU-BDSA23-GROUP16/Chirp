@@ -36,6 +36,20 @@ public class ChirpDBContext : IdentityDbContext<Author>
 
         modelBuilder.Entity<Follow>().HasKey(a => new { a.FollowerId, a.FollowingId });
 
+        //Follows
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Followers)
+        .WithOne(e => e.Follower)
+        .HasForeignKey(e => new { e.FollowerId })
+        .OnDelete(DeleteBehavior.ClientSetNull)
+        .HasPrincipalKey(e => e.Id);
+
+        modelBuilder.Entity<Author>()
+        .HasMany(e => e.Followings)
+        .WithOne(e => e.Following)
+        .HasForeignKey(e => new { e.FollowingId })
+        .OnDelete(DeleteBehavior.ClientSetNull)
+        .HasPrincipalKey(e => e.Id);
 
     }
     // The following configures EF to create a Sqlite database file in the
