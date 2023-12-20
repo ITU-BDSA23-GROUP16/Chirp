@@ -39,17 +39,17 @@ builder.Services.AddMvc();
 
 //Github authentication only works on the web app;
 //It must be removed in the local, SQLite release
-builder.Services.AddAuthentication()
-    .AddGitHub(o =>
-    {
-#pragma warning disable CS8601 // Possible null reference assignment.
+// builder.Services.AddAuthentication()
+//     .AddGitHub(o =>
+//     {
+// #pragma warning disable CS8601 // Possible null reference assignment.
 
-        o.ClientId = builder.Configuration["authentication_github_clientId"];
-        o.ClientSecret = builder.Configuration["authentication_github_clientSecret"];
-#pragma warning restore CS8601 // Possible null reference assignment.
+//         o.ClientId = builder.Configuration["authentication_github_clientId"];
+//         o.ClientSecret = builder.Configuration["authentication_github_clientSecret"];
+// #pragma warning restore CS8601 // Possible null reference assignment.
 
-        o.CallbackPath = "/signin-github";
-    });
+//         o.CallbackPath = "/signin-github";
+//     });
 
 
 builder.Services.AddRazorPages();
