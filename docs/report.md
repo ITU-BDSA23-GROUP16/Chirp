@@ -244,7 +244,7 @@ You should now be able to freely explore _Chirp!_
 ### Git Cloning
 
 <a id="terminal"></a>
-In the _\*\*Terminal/Command Prompt_:
+In the **Terminal/Command Prompt**:
 
 1. Open a new terminal/command prompt at the folder of your choice and type the following command:
 
