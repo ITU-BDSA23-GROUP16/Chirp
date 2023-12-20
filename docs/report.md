@@ -38,7 +38,7 @@ The endpoints we cover in the diagrams are as follows, for the following wishes 
 
 ![UML Sequence diagram showing an unauthorized user's call to root endpoint “/”.](./images/RootEndpoint.png)
 
-![DESPACITO](./images/AllUsers.png)
+![DESPACITO](./images/Onion-architecture.png)
 
 # Process
 
