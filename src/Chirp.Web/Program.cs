@@ -43,9 +43,11 @@ builder.Services.AddAuthentication()
     .AddGitHub(o =>
     {
 #pragma warning disable CS8601 // Possible null reference assignment.
+
         o.ClientId = builder.Configuration["authentication_github_clientId"];
         o.ClientSecret = builder.Configuration["authentication_github_clientSecret"];
 #pragma warning restore CS8601 // Possible null reference assignment.
+
         o.CallbackPath = "/signin-github";
     });
 

@@ -36,7 +36,7 @@ The endpoints we cover in the diagrams are as follows, for the following wishes 
 - to see all registered users of Chirp!
 - to delete one’s account.
 
-![UML Sequence diagram showing an unauthorized user's call to root endpoint “/”.](docs/images/RootEndpoint.png)
+![UML Sequence diagram showing an unauthorized user's call to root endpoint “/”.](./images/RootEndpoint.png)
 
 ![DESPACITO](docs/images/AllUsers.png)
 
