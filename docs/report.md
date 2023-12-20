@@ -125,7 +125,11 @@ to delete one’s account.
 
 ![UML Sequence diagram showing an unauthorized user's call to root endpoint “/”.](./images/RootEndpoint.png)
 
+<<<<<<< HEAD
 1: UML Sequence diagram showing an unauthorized user's call to root endpoint “/”.
+=======
+![DESPACITO](./images/Onion-architecture.png)
+>>>>>>> f32424e3ef95718f1cbb9c7a10d9fc352c3800bc
 
 
 

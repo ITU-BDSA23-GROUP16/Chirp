@@ -22,8 +22,8 @@ public class AuthorRepository : IAuthorRepository
 
         var newAuthor = new Author
         {
-            UserName = author.Name, 
-            Email = author.Email 
+            UserName = author.Name,
+            Email = author.Email
         };
         var existing = await _context.Authors.Where(c => c.UserName == author.Name).FirstOrDefaultAsync();
         if (existing != null)
@@ -78,10 +78,22 @@ public class AuthorRepository : IAuthorRepository
         var auth = await _context.Authors.Where(c => c.UserName == author).SingleAsync();
         if (auth != null)
         {
+            var follows = await _context.Follows
+            .Where(f => f.Following.UserName == author).ToListAsync();
+            foreach (Follow f in follows)
+            {
+                _context.Follows.Remove(f);
+            }
+            follows = await _context.Follows
+            .Where(f => f.Follower.UserName == author).ToListAsync();
+            foreach (Follow f in follows)
+            {
+                _context.Follows.Remove(f);
+            }
             _context.Authors.Remove(auth);
             await _context.SaveChangesAsync();
         }
-        
+
     }
 
 

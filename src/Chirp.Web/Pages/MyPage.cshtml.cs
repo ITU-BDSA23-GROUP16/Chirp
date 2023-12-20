@@ -49,8 +49,8 @@ public class MyPageModel : PageModel
 
         if (User!.Identity!.Name != null)
         {
-            await _signInManager.SignOutAsync();
             await _repository.DeleteAuthor(User!.Identity!.Name);
+            await _signInManager.SignOutAsync();
         }
         return Redirect("/");
     }
